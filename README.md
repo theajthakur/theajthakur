@@ -1,41 +1,13 @@
-### Hi there, I'm Vijay Thakur! 👋
+# React + Vite
 
-**🚀 Full-Stack Web Developer | Freelancer | Problem Solver**  
-🌍 Passionate about building high-performance web applications and solving real-world problems with code.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-### 🛠 Tech Stack:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- **Frontend:** HTML, CSS, JavaScript, jQuery, Bootstrap, Tailwind, React.js (Learning Next.js 🚀)
-- **Backend:** Node.js, Express.js, PHP
-- **Databases:** MongoDB, MySQL
-- **Authentication & Security:** JWT, OAuth
-- **Other Tools:** DigitalOcean, Docker, Git, APIs (Google Maps, WeatherAPI, Mapbox)
+## Expanding the ESLint configuration
 
----
-
-### 💡 What I Do:
-
-- 🌍 **Freelancing:** 2+ years of international experience in web development.
-- 🔥 **Startup Aspirations:** Dreaming big and working on out-of-the-box ideas!
-- 🏆 **Hackathons:** Love competitive coding and innovative problem-solving.
-- 🛠 **Open Source:** Currently exploring contributions to **Webpack & Electron** for GSoC 2025.
-- 🎮 **Passions:** Game development (Urban Escape), disaster management apps (ResQ), and more!
-
----
-
-### 📈 GitHub Stats:
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=theajthakur&show_icons=true&theme=radical)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=theajthakur&layout=compact&theme=radical)
-
----
-
-### 📬 Let's Connect:
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/theajthakur)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/theajthakur)
-[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=google-chrome&logoColor=white)](https://theajthakur.github.io)
-
-🚀 **Let's build something amazing together!**
+If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# theajthakur

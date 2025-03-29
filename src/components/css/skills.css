@@ -1,0 +1,9 @@
+.skill-section .skill-unit .skill-icon {
+  color: rebeccapurple;
+  font-size: 5rem;
+}
+
+.dark-mode .skill-section .skill-unit .skill-icon {
+  color: gold;
+  font-size: 5rem;
+}

@@ -7,7 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "animate.css";
 import Navbar from "./components/Navbar";
 import { useMode } from "./Context/ModeContext";
-import Skills from "./components/Skills";
+import SkillCarousel from "./components/Skills";
 
 export default function App() {
   const { mode } = useMode();
@@ -15,7 +15,7 @@ export default function App() {
     <div className={`app ${mode === "light" ? "light-mode" : "dark-mode"}`}>
       <Navbar />
       <Hero />
-      <Skills />
+      <SkillCarousel />
     </div>
   );
 }

@@ -1,11 +1,32 @@
 import React from "react";
 import "./css/hero.css";
 export default function Hero() {
+  const socialMedia = [
+    {
+      name: "GitHub",
+      icon: "bi bi-github",
+      link: "https://github.com/theajthakur",
+      btn: "dark",
+    },
+    {
+      name: "LinkedIn",
+      icon: "bi bi-linkedin",
+      link: "https://linkedin.com/in/theajthakur",
+      btn: "primary",
+    },
+    {
+      name: "Instagram",
+      icon: "bi bi-instagram",
+      link: "https://instagram.com/aj_thakur_rock",
+      btn: "warning",
+    },
+  ];
+
   return (
     <div className="hero-section py-5">
       <div className="container p-0">
         <div className="row p-0 m-0">
-          <div className="col-12 col-md-8">
+          <div className="col-12 col-md-8 text-center text-md-start">
             <div className="h-100 justify-content-center align-items-center d-inline-flex">
               <div className="hero-text animate__animated animate__fadeInLeft">
                 <h1>Vijay Singh</h1>
@@ -41,6 +62,20 @@ export default function Hero() {
                         </span>
                       </a>
                     </div>
+                  </div>
+                  <div className="social-media-section mb-3">
+                    {socialMedia.map((sm, index) => (
+                      <a
+                        key={index}
+                        className={`btn btn-${
+                          sm.btn
+                        } me-2 social-btn social-btn-${sm.name.toLowerCase()}`}
+                        href={sm.link}
+                        target="_blank"
+                      >
+                        <span className={sm.icon}></span> {sm.name}
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>

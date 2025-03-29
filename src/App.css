@@ -115,6 +115,7 @@ ul.navbar-nav li a {
 navbar {
   width: 100%;
   overflow: hidden;
+  transition: 0.2s;
 }
 
 .my-navbar {

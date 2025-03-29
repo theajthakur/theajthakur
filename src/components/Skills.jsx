@@ -73,7 +73,7 @@ const SkillCarousel = () => {
         <div className="skills-expanded">
           <div className="row">
             {skills.map((skill) => (
-              <div className="col-sm-6 col-md-4 col-lg-3">
+              <div className="col-6 col-md-4 col-lg-3">
                 <div className="skill-expanded-unit">
                   <div className="skill-expanded-icon">
                     <span className={skill.icon}></span>

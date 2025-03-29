@@ -25,7 +25,7 @@ export default function Navbar() {
                   <span
                     className={mode === "light" ? "bi bi-moon" : "bi bi-sun"}
                   ></span>
-                  {mode === "light" ? " Dark" : " Light"} Mode
+                  {mode === "light" ? " Dark" : " Light"}
                 </a>
               </li>
               <li className="nav-item">
@@ -35,7 +35,7 @@ export default function Navbar() {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <span className="bi bi-card-checklist"></span> About me
+                  <span className="bi bi-card-checklist"></span> About
                 </a>
               </li>
             </ul>

@@ -107,3 +107,25 @@ pre {
   background: black;
   color: white;
 }
+
+ul.navbar-nav li a {
+  white-space: nowrap;
+}
+
+navbar {
+  width: 100%;
+  overflow: hidden;
+}
+
+.my-navbar {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#navbarNav {
+  overflow-x: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

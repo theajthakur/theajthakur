@@ -7,3 +7,37 @@
   color: gold;
   font-size: 5rem;
 }
+
+.skill-section .skill-expanded-unit {
+  display: inline-flex;
+  width: 100%;
+  border-radius: 5px;
+  margin: 5px 0;
+  border: 2px solid rgba(240, 240, 240, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.skill-section .skill-expanded-unit .skill-expanded-icon {
+  padding: 5px 15px;
+  font-size: 3rem;
+  color: rebeccapurple;
+  background-color: rgba(240, 240, 240, 1);
+}
+
+.skill-section .skill-expanded-unit .skill-expanded-name {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.dark-mode .skill-section .skill-expanded-unit .skill-expanded-icon {
+  background-color: black;
+  color: gold;
+}
+
+.dark-mode .skill-section .skill-expanded-unit {
+  border: 2px solid black;
+}

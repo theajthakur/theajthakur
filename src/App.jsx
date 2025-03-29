@@ -6,15 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "animate.css";
 import Navbar from "./components/Navbar";
-import { ModeProvider } from "./Context/ModeContext";
+import { useMode } from "./Context/ModeContext";
 
 export default function App() {
+  const { mode } = useMode();
   return (
-    <div className="main-body">
-      <ModeProvider>
-        <Navbar />
-        <Hero />
-      </ModeProvider>
+    <div className={`app ${mode === "light" ? "light-mode" : "dark-mode"}`}>
+      <Navbar />
+      <Hero />
     </div>
   );
 }

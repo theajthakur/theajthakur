@@ -32,7 +32,7 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link">
+                <a className="nav-link" href="#">
                   <span className="bi bi-card-checklist"></span> About me
                 </a>
               </li>

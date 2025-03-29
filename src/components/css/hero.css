@@ -1,0 +1,52 @@
+.hero-section .hero-text h1 {
+  font-size: 3rem;
+}
+
+.hero-section .hero-text .styled-typewritter .typewriter h2 {
+  display: inline;
+  font-size: 1.2rem;
+  color: #696969;
+  animation: 3s blink infinite;
+}
+
+.hero-section .hero-text .styled-typewritter .typewriter h2 span.cursor {
+  padding: 0 1rem;
+}
+
+.hero-section .hero-text .styled-typewritter {
+  margin: 1rem 0;
+}
+
+@keyframes blink {
+  0% {
+    color: #696969;
+  }
+  2% {
+    color: transparent;
+  }
+  4% {
+    color: #696969;
+  }
+  7% {
+    color: transparent;
+  }
+  10%,
+  100% {
+    color: #696969;
+  }
+}
+
+.hero-section .hero-image {
+  transition: 0.2s;
+}
+
+.hero-section .hero-image:hover {
+  transform: scale(1.05);
+  rotate: 1deg;
+}
+
+.hero-section .hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}

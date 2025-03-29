@@ -1,10 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;600&family=Nunito:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap");
 
+::selection {
+  background: #ff8100;
+  color: white;
+}
+
 /* Apply Fonts */
 body {
   font-family: "Inter", sans-serif; /* Default body text */
   font-weight: 400;
   color: #333; /* Adjust text color */
+  overflow-x: hidden;
 }
 
 /* Headings */

@@ -7,7 +7,7 @@ export default function Hero() {
         <div className="row p-0 m-0">
           <div className="col-12 col-md-8">
             <div className="h-100 justify-content-center align-items-center d-inline-flex">
-              <div className="hero-text">
+              <div className="hero-text animate__animated animate__fadeInLeft">
                 <h1>Vijay Singh</h1>
                 <div className="styled-typewritter">
                   <div className="typewriter">
@@ -33,7 +33,7 @@ export default function Hero() {
                   </p>
 
                   <p>💻 Let's build something amazing together! ✨</p>
-                  <div className="hire-me-btn d-inline-flex">
+                  <div className="hire-me-btn d-inline-flex my-3 animate__animated animate__fadeInUp animate__delay-1s">
                     <div>
                       <a className="codepen-button">
                         <span>
@@ -48,7 +48,7 @@ export default function Hero() {
           </div>
           <div className="col-12 col-md-4">
             <div className="h-100 justify-content-center align-items-center d-inline-flex">
-              <div className="hero-image">
+              <div className="hero-image animate__animated animate__fadeInRight">
                 <img
                   src="https://avatars.githubusercontent.com/u/159218584?v=4"
                   alt="Vijay Singh"

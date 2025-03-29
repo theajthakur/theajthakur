@@ -33,8 +33,15 @@ pre {
   border-radius: 5px;
 }
 
-/* Yoinked from CodePen, but improved the animation
-so that it is smooth among other more minor things */
+.app {
+  min-height: 100vh;
+  transition: 0.2s;
+}
+
+.app.dark-mode {
+  background: #272727;
+  color: #e9e4dc;
+}
 
 .codepen-button {
   display: block;

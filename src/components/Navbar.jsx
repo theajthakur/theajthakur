@@ -22,8 +22,10 @@ export default function Navbar() {
                   href="#"
                   onClick={toggleMode}
                 >
-                  <span className="bi bi-sun"></span>
-                  {mode === "light" ? "Light" : "Dark"} Mode
+                  <span
+                    className={mode === "light" ? "bi bi-moon" : "bi bi-sun"}
+                  ></span>
+                  {mode === "light" ? " Dark" : " Light"} Mode
                 </a>
               </li>
               <li className="nav-item">

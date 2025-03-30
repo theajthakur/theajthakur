@@ -8,6 +8,7 @@ import "animate.css";
 import Navbar from "./components/Navbar";
 import { useMode } from "./Context/ModeContext";
 import SkillCarousel from "./components/Skills";
+import Projects from "./components/Projects";
 
 export default function App() {
   const { mode } = useMode();
@@ -16,6 +17,7 @@ export default function App() {
       <Navbar />
       <Hero />
       <SkillCarousel />
+      <Projects />
     </div>
   );
 }

@@ -1,0 +1,50 @@
+.project-container {
+  border: 2px solid lightgrey;
+  overflow: hidden;
+  border-radius: 5px;
+  height: 100%;
+}
+
+.project-container .project-thumbnail {
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-container .project-thumbnail img {
+  width: 100%;
+  transition: 0.2s;
+}
+
+.project-container .project-thumbnail img:hover {
+  transform: rotate(5deg) scale(1.2);
+  filter: grayscale(0.8);
+}
+
+.project-detail {
+  padding: 5px 10px;
+}
+
+.project-detail .project-title h4 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.project-detail .project-description {
+  color: grey;
+}
+
+.project-detail .project-tags {
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.project-detail .project-tags span {
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 2px dashed;
+  margin: 5px;
+  display: inline-block;
+}

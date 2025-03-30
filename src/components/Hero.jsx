@@ -26,7 +26,10 @@ export default function Hero() {
     <div className="hero-section py-5">
       <div className="container p-0">
         <div className="row p-0 m-0">
-          <div className="col-12 col-md-8 text-center text-md-start">
+          <div
+            className="col-12 col-md-8 text-center text-md-start"
+            style={{ overflow: "hidden" }}
+          >
             <div className="h-100 justify-content-center align-items-center d-inline-flex">
               <div className="hero-text animate__animated animate__fadeInLeft">
                 <h1>Vijay Singh</h1>
@@ -73,7 +76,8 @@ export default function Hero() {
                         href={sm.link}
                         target="_blank"
                       >
-                        <span className={sm.icon}></span> {sm.name}
+                        <span className={sm.icon}></span>
+                        <span className="social-media-name">{sm.name}</span>
                       </a>
                     ))}
                   </div>
@@ -82,7 +86,7 @@ export default function Hero() {
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="h-100 justify-content-center align-items-center d-inline-flex">
+            <div className="h-100 justify-content-center align-items-center d-inline-flex w-100">
               <div className="hero-image animate__animated animate__fadeInRight">
                 <img
                   src="https://avatars.githubusercontent.com/u/159218584?v=4"

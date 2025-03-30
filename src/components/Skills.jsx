@@ -8,22 +8,21 @@ const skills = [
   { name: "HTML", icon: "bi bi-filetype-html" },
   { name: "CSS", icon: "bi bi-filetype-css" },
   { name: "JavaScript", icon: "bi bi-filetype-js" },
+  { name: "MERN Stack", icon: "bi bi-stack" },
   { name: "React", icon: "bi bi-lightning-charge-fill" },
   { name: "Node.js", icon: "bi bi-server" },
   { name: "MongoDB", icon: "bi bi-database" },
   { name: "Bootstrap", icon: "bi bi-bootstrap-fill" },
   { name: "Git", icon: "bi bi-git" },
   { name: "Express.js", icon: "bi bi-code-slash" },
+  { name: "EJS", icon: "bi bi-file-earmark-code" },
   { name: "MySQL", icon: "bi bi-database-fill" },
   { name: "Python", icon: "bi bi-code" },
   { name: "jQuery", icon: "bi bi-box" },
   { name: "Animate.css", icon: "bi bi-stars" },
   { name: "Font Awesome", icon: "bi bi-brush" },
   { name: "Google Maps API", icon: "bi bi-map" },
-  { name: "EJS", icon: "bi bi-file-earmark-code" },
-  { name: "Next.js", icon: "bi bi-globe" },
-  { name: "C++ (DSA)", icon: "bi bi-cpu" },
-  { name: "MERN Stack", icon: "bi bi-stack" },
+  { name: "Razorpay", icon: "bi bi-credit-card" },
 ];
 
 const SkillCarousel = () => {
@@ -71,9 +70,9 @@ const SkillCarousel = () => {
       </p>
       {expandedSkill ? (
         <div className="skills-expanded">
-          <div className="row">
-            {skills.map((skill) => (
-              <div className="col-6 col-md-4 col-lg-3">
+          <div className="row justify-content-center">
+            {skills.map((skill, index) => (
+              <div className="col-6 col-md-4 col-lg-3" key={index}>
                 <div className="skill-expanded-unit">
                   <div className="skill-expanded-icon">
                     <span className={skill.icon}></span>

@@ -10,7 +10,11 @@ export default function Navbar() {
         }`}
       >
         <div className="container">
-          <a className="navbar-brand" href="#">
+          <a
+            className="navbar-brand"
+            href="https://github.com/theajthakur"
+            target="_blank"
+          >
             @theajthakur
           </a>
           <div className="collapse navbar-collapse" id="navbarNav">

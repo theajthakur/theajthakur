@@ -11,6 +11,7 @@ body {
   font-weight: 400;
   color: #333; /* Adjust text color */
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Headings */

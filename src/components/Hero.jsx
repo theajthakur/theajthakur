@@ -51,9 +51,9 @@ export default function Hero() {
                     Passionate about building <strong>scalable web apps</strong>
                     , optimizing <strong>backend performance</strong>, and
                     contributing to
-                    <strong>Webpack & Electron for GSoC 2025</strong>.
-                    Freelancing for <strong>2+ years</strong>, turning ideas
-                    into reality with clean code & innovation.
+                    <strong> Open Source Projects</strong>. Freelancing for{" "}
+                    <strong>2+ years</strong>, turning ideas into reality with
+                    clean code & innovation.
                   </p>
 
                   <p>💻 Let's build something amazing together! ✨</p>
@@ -66,7 +66,7 @@ export default function Hero() {
                       </a>
                     </div>
                   </div>
-                  <div className="social-media-section mb-3">
+                  <div className="social-media-section mb-3 animate__animated animate__fadeInUp animate__delay-1s">
                     {socialMedia.map((sm, index) => (
                       <a
                         key={index}

@@ -28,7 +28,7 @@ const skills = [
 const SkillCarousel = () => {
   const [expandedSkill, setExpandedSkill] = useState(false);
   return (
-    <div className="container skill-section animate__animated animate__fadeInUp animate__delay-2s">
+    <div className="container skill-section animate__animated animate__fadeIn animate__delay-2s">
       <h2 className="text-center border-top py-3">Skills</h2>
       <div className="max-w-4xl mx-auto py-10">
         <Swiper

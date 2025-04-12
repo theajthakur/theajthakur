@@ -11,6 +11,14 @@ export default function Projects() {
         "Notely is a fully client-side diary and to-do app built with ReactJS, focused on user privacy. It lets users write private diary entries, manage tasks by date, mark them as completed or delete them. It features a smart password system that re-authenticates after 1 minute of inactivity, with an option to save the password. Users can export and import backups locally, ensuring complete control over their data.",
       languages: ["ReactJS", "JavaScript", "LocalStorage"],
     },
+    {
+      title: "PNR Fetcher",
+      thumbnail: "/assets/images/project/pnr-fetcher.jpg",
+      accessUrl: "https://theajthakur.github.io/PNR_Frontend",
+      description:
+        "PNR Fetcher is an educational web app built with Node.js and Puppeteer to demonstrate real-time web scraping and captcha solving. Users can enter their IRCTC PNR number, and the app uses Puppeteer to navigate to the official website, solve the captcha using OCR techniques, and display PNR details on the screen. It showcases how basic captchas can be bypassed using OCR (Tesseract), highlighting the challenges of modern web scraping. Intended purely for educational and research purposes.",
+      languages: ["Node.js", "Puppeteer", "OCR", "JavaScript"],
+    },
   ];
 
   return (

@@ -2,3 +2,7 @@
   background: #ff8100;
   color: white;
 }
+
+body {
+  user-select: none;
+}

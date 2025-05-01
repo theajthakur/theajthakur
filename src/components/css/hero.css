@@ -49,10 +49,32 @@
   rotate: 1deg;
 }
 
-.hero-section .hero-image img {
+.hero-section .hero-image .hero-photo img {
   width: 100%;
   height: auto;
   border-radius: 1rem;
+  transition: all 0.5s;
+  transform-origin: bottom right;
+  transform: rotate(0deg);
+  z-index: 10;
+  position: relative;
+}
+
+.hero-section .hero-image:hover .hero-photo img {
+  transform: rotate(90deg);
+}
+
+.hero-section .hero-image:hover .hero-info-text {
+  z-index: 9;
+}
+
+.hero-section .hero-image .hero-info {
+  border-radius: 1rem;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -98,5 +120,51 @@
 
   .hero-section .hero-image {
     width: 90%;
+  }
+}
+
+.stylish-hero-info {
+  display: flex;
+  height: 100%;
+  padding: 10px;
+  place-items: center;
+  position: relative;
+  place-content: center;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.stylish-hero-info:before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 150%;
+  background: linear-gradient(45deg, red, yellow);
+  animation: 2s rotateConst linear infinite;
+}
+
+.hero-info-text {
+  z-index: 0;
+}
+
+.stylish-hero-info:after {
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  background: #272727;
+  padding: 5px;
+}
+
+.app.light-mode .stylish-hero-info:after {
+  background: #fff;
+}
+
+@keyframes rotateConst {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
   }
 }

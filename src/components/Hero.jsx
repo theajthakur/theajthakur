@@ -88,11 +88,20 @@ export default function Hero() {
           <div className="col-12 col-md-4">
             <div className="h-100 justify-content-center align-items-center d-inline-flex w-100">
               <div className="hero-image animate__animated animate__fadeInRight">
-                <img
-                  src="https://avatars.githubusercontent.com/u/159218584?v=4"
-                  alt="Vijay Singh"
-                  className="img-fluid"
-                />
+                <div className="hero-info">
+                  <div className="stylish-hero-info">
+                    <div className="hero-info-text">
+                      <h2>VIJAY</h2>
+                    </div>
+                  </div>
+                </div>
+                <div className="hero-photo">
+                  <img
+                    src="https://avatars.githubusercontent.com/u/159218584?v=4"
+                    alt="Vijay Singh"
+                    className="img-fluid"
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -28,7 +28,7 @@ export default function Projects() {
       </h2>
 
       <div className="projects-cards">
-        <div className="row">
+        <div className="row justify-content-center">
           {projects.map((project, index) => (
             <div
               className="col-sm-6 col-md-4 col-lg-3 mb-5"

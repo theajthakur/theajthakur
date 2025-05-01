@@ -8,15 +8,15 @@ export default function Projects() {
       thumbnail: "/assets/images/project/diary.jpeg",
       accessUrl: "https://theajthakur.github.io/notely",
       description:
-        "Notely is a fully client-side diary and to-do app built with ReactJS, focused on user privacy. It lets users write private diary entries, manage tasks by date, mark them as completed or delete them. It features a smart password system that re-authenticates after 1 minute of inactivity, with an option to save the password. Users can export and import backups locally, ensuring complete control over their data.",
+        "A privacy-focused diary and to-do app built with ReactJS. It supports smart password protection, local backups, and offline data via LocalStorage.",
       languages: ["ReactJS", "JavaScript", "LocalStorage"],
     },
     {
-      title: "PNR Fetcher",
+      title: "Instant PNR",
       thumbnail: "/assets/images/project/pnr-fetcher.jpg",
       accessUrl: "https://theajthakur.github.io/PNR_Frontend",
       description:
-        "PNR Fetcher is an educational web app built with Node.js and Puppeteer to demonstrate real-time web scraping and captcha solving. Users can enter their IRCTC PNR number, and the app uses Puppeteer to navigate to the official website, solve the captcha using OCR techniques, and display PNR details on the screen. It showcases how basic captchas can be bypassed using OCR (Tesseract), highlighting the challenges of modern web scraping. Intended purely for educational and research purposes.",
+        "An educational app that scrapes IRCTC PNR status in real-time using Puppeteer and OCR to bypass captchas.",
       languages: ["Node.js", "Puppeteer", "OCR", "JavaScript"],
     },
   ];
@@ -48,13 +48,13 @@ export default function Projects() {
                   <div className="project-description">
                     <p>{project.description}</p>
                   </div>
-                  <div className="project-tags">
-                    {project.languages.map((lang, ind) => (
-                      <span className="project-tag" key={ind}>
-                        {lang}
-                      </span>
-                    ))}
-                  </div>
+                </div>
+                <div className="project-tags">
+                  {project.languages.map((lang, ind) => (
+                    <span className="project-tag" key={ind}>
+                      {lang}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>

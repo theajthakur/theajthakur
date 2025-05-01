@@ -1,10 +1,14 @@
 .project-container {
-  border: 2px solid lightgrey;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-width: 2px;
+  border-style: solid;
+  border-color: lightgrey;
+  border-image: initial;
   overflow: hidden;
   border-radius: 5px;
-  height: 100%;
 }
-
 .project-container .project-thumbnail {
   text-align: center;
   overflow: hidden;
@@ -23,28 +27,38 @@
 
 .project-detail {
   padding: 5px 10px;
+  height: 100%;
+  flex: 1;
 }
 
 .project-detail .project-title h4 {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  color: #006eff;
+  cursor: pointer;
+  transition: 0.1s;
 }
 
 .project-detail .project-description {
   color: grey;
 }
 
-.project-detail .project-tags {
+.project-container .project-tags {
   white-space: nowrap;
   overflow-x: scroll;
+  font-size: 0.7rem;
 }
 
-.project-detail .project-tags span {
+.project-container .project-tags span {
   font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 10px;
-  border: 2px dashed;
-  margin: 5px;
   display: inline-block;
+  cursor: pointer;
+  padding: 3px 5px;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: initial;
+  border-image: initial;
+  margin: 5px;
 }

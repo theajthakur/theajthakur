@@ -48,6 +48,9 @@
   transform: scale(1.05);
   rotate: 1deg;
 }
+.hero-section .hero-image .hero-photo {
+  margin: 5px;
+}
 
 .hero-section .hero-image .hero-photo img {
   width: 100%;

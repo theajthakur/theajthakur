@@ -83,3 +83,28 @@
   color: black;
   width: 100%;
 }
+
+.main-icon {
+  position: relative;
+}
+
+.chatbot-settings {
+  position: absolute;
+  background: white;
+  right: 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.chatbot-settings ul {
+  padding: 0;
+  margin: 0;
+}
+
+.chatbot-settings ul li {
+  list-style: none;
+}
+
+.chatbot-settings ul li:hover {
+  color: #f80;
+}

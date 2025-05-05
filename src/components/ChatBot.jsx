@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./css/chatbot.css";
 import CharmingStars from "./CharmingStars";
 import ChatResponse from "./ChatResponse";
 
 export default function ChatBot() {
+  const chatBoxRef = useRef(null);
   const [chatBotVisibility, setChatBotVisibility] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [aiProcessing, setAiProcessing] = useState(false);
@@ -34,6 +35,12 @@ export default function ChatBot() {
       setAiProcessing(false);
     }
   };
+  useEffect(() => {
+    const chatBox = chatBoxRef.current;
+    if (chatBox) {
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  }, [chats]);
   return (
     <div
       className={`chatbot-container ${chatBotVisibility ? "only-chat" : ""}`}
@@ -79,7 +86,7 @@ export default function ChatBot() {
                 </div>
               </div>
             </div>
-            <div className="chatbot-body">
+            <div className="chatbot-body" ref={chatBoxRef}>
               {chats.map((chat, index) => (
                 <div className="chat-container" key={`chat_${index}`}>
                   <div

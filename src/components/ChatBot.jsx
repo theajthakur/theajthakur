@@ -5,6 +5,7 @@ import ChatResponse from "./ChatResponse";
 
 export default function ChatBot() {
   const chatBoxRef = useRef(null);
+  const submitMessageRef = useRef(null);
   const [chatBotVisibility, setChatBotVisibility] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [aiProcessing, setAiProcessing] = useState(false);
@@ -12,6 +13,7 @@ export default function ChatBot() {
   const [chats, setChats] = useState([
     { message: "How can I help you?", from: "ai" },
   ]);
+  const handleMessageSend = () => {};
   const API_URL = "https://treshop-backend.onrender.com/portfolio/chat";
   // const API_URL = "http://localhost:5000/portfolio/chat";
 
@@ -121,10 +123,15 @@ export default function ChatBot() {
                     onChange={(event) => {
                       setUserMessage(event.target.value);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key != "Enter") return;
+                      submitMessageRef.current?.click();
+                    }}
                   />
                 </div>
                 <div className="input-submit-container">
                   <button
+                    ref={submitMessageRef}
                     className="ai-prompt-submit"
                     onClick={() => {
                       if (aiProcessing) return;
@@ -152,7 +159,7 @@ export default function ChatBot() {
             setChatBotVisibility(true);
           }}
         >
-          <img src="/assets/images/chatbot.png" width={"100px"} />
+          <img src="/assets/images/chatbot.png" width={80} />
         </div>
       )}
     </div>

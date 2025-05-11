@@ -19,6 +19,14 @@ export default function Projects() {
         "An educational app that scrapes IRCTC PNR status in real-time using Puppeteer and OCR to bypass captchas.",
       languages: ["Node.js", "Puppeteer", "OCR", "JavaScript"],
     },
+    {
+      title: "Treshop",
+      thumbnail: "/assets/images/project/treshop.png",
+      accessUrl: "https://treshop.vercel.app",
+      description:
+        "A modern e-commerce platform built with React, featuring seamless single-page navigation, smart auto-correct search, a personalized AI chatbot, and secure in-built payments via Razorpay.",
+      languages: ["React", "JavaScript", "AI", "Chatbot", "Razorpay", "CSS"],
+    },
   ];
 
   return (

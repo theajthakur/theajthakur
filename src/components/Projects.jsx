@@ -4,6 +4,14 @@ import "./css/projects.css";
 export default function Projects() {
   const projects = [
     {
+      title: "Treshop",
+      thumbnail: "/assets/images/project/treshop.png",
+      accessUrl: "https://treshop.vercel.app",
+      description:
+        "A modern e-commerce platform built with React, featuring seamless single-page navigation, smart auto-correct search, a personalized AI chatbot, and secure in-built payments via Razorpay.",
+      languages: ["React", "JavaScript", "AI", "Chatbot", "Razorpay", "CSS"],
+    },
+    {
       title: "Notely",
       thumbnail: "/assets/images/project/diary.jpeg",
       accessUrl: "https://theajthakur.github.io/notely",
@@ -12,20 +20,20 @@ export default function Projects() {
       languages: ["ReactJS", "JavaScript", "LocalStorage"],
     },
     {
+      title: "QuickLookup",
+      thumbnail: "/assets/images/project/QuickLookup.png",
+      accessUrl: "https://galgotia.vercel.app",
+      description:
+        "A fast and intuitive React app for searching student details with live dropdown suggestions from a local JSON dataset. Displays full info on selection.",
+      languages: ["React", "JavaScript", "JSON", "CSS"],
+    },
+    {
       title: "Instant PNR",
       thumbnail: "/assets/images/project/pnr-fetcher.jpg",
       accessUrl: "https://theajthakur.github.io/PNR_Frontend",
       description:
         "An educational app that scrapes IRCTC PNR status in real-time using Puppeteer and OCR to bypass captchas.",
       languages: ["Node.js", "Puppeteer", "OCR", "JavaScript"],
-    },
-    {
-      title: "Treshop",
-      thumbnail: "/assets/images/project/treshop.png",
-      accessUrl: "https://treshop.vercel.app",
-      description:
-        "A modern e-commerce platform built with React, featuring seamless single-page navigation, smart auto-correct search, a personalized AI chatbot, and secure in-built payments via Razorpay.",
-      languages: ["React", "JavaScript", "AI", "Chatbot", "Razorpay", "CSS"],
     },
   ];
 

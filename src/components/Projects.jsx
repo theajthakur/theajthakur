@@ -1,7 +1,10 @@
-import React from "react";
+import useIntersectionObserver from "../utils/useIntersectionObserver";
 import "./css/projects.css";
 
 export default function Projects() {
+  const [divRef, isVisible] = useIntersectionObserver({
+    threshold: 0.1,
+  });
   const projects = [
     {
       title: "Treshop",
@@ -38,45 +41,56 @@ export default function Projects() {
   ];
 
   return (
-    <div className="container project-section animate__animated animate__fadeInUp mt-5">
-      <h2 className="text-center border-top py-3" id="projects">
-        Projects
-      </h2>
-
-      <div className="projects-cards">
-        <div className="row justify-content-center">
-          {projects.map((project, index) => (
-            <div
-              className="col-sm-6 col-md-4 col-lg-3 mb-5"
-              key={index}
-              onClick={() => {
-                window.open(project.accessUrl);
-              }}
-            >
-              <div className="project-container">
-                <div className="project-thumbnail">
-                  <img src={project.thumbnail} />
-                </div>
-                <div className="project-detail">
-                  <div className="project-title">
-                    <h4 className="py-2 m-0">{project.title}</h4>
+    <div
+      className={`container project-section mt-5 ${
+        isVisible ? "animate__animated animate__fadeInUp" : ""
+      }`}
+      ref={divRef}
+    >
+      {isVisible ? (
+        <>
+          {" "}
+          <h2 className="text-center border-top py-3" id="projects">
+            Projects
+          </h2>
+          <div className="projects-cards">
+            <div className="row justify-content-center">
+              {projects.map((project, index) => (
+                <div
+                  className="col-sm-6 col-md-4 col-lg-3 mb-5"
+                  key={index}
+                  onClick={() => {
+                    window.open(project.accessUrl);
+                  }}
+                >
+                  <div className="project-container">
+                    <div className="project-thumbnail">
+                      <img src={project.thumbnail} />
+                    </div>
+                    <div className="project-detail">
+                      <div className="project-title">
+                        <h4 className="py-2 m-0">{project.title}</h4>
+                      </div>
+                      <div className="project-description">
+                        <p>{project.description}</p>
+                      </div>
+                    </div>
+                    <div className="project-tags">
+                      {project.languages.map((lang, ind) => (
+                        <span className="project-tag" key={ind}>
+                          {lang}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="project-description">
-                    <p>{project.description}</p>
-                  </div>
                 </div>
-                <div className="project-tags">
-                  {project.languages.map((lang, ind) => (
-                    <span className="project-tag" key={ind}>
-                      {lang}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </>
+      ) : (
+        <div className="my-5 py-5"></div>
+      )}
     </div>
   );
 }

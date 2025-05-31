@@ -1,0 +1,16 @@
+.social-icons a {
+  font-size: 1.3rem;
+  color: inherit;
+}
+
+.social-icons a:hover {
+  color: #ff8100;
+}
+
+.footer-container p {
+  margin: 0;
+}
+
+.footer-container {
+  box-shadow: 0 -2px 10px #00000090;
+}

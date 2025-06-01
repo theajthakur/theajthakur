@@ -3,7 +3,7 @@ import "./css/projects.css";
 
 export default function Projects() {
   const [divRef, isVisible] = useIntersectionObserver({
-    threshold: 0.1,
+    threshold: 0.9,
   });
   const projects = [
     {
@@ -49,7 +49,6 @@ export default function Projects() {
     >
       {isVisible ? (
         <>
-          {" "}
           <h2 className="text-center border-top py-3" id="projects">
             Projects
           </h2>
@@ -89,7 +88,7 @@ export default function Projects() {
           </div>
         </>
       ) : (
-        <div className="my-5 py-5"></div>
+        <div style={{ height: 500 }}></div>
       )}
     </div>
   );

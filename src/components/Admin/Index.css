@@ -1,0 +1,13 @@
+.admin-window-handler {
+  display: flex;
+}
+
+.admin-window-handler .admin-window-handler__sidebar {
+  width: 375px;
+}
+
+.admin-window-handler .admin-window-handler__content {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+}

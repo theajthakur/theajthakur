@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function ContactPage() {
   useScript("https://www.google.com/recaptcha/api.js");
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY_PRODUCTION;
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const apiURL = import.meta.env.VITE_API_URL;
 
   const [formData, setFormData] = useState({
@@ -113,11 +113,11 @@ export default function ContactPage() {
               <div className="col-sm-6 text-center text-sm-end my-3">
                 <div className="hire-me-btn d-inline-flex animate__animated animate__fadeInUp animate__delay-1s">
                   <div>
-                    <a className="codepen-button">
+                    <button className="codepen-button">
                       <span>
                         <i className="bi bi-send"></i> Send
                       </span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   const { mode } = useMode();
+
   return (
     <div className={`app ${mode === "light" ? "light-mode" : "dark-mode"}`}>
       <Navbar />

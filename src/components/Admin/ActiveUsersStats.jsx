@@ -2,66 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Users, Link } from "lucide-react";
 
 export default function AnalyticsCards() {
-  const data = {
-    today: [
-      {
-        source: "(direct)",
-        medium: "(none)",
-        activeUsers: 1,
-      },
-      {
-        source: "(not set)",
-        medium: "(not set)",
-        activeUsers: 1,
-      },
-    ],
-    yesterday: [
-      {
-        source: "(direct)",
-        medium: "(none)",
-        activeUsers: 1,
-      },
-      {
-        source: "linkedin.com",
-        medium: "referral",
-        activeUsers: 1,
-      },
-    ],
-    thisWeek: [
-      {
-        source: "(direct)",
-        medium: "(none)",
-        activeUsers: 2,
-      },
-      {
-        source: "(not set)",
-        medium: "(not set)",
-        activeUsers: 1,
-      },
-      {
-        source: "linkedin.com",
-        medium: "referral",
-        activeUsers: 1,
-      },
-    ],
-    thisMonth: [
-      {
-        source: "(direct)",
-        medium: "(none)",
-        activeUsers: 7,
-      },
-      {
-        source: "(not set)",
-        medium: "(not set)",
-        activeUsers: 1,
-      },
-      {
-        source: "linkedin.com",
-        medium: "referral",
-        activeUsers: 1,
-      },
-    ],
-  };
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const apiURL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    fetch(`${apiURL}/admin/analytic`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className="text-center my-5">Loading...</div>;
+  if (error) return <div className="alert alert-danger my-5">{error}</div>;
+
   function renderItem(item, index) {
     return (
       <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">

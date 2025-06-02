@@ -5,6 +5,7 @@ export default function Navbar() {
   return (
     <div className="my-navbar">
       <nav
+        style={{ zIndex: 9 }}
         className={`navbar navbar-expand ${
           mode === "light" ? "navbar-light bg-light" : "navbar-dark bg-dark"
         }`}

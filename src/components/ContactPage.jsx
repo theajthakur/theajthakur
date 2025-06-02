@@ -4,8 +4,8 @@ import useScript from "../utils/useScript";
 import axios from "axios";
 
 export default function ContactPage() {
-  const status = useScript("https://www.google.com/recaptcha/api.js");
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  useScript("https://www.google.com/recaptcha/api.js");
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY_PRODUCTION;
   const apiURL = import.meta.env.VITE_API_URL;
 
   const [formData, setFormData] = useState({

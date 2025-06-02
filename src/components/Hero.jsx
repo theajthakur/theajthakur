@@ -59,7 +59,7 @@ export default function Hero() {
                   <p>💻 Let's build something amazing together! ✨</p>
                   <div className="hire-me-btn d-inline-flex my-3 animate__animated animate__fadeInUp animate__delay-1s">
                     <div>
-                      <a className="codepen-button">
+                      <a className="codepen-button" href="#contact">
                         <span>
                           <i className="bi bi-chevron-contract"></i> Contact Me
                         </span>

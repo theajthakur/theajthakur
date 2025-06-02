@@ -1,39 +1,86 @@
+import { useState } from "react";
+import { notyf } from "../utils/notyf";
 import useScript from "../utils/useScript";
+import axios from "axios";
 
 export default function ContactPage() {
   const status = useScript("https://www.google.com/recaptcha/api.js");
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-  const formHandler = (event) => {
+  const apiURL = import.meta.env.VITE_API_URL;
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const formHandler = async (event) => {
     event.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+
+    const { name, email, mobile, message } = formData;
 
     if (grecaptcha && grecaptcha.getResponse()) {
-      console.log("Form submitted:", {
-        name,
-        email,
-        message,
-        captcha: grecaptcha.getResponse(),
-      });
-      alert("Form submitted successfully!");
+      if (!name || !email || !mobile || !message) {
+        return notyf.error("Please fill out the form correctly");
+      }
+
+      try {
+        const response = await axios.post(`${apiURL}/feedback`, {
+          ...formData,
+          captcha: grecaptcha.getResponse(),
+        });
+        console.log("Feedback submitted:", response.data);
+        notyf.success("Form submitted successfully!");
+        setFormData({ name: "", email: "", mobile: "", message: "" });
+        grecaptcha.reset();
+      } catch (error) {
+        notyf.error("Form submission failed!");
+        console.error("Error submitting feedback:", error);
+      }
     } else {
-      alert("Please complete the reCAPTCHA.");
+      notyf.error("Please complete the reCAPTCHA.");
     }
   };
+
   return (
     <div className="container contact-page">
       <div className="row justify-content-center">
         <div className="col-md-8">
           <h2 className="text-center my-4">Contact Me</h2>
           <form onSubmit={formHandler}>
-            <div className="mb-3">
+            <div className="mb-3 animate__animated animate__fadeInLeft animate__delay-1s">
               <label htmlFor="name" className="form-label">
                 Name
               </label>
-              <input type="text" className="form-control" id="name" required />
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 animate__animated animate__fadeInRight animate__delay-1s">
+              <label htmlFor="mobile" className="form-label">
+                Mobile Number
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3 animate__animated animate__fadeInLeft animate__delay-1s">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
@@ -41,10 +88,12 @@ export default function ContactPage() {
                 type="email"
                 className="form-control"
                 id="email"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 animate__animated animate__fadeInRight animate__delay-1s">
               <label htmlFor="message" className="form-label">
                 Message
               </label>
@@ -52,22 +101,25 @@ export default function ContactPage() {
                 className="form-control"
                 id="message"
                 rows="5"
+                value={formData.message}
+                onChange={handleChange}
                 required
               ></textarea>
             </div>
             <div className="row">
-              <div className="col-sm-6 my-3">
-                {status === "ready" ? (
-                  <div className="g-recaptcha" data-sitekey={siteKey}></div>
-                ) : (
-                  <p>Loading reCAPTCHA...</p>
-                )}
+              <div className="col-sm-6 my-3 animate__animated animate__fadeInUp animate__delay-1s">
+                <div className="g-recaptcha" data-sitekey={siteKey}></div>
               </div>
               <div className="col-sm-6 text-center text-sm-end my-3">
-                <button type="submit" className="btn btn-primary">
-                  <span className="bi bi-send"></span>{" "}
-                  <span className="ms-1">Send</span>
-                </button>
+                <div className="hire-me-btn d-inline-flex animate__animated animate__fadeInUp animate__delay-1s">
+                  <div>
+                    <a className="codepen-button">
+                      <span>
+                        <i className="bi bi-send"></i> Send
+                      </span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </form>

@@ -6,10 +6,10 @@ export default function Footer() {
   const { mode } = useMode();
   const [divRef, isVisible] = useIntersectionObserver({ threshold: 0.9 });
   return (
-    <div ref={divRef}>
+    <div ref={divRef} id="contact">
       {isVisible ? (
         <div
-          className={`footer-container animate__animated animate__rotateInDownLeft p-sm-5 p-3 ${
+          className={`footer-container animate__animated animate__zoomInUp p-sm-5 p-3 ${
             mode === "light" ? "bg-light text-dark" : "bg-dark text-light"
           }`}
         >

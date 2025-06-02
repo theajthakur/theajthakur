@@ -53,10 +53,12 @@ export default function Projects() {
             Projects
           </h2>
           <div className="projects-cards">
-            <div className="row justify-content-center">
+            <div className="row justify-content-center  animate__animated animate__fadeIn animate__delay-1s">
               {projects.map((project, index) => (
                 <div
-                  className="col-sm-6 col-md-4 col-lg-3 mb-5"
+                  className={`col-sm-6 col-md-4 col-lg-3 mb-5 animate__animated ${
+                    index % 2 ? "animate__fadeInUp" : "animate__fadeInDown"
+                  } animate__delay-1s`}
                   key={index}
                   onClick={() => {
                     window.open(project.accessUrl);

@@ -11,3 +11,13 @@
   height: 100vh;
   overflow-y: scroll;
 }
+
+@media screen and (max-width: 800px) {
+  .admin-window-handler {
+    display: block;
+  }
+
+  .admin-window-handler .admin-window-handler__sidebar {
+    width: 100%;
+  }
+}

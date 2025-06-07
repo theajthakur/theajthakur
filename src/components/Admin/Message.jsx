@@ -39,6 +39,8 @@ export default function FeedbackAdmin() {
       });
 
       if (!res.ok) throw new Error("Failed to delete message");
+      const data = await res.json();
+      notyf[data.status](data.message);
 
       setMessages((prev) => prev.filter((msg) => msg._id !== id));
       if (replyingTo === id) {
@@ -97,7 +99,7 @@ export default function FeedbackAdmin() {
       </h3>
       <div className="row">
         {messages.map((msg) => (
-          <div key={msg._id} className="col-xl-4 col-lg-6">
+          <div key={msg._id} className="col-xl-4 col-lg-6 my-2">
             <div className="card shadow-sm h-100 d-flex flex-column">
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title text-primary">{msg.name}</h5>

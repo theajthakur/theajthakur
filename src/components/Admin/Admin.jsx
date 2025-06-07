@@ -13,7 +13,7 @@ export default function Admin() {
       {isLoggedIn ? (
         <div className="admin-window-handler">
           <div className="admin-window-handler__sidebar">
-            <Sidebar />
+            <Sidebar setIsLoggedIn={setIsLoggedIn} />
           </div>
           <div className="admin-window-handler__content">
             <Routes>

@@ -1,8 +1,9 @@
 import { LayoutDashboard, LogOut, MessageCircle } from "lucide-react";
 import "./sidebar.css";
 import { Link } from "react-router-dom";
+import { notyf } from "../../utils/notyf";
 
-export default function Sidebar() {
+export default function Sidebar({ setIsLoggedIn }) {
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
@@ -28,13 +29,19 @@ export default function Sidebar() {
               <span className="text">Messages</span>
             </Link>
           </li>
-          <li>
-            <Link to="/">
-              <span className="icon">
-                <LogOut />
-              </span>
-              <span className="text">Logout</span>
-            </Link>
+          <li
+            onClick={() => {
+              localStorage.removeItem("portfolio_admin_token");
+              notyf.success("Logged Out!");
+              setTimeout(() => {
+                setIsLoggedIn(false);
+              }, 1000);
+            }}
+          >
+            <span className="icon">
+              <LogOut />
+            </span>
+            <span className="text">Logout</span>
           </li>
         </ul>
       </div>

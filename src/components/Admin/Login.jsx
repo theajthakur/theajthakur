@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Home } from "lucide-react";
 import { notyf } from "../../utils/notyf";
+import { Link } from "react-router-dom";
 
 const CenteredPasswordInput = ({ setIsLoggedIn }) => {
   const [visible, setVisible] = useState(false);
@@ -45,7 +46,7 @@ const CenteredPasswordInput = ({ setIsLoggedIn }) => {
         localStorage.setItem("portfolio_admin_token", data.token);
         notyf[data.status](data.message);
         if (data.status === "success") {
-          setTimeout(() => setIsLoggedIn(true), 3000);
+          setTimeout(() => setIsLoggedIn(true), 1000);
         }
       })
       .catch((err) => {
@@ -56,6 +57,11 @@ const CenteredPasswordInput = ({ setIsLoggedIn }) => {
   return (
     <div className="d-flex vh-100 justify-content-center align-items-center">
       <form onSubmit={attemptLogin}>
+        <div className="d-flex align-items-center pb-3 mb-3 border-bottom">
+          <Link to={"/"}>
+            <Home /> <span className="ms-1">Back to Home</span>
+          </Link>
+        </div>
         <div className="position-relative" style={{ width: "300px" }}>
           <input
             type={visible ? "text" : "password"}

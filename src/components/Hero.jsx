@@ -1,5 +1,5 @@
-import React from "react";
 import "./css/hero.css";
+
 export default function Hero() {
   const socialMedia = [
     {

@@ -9,7 +9,6 @@ const useScript = (src) => {
       return;
     }
 
-    // Check if script already exists
     let script = document.querySelector(`script[src="${src}"]`);
 
     if (!script) {

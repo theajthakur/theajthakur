@@ -7,6 +7,22 @@ export default function Projects() {
   });
   const projects = [
     {
+      title: "SynTalk",
+      thumbnail: "/assets/images/project/syntalk.png",
+      accessUrl: "https://syntalk.vercel.app",
+      description:
+        "An AI-powered real-time chat application built using the MERN stack and WebSockets. SynTalk features mood-aware AI summaries, Google OAuth login, room-based chat with QR code access, and dynamic visual feedback based on conversation behavior.",
+      languages: [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Socket.io",
+        "AI",
+        "OAuth",
+        "QR Code",
+      ],
+    },
+    {
       title: "Treshop",
       thumbnail: "/assets/images/project/treshop.png",
       accessUrl: "https://treshop.vercel.app",
@@ -56,7 +72,7 @@ export default function Projects() {
             <div className="row justify-content-center  animate__animated animate__fadeIn animate__delay-1s">
               {projects.map((project, index) => (
                 <div
-                  className={`col-sm-6 col-md-4 col-lg-3 mb-5 animate__animated ${
+                  className={`col-sm-12 col-md-6 col-lg-4 mb-5 animate__animated ${
                     index % 2 ? "animate__fadeInUp" : "animate__fadeInDown"
                   } animate__delay-1s`}
                   key={index}

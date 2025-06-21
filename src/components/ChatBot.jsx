@@ -1,19 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./css/chatbot.css";
 import CharmingStars from "./CharmingStars";
 import ChatResponse from "./ChatResponse";
 
 export default function ChatBot() {
   const chatBoxRef = useRef(null);
+  const inputRef = useRef(null);
   const apiURL = import.meta.env.VITE_API_URL;
-  const submitMessageRef = useRef(null);
   const [chatBotVisibility, setChatBotVisibility] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [aiProcessing, setAiProcessing] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [chats, setChats] = useState([
     { message: "How can I help you?", from: "ai" },
   ]);
+  const placeCaretAtEnd = (el) => {
+    if (!el) return;
+
+    const range = document.createRange();
+    const sel = window.getSelection();
+
+    range.selectNodeContents(el);
+    range.collapse(false); // false = move to end
+
+    sel.removeAllRanges();
+    sel.addRange(range);
+  };
+
+  const handleInput = () => {
+    setUserMessage(inputRef.current.innerText);
+    placeCaretAtEnd(inputRef.current);
+  };
   const API_URL = `${apiURL}/api/chatbot/portfolio`;
 
   const generateAiMessage = async (query) => {
@@ -36,6 +52,16 @@ export default function ChatBot() {
       setAiProcessing(false);
     }
   };
+
+  const handleSendQuery = () => {
+    if (aiProcessing) return;
+    if (!userMessage) return;
+    setUserMessage("");
+    setChats((prevChats) => {
+      return [...prevChats, { message: userMessage, from: "user" }];
+    });
+    generateAiMessage(userMessage);
+  };
   useEffect(() => {
     const chatBox = chatBoxRef.current;
     if (chatBox) {
@@ -45,44 +71,32 @@ export default function ChatBot() {
   return (
     <div
       className={`chatbot-container ${chatBotVisibility ? "only-chat" : ""}`}
+      style={{
+        bottom: chatBotVisibility ? 0 : 20,
+        right: chatBotVisibility ? 10 : 50,
+      }}
     >
       {chatBotVisibility ? (
-        <div className="chatbot-box">
+        <div className="chatbot-box card">
           <div className="chatbot-inner">
             <div className="chatbot-header">
               <div className="chatbot-flex">
                 <div className="ai-image-container">
-                  <img src="/vite.svg" alt="ai-image" />
+                  <img src="/favicon.png" alt="ai-image" />
                 </div>
                 <div className="ai-name-container">
-                  <h4 className="m-0">UNI AI</h4>
+                  <h3 className="m-0">
+                    <b>VJBot</b>
+                  </h3>
                 </div>
                 <div className="ai-head-option">
                   <div className="main-icon">
                     <span
-                      className={`bi ${
-                        showSettings ? "bi-x" : "bi-three-dots-vertical"
-                      }`}
+                      className="bi bi-x"
                       onClick={() => {
-                        setShowSettings(!showSettings);
+                        setChatBotVisibility(false);
                       }}
                     ></span>
-                    {showSettings ? (
-                      <div className="chatbot-settings">
-                        <ul>
-                          <li
-                            onClick={() => {
-                              setShowSettings(false);
-                              setChatBotVisibility(false);
-                            }}
-                          >
-                            Exit
-                          </li>
-                        </ul>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 </div>
               </div>
@@ -112,38 +126,22 @@ export default function ChatBot() {
               )}
             </div>
             <div className="chatbot-footer">
-              <div className="chatbot-flex">
-                <div className="input-container">
-                  <input
-                    type="text"
-                    placeholder="Your Skills?"
-                    className="ai-prompt-input"
-                    value={userMessage}
-                    onChange={(event) => {
-                      setUserMessage(event.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key != "Enter") return;
-                      submitMessageRef.current?.click();
-                    }}
-                  />
+              <div className="chatbot-footer-items">
+                <div
+                  className="ai-input"
+                  contentEditable={true}
+                  ref={inputRef}
+                  onInput={handleInput}
+                  onBlur={handleInput}
+                  suppressContentEditableWarning={true}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSendQuery();
+                  }}
+                >
+                  {userMessage}
                 </div>
-                <div className="input-submit-container">
-                  <button
-                    ref={submitMessageRef}
-                    className="ai-prompt-submit"
-                    onClick={() => {
-                      if (aiProcessing) return;
-                      setUserMessage("");
-                      setChats((prevChats) => {
-                        return [
-                          ...prevChats,
-                          { message: userMessage, from: "user" },
-                        ];
-                      });
-                      generateAiMessage(userMessage);
-                    }}
-                  >
+                <div className="ai-controller">
+                  <button className="ai-send-btn" onClick={handleSendQuery}>
                     <span className="bi bi-send"></span>
                   </button>
                 </div>

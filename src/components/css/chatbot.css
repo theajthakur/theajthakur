@@ -190,3 +190,9 @@
   background: transparent;
   color: black;
 }
+
+.ai-input:empty::before {
+  content: "Type your message...";
+  color: #888888;
+  pointer-events: none;
+}

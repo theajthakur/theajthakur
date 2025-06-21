@@ -68,6 +68,14 @@ export default function ChatBot() {
       chatBox.scrollTop = chatBox.scrollHeight;
     }
   }, [chats]);
+
+  useEffect(() => {
+    if (!chatBotVisibility) {
+      document.body.style = "overflow:auto";
+    } else {
+      document.body.style = "overflow:hidden";
+    }
+  }, [chatBotVisibility]);
   return (
     <div
       className={`chatbot-container ${chatBotVisibility ? "only-chat" : ""}`}

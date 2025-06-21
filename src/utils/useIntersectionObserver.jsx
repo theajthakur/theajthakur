@@ -16,6 +16,10 @@ export default function useIntersectionObserver({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          document.body.style.overflow = "hidden";
+          setTimeout(() => {
+            document.body.style.overflow = "auto";
+          }, 2000);
           if (triggerOnce) observer.unobserve(ref.current);
         } else if (!triggerOnce) {
           setIsVisible(false);

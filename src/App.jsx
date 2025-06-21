@@ -36,7 +36,7 @@ export default function App() {
                 <Hero />
                 <SkillCarousel />
                 <Projects />
-                {/* <ChatBot /> */}
+                <ChatBot />
                 <Footer />
               </div>
             </>

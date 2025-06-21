@@ -5,6 +5,7 @@ import ChatResponse from "./ChatResponse";
 
 export default function ChatBot() {
   const chatBoxRef = useRef(null);
+  const apiURL = import.meta.env.VITE_API_URL;
   const submitMessageRef = useRef(null);
   const [chatBotVisibility, setChatBotVisibility] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -13,9 +14,7 @@ export default function ChatBot() {
   const [chats, setChats] = useState([
     { message: "How can I help you?", from: "ai" },
   ]);
-  const handleMessageSend = () => {};
-  const API_URL = "https://treshop-backend.onrender.com/portfolio/chat";
-  // const API_URL = "http://localhost:5000/portfolio/chat";
+  const API_URL = `${apiURL}/api/chatbot/portfolio`;
 
   const generateAiMessage = async (query) => {
     setAiProcessing(true);

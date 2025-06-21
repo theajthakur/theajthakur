@@ -30,7 +30,7 @@ export default function ChatBot() {
     setUserMessage(inputRef.current.innerText);
     placeCaretAtEnd(inputRef.current);
   };
-  const API_URL = `${apiURL}/api/chatbot/portfolio`;
+  const API_URL = `${apiURL}/chatbot`;
 
   const generateAiMessage = async (query) => {
     setAiProcessing(true);

@@ -7,6 +7,7 @@ export default function ContactPage() {
   useScript("https://www.google.com/recaptcha/api.js");
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const apiURL = import.meta.env.VITE_API_URL;
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,11 +23,14 @@ export default function ContactPage() {
 
   const formHandler = async (event) => {
     event.preventDefault();
+    if (isLoading) return notyf.error("Please wait....");
+    setIsLoading(true);
 
     const { name, email, mobile, message } = formData;
 
     if (grecaptcha && grecaptcha.getResponse()) {
       if (!name || !email || !mobile || !message) {
+        setIsLoading(false);
         return notyf.error("Please fill out the form correctly");
       }
 
@@ -46,6 +50,7 @@ export default function ContactPage() {
     } else {
       notyf.error("Please complete the reCAPTCHA.");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -113,9 +118,10 @@ export default function ContactPage() {
               <div className="col-sm-6 text-center text-sm-end my-3">
                 <div className="hire-me-btn d-inline-flex animate__animated animate__fadeInUp animate__delay-1s">
                   <div>
-                    <button className="codepen-button">
+                    <button className="codepen-button" disabled={isLoading}>
                       <span>
-                        <i className="bi bi-send"></i> Send
+                        <i className="bi bi-send"></i>{" "}
+                        {isLoading ? "Sending" : "Send"}
                       </span>
                     </button>
                   </div>

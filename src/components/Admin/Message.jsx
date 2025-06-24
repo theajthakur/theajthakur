@@ -109,6 +109,11 @@ export default function FeedbackAdmin() {
                   {new Date(msg.createdAt).toLocaleString()}
                 </small>
                 <p className="card-text text-truncate">{msg.message}</p>
+                {msg.reply && (
+                  <div className="p-2 bg-light mb-3 text-secondary">
+                    {msg.reply}
+                  </div>
+                )}
                 <div className="mt-auto d-flex justify-content-between">
                   <button
                     className="btn btn-sm btn-outline-primary"
@@ -119,17 +124,19 @@ export default function FeedbackAdmin() {
                     <Eye size={16} className="me-1" />
                     View
                   </button>
-                  <button
-                    className={`btn btn-sm ${
-                      replyingTo === msg._id
-                        ? "btn-success"
-                        : "btn-outline-success"
-                    }`}
-                    onClick={() => handleReplyClick(msg._id)}
-                  >
-                    <Reply size={16} className="me-1" />
-                    Reply
-                  </button>
+                  {!msg.reply && (
+                    <button
+                      className={`btn btn-sm ${
+                        replyingTo === msg._id
+                          ? "btn-success"
+                          : "btn-outline-success"
+                      }`}
+                      onClick={() => handleReplyClick(msg._id)}
+                    >
+                      <Reply size={16} className="me-1" />
+                      Reply
+                    </button>
+                  )}
                   <button
                     className="btn btn-sm btn-outline-danger"
                     onClick={() => handleDelete(msg._id)}

@@ -13,55 +13,91 @@ export default function ChatBot() {
   const [chats, setChats] = useState([
     { message: "How can I help you?", from: "ai" },
   ]);
-  const placeCaretAtEnd = (el) => {
-    if (!el) return;
+  const [response, setResponse] = useState("");
 
-    const range = document.createRange();
+  const saveCaretPosition = (el) => {
     const sel = window.getSelection();
+    if (!sel.rangeCount) return null;
+    return sel.getRangeAt(0).cloneRange(); // clone is important
+  };
 
-    range.selectNodeContents(el);
-    range.collapse(false); // false = move to end
-
+  const restoreCaretPosition = (el, range) => {
+    const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
   };
 
-  const handleInput = () => {
-    setUserMessage(inputRef.current.innerText);
-    placeCaretAtEnd(inputRef.current);
+  const handleInput = (e) => {
+    const el = e.target;
+    const caret = saveCaretPosition(el);
+
+    setUserMessage(el.innerText); // update React state
+
+    // Let React finish DOM updates first, then restore caret
+    requestAnimationFrame(() => {
+      if (caret) restoreCaretPosition(el, caret);
+    });
   };
+
   const API_URL = `${apiURL}/chatbot`;
 
   const generateAiMessage = async (query) => {
     setAiProcessing(true);
     try {
-      const response = await fetch(API_URL, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, lastResponse: response }),
       });
-      const data = await response.json();
+
+      const data = await res.json();
       setAiProcessing(false);
-      setChats((prevChats) => {
-        return [...prevChats, { message: data.reply, from: "ai" }];
-      });
+
+      if (
+        data &&
+        data.reply &&
+        typeof data.reply === "string" &&
+        data.reply.trim() !== ""
+      ) {
+        setResponse(data.reply);
+        setChats((prevChats) => [
+          ...prevChats,
+          { message: data.reply, from: "ai" },
+        ]);
+      } else {
+        console.warn("No valid AI response received.");
+        setChats((prevChats) => [
+          ...prevChats,
+          {
+            message:
+              "Something went wrong, Please contact 'Vijay' by <a target='_blank' href='https://wa.me/+919695146906'>Whatsapp</a> or <a href='mailto://vijaysingh.handler@gmail.com' target='_blank'>Mail</a>",
+            from: "ai",
+          },
+        ]);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("AI fetch error:", error);
       setAiProcessing(false);
     }
   };
 
   const handleSendQuery = () => {
+    setTimeout(() => {
+      inputRef.current.innerText = "";
+    }, 100);
     if (aiProcessing) return;
-    if (!userMessage) return;
+    if (!userMessage.trim()) return;
+
+    const msg = userMessage;
     setUserMessage("");
-    setChats((prevChats) => {
-      return [...prevChats, { message: userMessage, from: "user" }];
-    });
-    generateAiMessage(userMessage);
+
+    setChats((prevChats) => [...prevChats, { message: msg, from: "user" }]);
+
+    generateAiMessage(msg);
   };
+
   useEffect(() => {
     const chatBox = chatBoxRef.current;
     if (chatBox) {
@@ -117,7 +153,7 @@ export default function ChatBot() {
                       chat.from == "ai" ? "chat-ai" : "chat-user"
                     }`}
                   >
-                    <ChatResponse response={chat.message} />
+                    <ChatResponse response={chat?.message} />
                   </div>
                 </div>
               ))}
@@ -137,17 +173,15 @@ export default function ChatBot() {
               <div className="chatbot-footer-items">
                 <div
                   className="ai-input"
-                  contentEditable={true}
+                  contentEditable
                   ref={inputRef}
-                  onInput={handleInput}
-                  onBlur={handleInput}
-                  suppressContentEditableWarning={true}
+                  onInput={(e) => setUserMessage(e.currentTarget.innerText)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSendQuery();
+                    if (e.key === "Enter") return handleSendQuery();
                   }}
-                >
-                  {userMessage}
-                </div>
+                  suppressContentEditableWarning
+                />
+
                 <div className="ai-controller">
                   <button className="ai-send-btn" onClick={handleSendQuery}>
                     <span className="bi bi-send"></span>

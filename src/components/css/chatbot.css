@@ -3,6 +3,11 @@
   z-index: 99;
 }
 
+.chatbot-container a {
+  color: cyan;
+  font-weight: 700;
+}
+
 .chatbot-container .chatbot-box {
   height: 700px;
   width: 500px;

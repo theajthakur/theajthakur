@@ -1,17 +1,22 @@
 import React from "react";
 
 const ChatResponse = ({ response }) => {
-  const cleanHTML = response
-    .replace(/^```html\n/, "")
-    .replace(/\n```$/, "")
-    .replace("```", "");
+  try {
+    const cleanHTML = response
+      .replace(/^```html\n/, "")
+      .replace(/\n```$/, "")
+      .replace("```", "");
 
-  return (
-    <div
-      className="chat-reply"
-      dangerouslySetInnerHTML={{ __html: cleanHTML }}
-    />
-  );
+    return (
+      <div
+        className="chat-reply"
+        dangerouslySetInnerHTML={{ __html: cleanHTML }}
+      />
+    );
+  } catch (error) {
+    console.log(error.message || error);
+    return "Something went wrong";
+  }
 };
 
 export default ChatResponse;

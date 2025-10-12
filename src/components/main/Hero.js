@@ -18,14 +18,14 @@ export default function Hero() {
       className="flex flex-col justify-center md:flex-row gap-10 w-full min-h-[80vh]"
     >
       <div className="w-full md:w-md flex items-center justify-center font-primary">
-        <div className="text-black relative z-50 p-[20px]">
+        <div className="text-high relative z-50 p-[20px]">
           <div className="relative left-[-20px] top-2">
             <div className="flex">
               <div className="w-1 h-4 bg-secondary"></div>
               <div className="w-4 h-1 bg-secondary"></div>
             </div>
           </div>
-          <h5 className="text-dark text-2xl">Hi There,</h5>
+          <h5 className="text-primary text-2xl">Hi There,</h5>
           <h2 className="text-3xl">
             I’m a <span className="text-primary">Full Stack</span> Web Developer
           </h2>

@@ -15,7 +15,7 @@ export default function Hero() {
     <motion.div
       initial={{ y: 10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex flex-col justify-center md:flex-row gap-10 w-full min-h-[80vh] px-4 md:px-40"
+      className="flex flex-col justify-center md:flex-row gap-10 w-full min-h-[80vh]"
     >
       <div className="w-full md:w-md flex items-center justify-center font-primary">
         <div className="text-black relative z-50 p-[20px]">

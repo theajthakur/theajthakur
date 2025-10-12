@@ -13,6 +13,7 @@
   --color-secondary: #00e5ff;
   --font-primary: var(--font-alata);
   --font-secondary: var(--font-agdasima);
+  --font-heading: var(--font-aldrich);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -25,4 +26,17 @@
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-aldrich);
+}
+
+p {
+  font-family: var(--foreground);
 }

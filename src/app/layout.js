@@ -1,4 +1,4 @@
-import { Alata, Agdasima } from "next/font/google";
+import { Alata, Agdasima, Aldrich } from "next/font/google";
 
 import "./globals.css";
 import LayoutProvider from "@/components/providers/LayoutProvider";
@@ -15,6 +15,12 @@ const agdasima = Agdasima({
   weight: "400",
 });
 
+const aldrich = Aldrich({
+  subsets: ["latin"],
+  variable: "--font-aldrich",
+  weight: "400",
+});
+
 export const metadata = {
   title: "VIJAY THAKUR - FULL STACK WEB DEVELOPER",
   description:
@@ -25,7 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${alata.variable} ${agdasima.variable} antialiased font-primary`}
+        className={`${alata.variable} ${agdasima.variable} ${aldrich.variable} antialiased font-primary`}
       >
         <LayoutProvider>{children}</LayoutProvider>
       </body>

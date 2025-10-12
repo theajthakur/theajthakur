@@ -14,7 +14,7 @@ export default function Navbar() {
     <motion.div
       initial={{ y: -10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex w-full justify-center items-center h-[100px] top-0 px-3 md:px-40"
+      className="flex w-full justify-center items-center h-[100px] top-0"
     >
       <div className="flex justify-center md:justify-start w-full gap-1 md:gap-4 p-1 rounded-xl text-xl">
         {links.map((e, i) => (

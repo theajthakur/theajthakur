@@ -9,9 +9,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: #008b9b;
+  --color-dark: #003a41;
   --color-secondary: #00e5ff;
-  --font-sans: var(--font-alata);
-  --font-mono: var(--font-agdasima);
+  --font-primary: var(--font-alata);
+  --font-secondary: var(--font-agdasima);
 }
 
 /* @media (prefers-color-scheme: dark) {

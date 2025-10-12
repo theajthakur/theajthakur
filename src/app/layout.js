@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${alata.variable} ${agdasima.variable} antialiased font-sans`}
+        className={`${alata.variable} ${agdasima.variable} antialiased font-primary`}
       >
         <LayoutProvider>{children}</LayoutProvider>
       </body>

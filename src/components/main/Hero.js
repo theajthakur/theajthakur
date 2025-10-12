@@ -1,12 +1,30 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import Button from "../ui/Button";
+import { motion } from "framer-motion";
+import { Github, Instagram, Linkedin } from "lucide-react";
 
 export default function Hero() {
+  const social = [
+    { icon: <Github />, link: "https://github.com/theajthakur" },
+    { icon: <Linkedin />, link: "https://linkedin.com/in/theajthakur" },
+    { icon: <Instagram />, link: "https://instagram.com/aj_thakur_rock" },
+  ];
   return (
-    <div className="flex flex-col justify-center md:flex-row gap-10 w-full min-h-[80vh] px-4 md:px-40">
+    <motion.div
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="flex flex-col justify-center md:flex-row gap-10 w-full min-h-[80vh] px-4 md:px-40"
+    >
       <div className="w-full md:w-md flex items-center justify-center font-primary">
-        <div className="text-black relative z-50">
+        <div className="text-black relative z-50 p-[20px]">
+          <div className="relative left-[-20px] top-2">
+            <div className="flex">
+              <div className="w-1 h-4 bg-secondary"></div>
+              <div className="w-4 h-1 bg-secondary"></div>
+            </div>
+          </div>
           <h5 className="text-dark text-2xl">Hi There,</h5>
           <h2 className="text-3xl">
             I’m a <span className="text-primary">Full Stack</span> Web Developer
@@ -17,9 +35,33 @@ export default function Hero() {
             technologies. I design and develop complete solutions — from
             intuitive interfaces to efficient backend systems.
           </p>
-          <div className="my-5">
-            <Button>HIRE ME</Button>
+          <div className="flex flex-col items-end gap-0">
+            <div className="w-1 h-4 bg-secondary"></div>
+            <div className="w-4 h-1 bg-secondary"></div>
           </div>
+          <div className="flex md:hidden gap-2 items-center">
+            {social.map((e, i) => {
+              return (
+                <div
+                  key={i}
+                  className="p-1 rounded-full hover:text-primary cursor-pointer"
+                  onClick={() => {
+                    window.open(e.link);
+                  }}
+                >
+                  {e.icon}
+                </div>
+              );
+            })}
+          </div>
+          <motion.div
+            initial={{ x: 30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="my-5"
+          >
+            <Button className="w-full md:w-auto cursor-pointer">HIRE ME</Button>
+          </motion.div>
         </div>
       </div>
       <div className="flex md:p-10 justify-center md:justify-end items-center">
@@ -30,6 +72,6 @@ export default function Hero() {
           alt="brush-vijay"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -4,7 +4,7 @@ import React from "react";
 export default function Footer() {
   return (
     <footer className="mt-10 text-foreground py-10 px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
           <h2 className="text-primary text-lg font-semibold mb-3">
             Vijay Singh
@@ -37,15 +37,6 @@ export default function Footer() {
                 Contact
               </a>
             </li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-primary font-semibold mb-3">Services</h3>
-          <ul className="space-y-2 text-sm">
-            <li>Web Development</li>
-            <li>UI/UX Design</li>
-            <li>API Integration</li>
-            <li>Freelance Consulting</li>
           </ul>
         </div>
         <div>

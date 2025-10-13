@@ -20,7 +20,7 @@ export default function Navbar() {
         {links.map((e, i) => (
           <div
             key={i}
-            className="cursor-pointer font-secondary hover:bg-[#00000008] hover:text-black py-2 px-3 rounded-xl"
+            className="cursor-pointer font-secondary hover:bg-[#00000008] hover:text-primary py-2 px-3 rounded-xl"
           >
             {e}
           </div>

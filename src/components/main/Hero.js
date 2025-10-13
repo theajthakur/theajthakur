@@ -1,16 +1,34 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Button from "../ui/Button";
 import { motion } from "framer-motion";
-import { Github, Instagram, Linkedin } from "lucide-react";
+import {
+  Github,
+  Instagram,
+  LaptopMinimalCheckIcon,
+  Linkedin,
+} from "lucide-react";
+import gsap from "gsap";
+import { Boxes } from "../ui/background-boxes";
 
 export default function Hero() {
+  const nameRef = useRef(null);
   const social = [
     { icon: <Github />, link: "https://github.com/theajthakur" },
     { icon: <Linkedin />, link: "https://linkedin.com/in/theajthakur" },
     { icon: <Instagram />, link: "https://instagram.com/aj_thakur_rock" },
   ];
+  useEffect(() => {
+    if (!nameRef.current) return;
+    console.log(nameRef.current.children);
+    gsap.from(nameRef.current.children, {
+      duration: 0.5,
+      stagger: 0.1,
+      x: 50,
+      opacity: 0,
+    });
+  }, []);
   return (
     <motion.div
       initial={{ y: 10, opacity: 0 }}
@@ -29,7 +47,13 @@ export default function Hero() {
           <h2 className="text-3xl">
             I’m a <span className="text-primary">Full Stack</span> Web Developer
           </h2>
-          <h1 className="text-5xl text-primary py-3">VIJAY SINGH</h1>
+          <div className="text-5xl text-primary py-3 flex" ref={nameRef}>
+            {"VIJAY SINGH".split("").map((e, i) => (
+              <div className="relative" key={i}>
+                {e == " " ? <span className="px-2"></span> : e}
+              </div>
+            ))}
+          </div>
           <p className="text-foreground">
             Full Stack Web Developer with strong expertise in modern web
             technologies. I design and develop complete solutions — from
@@ -60,7 +84,9 @@ export default function Hero() {
             transition={{ delay: 0.5 }}
             className="my-5"
           >
-            <Button className="w-full md:w-auto cursor-pointer">HIRE ME</Button>
+            <Button className="w-full md:w-auto cursor-pointer flex gap-2">
+              <LaptopMinimalCheckIcon /> <span>HIRE ME</span>
+            </Button>
           </motion.div>
         </div>
       </div>

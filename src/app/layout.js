@@ -23,9 +23,50 @@ const aldrich = Aldrich({
 });
 
 export const metadata = {
-  title: "VIJAY THAKUR - FULL STACK WEB DEVELOPER",
+  title: "Vijay Thakur | Full Stack Web Developer in India",
   description:
-    "Vijay Singh is an expert full stack web developer having expertise in MERN STACK. ",
+    "Vijay Thakur is a professional Full Stack Web Developer based in India, specializing in the MERN Stack. Available for web development projects in Greater Noida, Delhi NCR, Orai, and Jalaun. Expert in creating responsive, modern, and high-performance web applications.",
+  keywords: [
+    "Full Stack Developer in India",
+    "Full Stack Developer in Delhi",
+    "Full Stack Developer in Greater Noida",
+    "Full Stack Developer in NCR",
+    "Full Stack Developer in Jalaun",
+    "Full Stack Developer in Orai",
+    "Web Developer near me",
+    "MERN Stack Developer",
+    "React Developer",
+    "Node.js Developer",
+    "Freelance Web Developer India",
+    "Vijay Thakur Web Developer",
+    "Vijay Singh Thakur Portfolio",
+  ],
+  authors: [{ name: "Vijay Thakur" }],
+  openGraph: {
+    title:
+      "Vijay Thakur | Full Stack Web Developer (MERN Stack Expert) in India",
+    description:
+      "Hire Vijay Thakur — a Full Stack Web Developer in India with MERN Stack expertise. Available for freelance projects in Greater Noida, Delhi NCR, Orai, and Jalaun.",
+    url: "https://dev.vijstack.com",
+    siteName: "Vijay Thakur Portfolio",
+    images: [
+      {
+        url: "https://dev.vijstack.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Vijay Thakur - Full Stack Developer Portfolio",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vijay Thakur | Full Stack Developer in India",
+    description:
+      "Experienced Full Stack Web Developer (MERN Stack) in India — available for freelance and remote projects across Delhi NCR, Greater Noida, and more.",
+    images: ["https://dev.vijstack.com/og-image.png"],
+  },
 };
 
 export default function RootLayout({ children }) {

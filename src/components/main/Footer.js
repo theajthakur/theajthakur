@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
@@ -25,9 +26,9 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             {links.map((l, i) => (
               <li key={i}>
-                <a href={l.link} className="hover:text-primary transition">
+                <Link href={l.link} className="hover:text-primary transition">
                   {l.text}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

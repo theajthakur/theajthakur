@@ -8,7 +8,7 @@ export default function About() {
           About <span className="text-primary">Me</span>
         </h2>
         <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          I’m a passionate full-stack web developer who loves crafting clean,
+          I’m a Self Learned full-stack web developer who loves crafting clean,
           responsive, and scalable web applications. My focus is on delivering
           seamless digital experiences that combine performance and design.
           Whether it’s a simple landing page or a complex MERN-based platform, I

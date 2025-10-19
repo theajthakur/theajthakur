@@ -2,6 +2,7 @@ import { Alata, Agdasima, Aldrich } from "next/font/google";
 
 import "./globals.css";
 import LayoutProvider from "@/components/providers/LayoutProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const alata = Alata({
   subsets: ["latin"],

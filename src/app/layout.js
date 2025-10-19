@@ -67,6 +67,9 @@ export const metadata = {
       "Experienced Full Stack Web Developer (MERN Stack) in India — available for freelance and remote projects across Delhi NCR, Greater Noida, and more.",
     images: ["https://dev.vijstack.com/og-image.png"],
   },
+  alternates: {
+    canonical: "https://dev.vijstack.com",
+  },
 };
 
 export default function RootLayout({ children }) {

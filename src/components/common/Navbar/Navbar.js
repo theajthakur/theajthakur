@@ -1,10 +1,33 @@
 "use client";
 import { motion } from "framer-motion";
 import { Github, Instagram, Linkedin } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 export default function Navbar() {
-  const links = ["Home", "Skills", "About", "Projects", "Contact"];
+  const links = [
+    {
+      text: "Home",
+      link: "/",
+    },
+    {
+      text: "Skills",
+      link: "/p/skills",
+    },
+    {
+      text: "About",
+      link: "/p/about",
+    },
+    {
+      text: "Projects",
+      link: "/p/projects",
+    },
+    {
+      text: "Contact",
+      link: "/p/contact",
+    },
+  ];
+
   const social = [
     { icon: <Github />, link: "https://github.com/theajthakur" },
     { icon: <Linkedin />, link: "https://linkedin.com/in/theajthakur" },
@@ -18,12 +41,11 @@ export default function Navbar() {
     >
       <div className="flex justify-center md:justify-start w-full gap-1 md:gap-4 p-1 rounded-xl text-xl">
         {links.map((e, i) => (
-          <div
-            key={i}
-            className="cursor-pointer font-secondary hover:bg-[#00000008] hover:text-primary py-2 px-3 rounded-xl"
-          >
-            {e}
-          </div>
+          <Link href={e.link} key={i}>
+            <div className="cursor-pointer font-secondary hover:bg-[#00000008] hover:text-primary py-2 px-3 rounded-xl">
+              {e.text}
+            </div>
+          </Link>
         ))}
       </div>
       <div className="md:flex hidden gap-2 items-center">

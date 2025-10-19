@@ -2,6 +2,12 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import React from "react";
 
 export default function Footer() {
+  const links = [
+    { link: "/p/about", text: "About" },
+    { link: "/p/contact", text: "Contact" },
+    { link: "/p/projects", text: "Projects" },
+    { link: "/p/skills", text: "Skills" },
+  ];
   return (
     <footer className="mt-10 text-foreground py-10 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -17,26 +23,13 @@ export default function Footer() {
         <div>
           <h3 className="text-primary font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
-            <li>
-              <a href="#about" className="hover:text-primary transition">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#projects" className="hover:text-primary transition">
-                Projects
-              </a>
-            </li>
-            <li>
-              <a href="#skills" className="hover:text-primary transition">
-                Skills
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="hover:text-primary transition">
-                Contact
-              </a>
-            </li>
+            {links.map((l, i) => (
+              <li key={i}>
+                <a href={l.link} className="hover:text-primary transition">
+                  {l.text}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
         <div>
@@ -65,17 +58,6 @@ export default function Footer() {
               </div>
               +91 9695146906
             </div>
-          </div>
-          <div className="flex gap-4 mt-3">
-            <a href="#" className="hover:text-primary transition">
-              🌐
-            </a>
-            <a href="#" className="hover:text-primary transition">
-              💼
-            </a>
-            <a href="#" className="hover:text-primary transition">
-              📸
-            </a>
           </div>
         </div>
       </div>

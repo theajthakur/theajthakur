@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 import { motion } from "framer-motion";
 import {
@@ -10,17 +10,18 @@ import {
   Linkedin,
 } from "lucide-react";
 import gsap from "gsap";
-import { Boxes } from "../ui/background-boxes";
 
 export default function Hero() {
   const nameRef = useRef(null);
+  const [animationDone, setAnimationDone] = useState(false);
   const social = [
     { icon: <Github />, link: "https://github.com/theajthakur" },
     { icon: <Linkedin />, link: "https://linkedin.com/in/theajthakur" },
     { icon: <Instagram />, link: "https://instagram.com/aj_thakur_rock" },
   ];
   useEffect(() => {
-    if (!nameRef.current) return;
+    if (!nameRef.current || animationDone) return;
+    setAnimationDone(true);
     console.log(nameRef.current.children);
     gsap.from(nameRef.current.children, {
       duration: 0.5,
@@ -84,8 +85,10 @@ export default function Hero() {
             transition={{ delay: 0.5 }}
             className="my-5"
           >
-            <Button className="w-full md:w-auto cursor-pointer flex gap-2">
-              <LaptopMinimalCheckIcon /> <span>HIRE ME</span>
+            <Button className="cursor-pointer">
+              <div className="flex gap-2">
+                <LaptopMinimalCheckIcon /> <span>HIRE ME</span>
+              </div>
             </Button>
           </motion.div>
         </div>

@@ -16,9 +16,10 @@ import { FaReact } from "react-icons/fa";
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
-export default function Skills() {
+export default function Skills({ type = "long" }) {
   const wrapperRef = useRef(null);
   const container = [];
   const skills = [
@@ -69,7 +70,20 @@ export default function Skills() {
   return (
     <div ref={wrapperRef}>
       <h2 className="text-5xl text-primary text-center my-10">MY SKILLS</h2>
-      <div>
+      {type == "long" && (
+        <motion.div
+          className="flex justify-center w-full"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <p className="w-full max-w-xl p-5 shadow-xl">
+            Every skill I’ve learned helps me bring ideas to life on the web.
+            Here’s a look at the tools and technologies I use daily to build,
+            experiment, and create meaningful digital experiences.
+          </p>
+        </motion.div>
+      )}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         {skills.map((e, i) => (
           <div key={i} className="mt-5 mb-10">
             <h3 className="text-primary text-2xl my-5">{e.type}</h3>
@@ -94,7 +108,7 @@ export default function Skills() {
             </div>
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

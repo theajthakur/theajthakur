@@ -9,9 +9,8 @@ export default function Main() {
   return (
     <div>
       <Hero />
-      <Skills />
+      <Skills type={"short"} />
       <MyTimeLine />
-      <Footer />
     </div>
   );
 }

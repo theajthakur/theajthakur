@@ -1,4 +1,4 @@
-import About from "@/components/main/About";
+import About from "@/components/pages/About";
 export const metadata = {
   title: "About Vijay Thakur | Full Stack Web Developer",
   description:

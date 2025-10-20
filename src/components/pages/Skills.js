@@ -13,7 +13,20 @@ import {
 } from "lucide-react";
 
 import { FaReact } from "react-icons/fa";
-import React, { useEffect, useRef } from "react";
+import {
+  React,
+  NextJs,
+  TailwindCSS,
+  JavaScript,
+  CSS,
+  PHP,
+  MongoDB,
+  ExpressJsDark,
+  NodeJs,
+  Git,
+  DigitalOcean,
+} from "developer-icons";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
@@ -26,27 +39,29 @@ export default function Skills({ type = "long" }) {
     {
       type: "Frontend",
       skills: [
-        { name: "React", icon: FaReact },
-        { name: "Next.js", icon: Code2 },
-        { name: "Tailwind CSS", icon: Palette },
-        { name: "JavaScript", icon: FileCode2 },
-        { name: "HTML/CSS", icon: Braces },
+        { name: "Next.js", icon: NextJs },
+        { name: "React", icon: React },
+        { name: "Tailwind CSS", icon: TailwindCSS },
+        { name: "JavaScript", icon: JavaScript },
+        { name: "HTML/CSS", icon: CSS },
       ],
     },
     {
       type: "Backend",
       skills: [
-        { name: "Node.js", icon: Server },
-        { name: "Express.js", icon: Wrench },
-        { name: "MongoDB", icon: Database },
+        { name: "Node.js", icon: NodeJs },
+        { name: "Express.js", icon: ExpressJsDark },
+        { name: "MongoDB", icon: MongoDB },
+        { name: "PHP", icon: PHP },
         { name: "REST API", icon: TerminalSquare },
       ],
     },
     {
       type: "Other",
       skills: [
-        { name: "Git / GitHub", icon: Code2 },
+        { name: "Git / GitHub", icon: Git },
         { name: "Cloud / Deployment", icon: Cloud },
+        { name: "Digital Ocean", icon: DigitalOcean },
       ],
     },
   ];
@@ -99,7 +114,9 @@ export default function Skills({ type = "long" }) {
                     className="opacity-0 relative shadow-sm p-5 rounded-sm sm:min-w-[200px] transition-all hover:bg-primary hover:text-light hover:scale-105"
                   >
                     <div className="flex justify-center">
-                      <Icon className="w-10 h-10" />
+                      <div className="p-2 rounded-full bg-light text-dark">
+                        <Icon className="w-10 h-10" />
+                      </div>
                     </div>
                     <h2 className="text-center mt-3">{a.name}</h2>
                   </div>

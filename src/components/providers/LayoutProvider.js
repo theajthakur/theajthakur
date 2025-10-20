@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../common/Navbar/Navbar";
-import Footer from "../main/Footer";
 import { Toaster } from "sonner";
+import Footer from "../common/Navbar/Footer";
 
 export default function LayoutProvider({ children }) {
   return (

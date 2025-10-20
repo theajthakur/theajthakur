@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import Button from "../ui/Button";
+
 import { motion } from "framer-motion";
 import {
   Github,
@@ -10,6 +10,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import gsap from "gsap";
+import Button from "@/components/ui/Button";
 
 export default function Hero() {
   const nameRef = useRef(null);

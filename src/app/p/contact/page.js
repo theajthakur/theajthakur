@@ -1,4 +1,4 @@
-import Contact from "@/components/main/Contact";
+import Contact from "@/components/pages/Contact";
 import React from "react";
 export const metadata = {
   alternates: {

@@ -1,9 +1,7 @@
 import React from "react";
-import Hero from "./Hero";
-import About from "./About";
-import Footer from "./Footer";
-import Skills from "./Skills";
-import { MyTimeLine } from "./Timeline";
+import Skills from "../pages/Skills";
+import { MyTimeLine } from "../pages/Timeline";
+import Hero from "./_components/Hero";
 
 export default function Main() {
   return (

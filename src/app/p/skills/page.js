@@ -1,4 +1,4 @@
-import Skills from "@/components/main/Skills";
+import Skills from "@/components/pages/Skills";
 import React from "react";
 export const metadata = {
   title: "Vijay Thakur | Skills & Expertise in Web Development",

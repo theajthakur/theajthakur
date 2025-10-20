@@ -95,7 +95,7 @@ export default function Hero() {
       </div>
       <div className="flex md:p-10 justify-center md:justify-end items-center">
         <Image
-          src={"/vijay_brush.png"}
+          src={"/VIJAY_BRUSH.png"}
           width={300}
           height={300}
           alt="brush-vijay"

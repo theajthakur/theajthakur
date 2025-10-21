@@ -12,7 +12,9 @@ export default function Button({
       onClick={onClick}
       className={`text-center cursor-pointer px-6 py-3 rounded-lg bg-primary text-light font-medium hover:bg-primary/80 transition duration-300 ${className}`}
     >
-      {children}
+      <div className="w-full flex justify-center items-center gap-2">
+        {children}
+      </div>
     </button>
   );
 }

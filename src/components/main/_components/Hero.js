@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function Hero() {
   const nameRef = useRef(null);
@@ -86,11 +87,13 @@ export default function Hero() {
             transition={{ delay: 0.5 }}
             className="my-5"
           >
-            <Button className="cursor-pointer">
-              <div className="flex gap-2">
-                <LaptopMinimalCheckIcon /> <span>HIRE ME</span>
-              </div>
-            </Button>
+            <Link href={"/p/hire"}>
+              <Button className="cursor-pointer">
+                <div className="flex gap-2">
+                  <LaptopMinimalCheckIcon /> <span>HIRE ME</span>
+                </div>
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </div>

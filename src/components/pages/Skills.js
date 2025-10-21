@@ -1,18 +1,6 @@
 "use client";
-import {
-  Braces,
-  Cloud,
-  Code2,
-  Database,
-  FileCode2,
-  Hospital,
-  Palette,
-  Server,
-  TerminalSquare,
-  Wrench,
-} from "lucide-react";
+import { Cloud, TerminalSquare } from "lucide-react";
 
-import { FaReact } from "react-icons/fa";
 import {
   React,
   NextJs,

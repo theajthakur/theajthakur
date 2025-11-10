@@ -41,6 +41,7 @@ export const metadata = {
     "Vijay Thakur Web Developer",
     "Vijay Singh Thakur Portfolio",
   ],
+  manifest: "/site.webmanifest",
   authors: [{ name: "Vijay Thakur" }],
   openGraph: {
     title:

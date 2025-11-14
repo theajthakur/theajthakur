@@ -90,7 +90,7 @@ export default function Skills({ type = "long" }) {
         {skills.map((e, i) => (
           <div key={i} className="mt-5 mb-10">
             <h3 className="text-primary text-2xl my-5">{e.type}</h3>
-            <div className="flex gap-2 flex-wrap">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
               {e.skills.map((a, b) => {
                 const Icon = a.icon;
                 return (
@@ -99,7 +99,7 @@ export default function Skills({ type = "long" }) {
                     ref={(e) => {
                       container.push(e);
                     }}
-                    className="opacity-0 relative shadow-sm p-5 rounded-sm sm:min-w-[200px] transition-all hover:bg-primary hover:text-light hover:scale-105"
+                    className="w-full border-2 py-5 rounded-sm hover:scale-105 transition-all hover:bg-primary"
                   >
                     <div className="flex justify-center">
                       <div className="p-2 rounded-full bg-light text-dark">

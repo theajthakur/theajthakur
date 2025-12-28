@@ -10,7 +10,7 @@ export default function Footer() {
     { link: "/p/skills", text: "Skills" },
   ];
   return (
-    <footer className="mt-10 text-foreground py-10 px-6">
+    <footer className="mt-10 text-foreground py-10 px-6 border-t border-border/50">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
           <h2 className="text-primary text-lg font-semibold mb-3">

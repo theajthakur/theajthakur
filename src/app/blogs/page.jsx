@@ -158,7 +158,7 @@ export default function BlogsPage() {
             filteredBlogs.map((blog) => (
               <Card
                 key={blog.id}
-                className="group flex flex-col overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 bg-card/50 backdrop-blur-sm hover:-translate-y-1"
+                className="group flex flex-col overflow-hidden hover:shadow-lg transition-all duration-300 border-border/50 bg-card/50 backdrop-blur-sm hover:-translate-y-1 pb-6"
               >
                 {/* Thumbnail */}
                 <div className="relative h-48 w-full overflow-hidden">

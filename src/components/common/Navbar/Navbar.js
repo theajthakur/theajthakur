@@ -49,6 +49,7 @@ export default function Navbar() {
     },
     {
       icon: <Twitter className="w-5 h-5" />,
+      link: "https://x.com/xvijaythkur",
     },
   ];
 
@@ -57,7 +58,7 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="flex w-full justify-center items-center h-[80px] md:h-[100px] top-0 px-4 md:px-0 relative z-30"
+        className="flex w-full justify-center items-center h-[80px] md:h-[100px] top-0 px-4 md:px-0 relative z-30 border-b border-border/50"
       >
         <div className="flex justify-between md:justify-center items-center w-full max-w-7xl">
           {/* Logo - Always Visible */}

@@ -13,29 +13,58 @@ export default function Contact() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const handleSubmit = (e) => {
-    if (loading) return toast.error("Loading...", { duration: 5000 });
-    setLoading(true);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.errors) return toast.error("Something went wrong!");
-        toast.success("Message sent successfully!");
-        setFormData({
-          name: "",
-          email: "",
-          mobile: "",
-          message: "",
-        });
-      })
-      .finally(() => {
-        setLoading(false);
+
+    if (loading) {
+      toast.error("Loading...", { duration: 5000 });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await res.json();
+
+      // Handle validation errors from API
+      if (!res.ok || data?.errors) {
+        if (data?.errors && typeof data.errors === "object") {
+          Object.entries(data.errors).forEach(([field, message]) => {
+            toast.error(field.toUpperCase(), {
+              description: message,
+            });
+          });
+        } else {
+          toast.error("Error", {
+            description: data?.message || "Something went wrong",
+          });
+        }
+
+        return;
+      }
+
+      toast.success("Message sent successfully!");
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        message: "",
+      });
+    } catch (error) {
+      toast.error("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <section id="contact" className="py-16 bg-background text-foreground">
       <div className="max-w-6xl mx-auto px-6">

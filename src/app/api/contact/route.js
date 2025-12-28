@@ -1,6 +1,5 @@
-import connectToDB from "@/lib/mongodb";
-import UserQuery from "@/models/UserQuery";
-import z from "zod";
+import { prisma } from "@/lib/prisma";
+import { z } from "zod";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -12,40 +11,33 @@ const contactSchema = z.object({
 });
 
 export async function POST(req) {
-  await connectToDB();
-
   try {
     const body = await req.json();
+
     const parsedData = contactSchema.parse(body);
-    const user = await UserQuery.create(parsedData);
+
+    const user = await prisma.userQuery.create({
+      data: parsedData,
+    });
 
     return new Response(JSON.stringify(user), { status: 201 });
   } catch (error) {
     if (error.name === "ZodError") {
       const fieldErrors = {};
+
       error.errors.forEach((err) => {
         fieldErrors[err.path[0]] = err.message;
       });
+
       return new Response(JSON.stringify({ errors: fieldErrors }), {
         status: 400,
       });
     }
 
     console.error(error);
+
     return new Response(JSON.stringify({ error: "Server error" }), {
       status: 500,
-    });
-  }
-}
-
-export async function GET() {
-  await connectToDB();
-  try {
-    const users = await UserQuery.find({});
-    return new Response(JSON.stringify(users), { status: 200 });
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 400,
     });
   }
 }

@@ -1,0 +1,32 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean  @default(false)
+  title     String   @db.VarChar(255)
+  content   String
+}
+
+model UserQuery {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  mobile    String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+
+enum Role {
+  USER
+  ADMIN
+}

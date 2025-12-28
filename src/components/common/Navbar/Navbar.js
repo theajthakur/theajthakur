@@ -1,18 +1,24 @@
 "use client";
 import { motion } from "framer-motion";
-import { Github, Instagram, Linkedin } from "lucide-react";
+import { Github, Linkedin, Instagram, Twitter, Menu } from "lucide-react";
+import React, { useState } from "react";
+import { NavLinks } from "./_components/NavLinks";
+import { SocialLinks } from "./_components/SocialLinks";
+import { MobileMenu } from "./_components/MobileMenu";
+import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const links = [
     {
       text: "Home",
       link: "/",
     },
     {
-      text: "Skills",
-      link: "/p/skills",
+      text: "Blogs",
+      link: "/blogs",
     },
     {
       text: "About",
@@ -29,40 +35,73 @@ export default function Navbar() {
   ];
 
   const social = [
-    { icon: <Github />, link: "https://github.com/theajthakur" },
-    { icon: <Linkedin />, link: "https://linkedin.com/in/theajthakur" },
-    { icon: <Instagram />, link: "https://instagram.com/aj_thakur_rock" },
+    {
+      icon: <Github className="w-5 h-5" />,
+      link: "https://github.com/theajthakur",
+    },
+    {
+      icon: <Linkedin className="w-5 h-5" />,
+      link: "https://linkedin.com/in/theajthakur",
+    },
+    {
+      icon: <Instagram className="w-5 h-5" />,
+      link: "https://instagram.com/aj_thakur_rock",
+    },
+    {
+      icon: <Twitter className="w-5 h-5" />,
+    },
   ];
+
   return (
-    <motion.div
-      initial={{ y: -10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="flex w-full justify-center items-center h-[100px] top-0"
-    >
-      <div className="flex justify-center md:justify-start w-full gap-1 md:gap-4 p-1 rounded-xl text-xl">
-        {links.map((e, i) => (
-          <Link href={e.link} key={i}>
-            <div className="cursor-pointer font-secondary hover:bg-[#00000008] hover:text-primary py-2 px-3 rounded-xl">
-              {e.text}
-            </div>
-          </Link>
-        ))}
-      </div>
-      <div className="md:flex hidden gap-2 items-center">
-        {social.map((e, i) => {
-          return (
-            <div
-              key={i}
-              className="p-1 rounded-full hover:text-primary cursor-pointer"
-              onClick={() => {
-                window.open(e.link);
-              }}
+    <>
+      <motion.nav
+        initial={{ y: -10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="flex w-full justify-center items-center h-[80px] md:h-[100px] top-0 px-4 md:px-0 relative z-30"
+      >
+        <div className="flex justify-between md:justify-center items-center w-full max-w-7xl">
+          {/* Logo - Always Visible */}
+          <div className="flex md:absolute md:left-4 lg:left-10 md:top-1/2 md:-translate-y-1/2">
+            <Link href={"/"}>
+              <Image
+                src="/android-chrome-192x192.png"
+                alt="Logo"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+            </Link>
+          </div>
+
+          {/* Desktop Nav */}
+          <NavLinks
+            links={links}
+            className="hidden md:flex gap-1 md:gap-4 p-1 rounded-xl text-xl"
+          />
+
+          {/* Mobile Hamburger */}
+          <div className="md:hidden flex w-full justify-end">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 hover:bg-[#00000008] rounded-full transition-colors"
             >
-              {e.icon}
-            </div>
-          );
-        })}
-      </div>
-    </motion.div>
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Desktop Social */}
+          <div className="hidden md:flex absolute right-4 lg:right-10 top-1/2 -translate-y-1/2">
+            <SocialLinks social={social} />
+          </div>
+        </div>
+      </motion.nav>
+
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        setIsOpen={setIsMobileMenuOpen}
+        links={links}
+        social={social}
+      />
+    </>
   );
 }

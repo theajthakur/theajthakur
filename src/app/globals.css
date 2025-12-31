@@ -153,3 +153,12 @@ p {
     @apply bg-background text-foreground;
   }
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}

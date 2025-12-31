@@ -1,10 +1,13 @@
+"use client";
 import React from "react";
 import Navbar from "../common/Navbar/Navbar";
 import { Toaster } from "sonner";
 import Footer from "../common/Navbar/Footer";
 import { AlertTriangle, CheckCircle, Info, XCircle } from "lucide-react";
-
+import { usePathname } from "next/navigation";
 export default function LayoutProvider({ children }) {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) return <div>{children}</div>;
   return (
     <div className="body-container px-4 xl:px-40">
       <div className="navbar sticky top-0 bg-background z-50">

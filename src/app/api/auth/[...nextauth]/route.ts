@@ -1,7 +1,24 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      role: string;
+    };
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role: string;
+  }
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Admin Login",
@@ -14,7 +31,7 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { email, password } = credentials;
+        const { email, password } = credentials || {};
         console.log(`[Auth] Attempting login for: ${email}`);
 
         // Check against environment variables
@@ -23,7 +40,12 @@ const handler = NextAuth({
           password === process.env.ADMIN_PASS
         ) {
           console.log("[Auth] Credentials match. User authenticated.");
-          return { id: "1", name: "Admin Code", email: email, role: "admin" };
+          return {
+            id: "1",
+            name: "Admin Code",
+            email: email || "",
+            role: "admin",
+          };
         }
 
         console.log(
@@ -49,7 +71,7 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
+        token.role = (user as any).role;
       }
       return token;
     },
@@ -61,6 +83,8 @@ const handler = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

@@ -2,8 +2,8 @@
 import React from "react";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { Briefcase, Handshake, Rocket, Send } from "lucide-react";
-import Input from "../ui/Input";
-import Button from "../ui/Button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import Link from "next/link";
 
 export function HireMePage() {

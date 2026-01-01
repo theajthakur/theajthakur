@@ -3,7 +3,15 @@ import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import React from "react";
 
-export const BackgroundLines = ({ children, className, svgOptions }) => {
+export const BackgroundLines = ({
+  children,
+  className,
+  svgOptions,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+  svgOptions?: { duration?: number };
+}) => {
   return (
     <div className={cn("w-full bg-white dark:bg-black", className)}>
       <SVG svgOptions={svgOptions} />

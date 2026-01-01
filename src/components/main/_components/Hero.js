@@ -10,7 +10,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import gsap from "gsap";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Hero() {

@@ -4,7 +4,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client"
-  output   = "./generated"
+  output   = "../src/generated/client"
 }
 
 model Post {
@@ -14,6 +14,9 @@ model Post {
   published Boolean  @default(false)
   title     String   @db.VarChar(255)
   content   String
+  slug      String   @unique
+  tags      String[]
+  thumbnail String?
 }
 
 model UserQuery {

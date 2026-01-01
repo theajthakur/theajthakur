@@ -1,8 +1,8 @@
 "use client";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import Input from "../ui/Input";
+import { Input } from "../ui/input";
 import { useState } from "react";
-import Button from "../ui/Button";
+import { Button } from "../ui/button";
 import { toast } from "sonner";
 
 export default function Contact() {

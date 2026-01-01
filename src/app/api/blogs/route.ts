@@ -6,7 +6,12 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function GET() {
   try {
     const blogs = await getAllBlogs();
-    return NextResponse.json(blogs);
+    return NextResponse.json(
+      blogs.map((b) => ({
+        ...b,
+        content: b.content.substring(0, 100),
+      }))
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

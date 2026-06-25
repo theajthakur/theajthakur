@@ -48,20 +48,20 @@ export default function Hero() {
             </div>
           </div>
           <h5 className="text-primary text-2xl">Hi There,</h5>
-          <h2 className="text-3xl">
-            I’m a <span className="text-primary">Full Stack</span> Web Developer
+          <h2 className="text-3xl font-heading">
+            I’m a <span className="text-primary">Full Stack Web & AI</span> Developer
           </h2>
-          <div className="text-5xl text-primary py-3 flex" ref={nameRef}>
+          <div className="text-5xl text-primary py-3 flex font-heading" ref={nameRef}>
             {"VIJAY SINGH".split("").map((e, i) => (
               <div className="relative" key={i}>
                 {e == " " ? <span className="px-2"></span> : e}
               </div>
             ))}
           </div>
-          <p className="text-foreground">
-            Full Stack Web Developer with strong expertise in modern web
-            technologies. I design and develop complete solutions — from
-            intuitive interfaces to efficient backend systems.
+          <p className="text-foreground leading-relaxed text-sm md:text-base">
+            Full Stack Web Developer & AI Automation Specialist. I build responsive,
+            high-performance web applications and intelligent AI solutions—from custom
+            Next.js frontends to autonomous LLM agent pipelines, LangChain integrations, and n8n workflows.
           </p>
           <div className="flex flex-col items-end gap-0">
             <div className="w-1 h-4 bg-secondary"></div>

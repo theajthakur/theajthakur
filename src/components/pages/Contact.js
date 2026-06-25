@@ -1,5 +1,5 @@
 "use client";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -101,6 +101,21 @@ export default function Contact() {
                 <p className="text-muted-foreground">+91 96951 46906</p>
               </div>
             </div>
+
+            <a
+              href="https://wa.me/919695146906?text=Hi%20Vijay,%20I'm%20interested%20in%20your%20web%20development%20and%20AI%20automation%20services.%20Let's%20connect!"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 group hover:translate-x-1 transition-transform duration-300"
+            >
+              <div className="bg-secondary/10 p-4 rounded-full text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                <MessageCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-dark group-hover:text-primary transition-colors">WhatsApp</h4>
+                <p className="text-muted-foreground group-hover:text-primary/95 transition-colors">Chat directly with prefilled message</p>
+              </div>
+            </a>
 
             <div className="flex items-center gap-4">
               <div className="bg-secondary/10 p-4 rounded-full">

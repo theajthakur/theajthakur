@@ -16,7 +16,16 @@ import { Label } from "@/components/ui/label";
 
 const Form = FormProvider;
 
-const FormFieldContext = React.createContext({});
+type FormFieldContextValue<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = {
+  name: TName
+}
+
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue
+);
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
@@ -54,7 +63,13 @@ const useFormField = () => {
   };
 };
 
-const FormItemContext = React.createContext({});
+type FormItemContextValue = {
+  id: string
+}
+
+const FormItemContext = React.createContext<FormItemContextValue>(
+  {} as FormItemContextValue
+);
 
 function FormItem({ className, ...props }) {
   const id = React.useId();

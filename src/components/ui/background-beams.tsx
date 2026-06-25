@@ -4,7 +4,9 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export const BackgroundBeams = React.memo(({
-  className
+  className,
+}: {
+  className?: string;
 }) => {
   const paths = [
     "M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875",

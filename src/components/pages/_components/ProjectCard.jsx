@@ -34,7 +34,8 @@ export default function ProjectCard({ project, index }) {
                 src={`/assets/projects/${project.thumbnail[0]}`}
                 alt={project.name}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                style={{ objectPosition: "left center" }}
+                className="object-cover transition-transform duration-700"
               />
             )}
           </Link>

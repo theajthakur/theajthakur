@@ -17,10 +17,6 @@ export default function Navbar() {
       link: "/",
     },
     {
-      text: "Blogs",
-      link: "/blogs",
-    },
-    {
       text: "About",
       link: "/p/about",
     },

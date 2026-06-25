@@ -28,7 +28,6 @@ model UserQuery {
   createdAt DateTime @default(now())
 }
 
-
 enum Role {
   USER
   ADMIN

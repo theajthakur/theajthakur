@@ -1,11 +1,11 @@
-import { PrismaClient } from "@/generated/client";
+import { PrismaClient } from "@/generated/client/client";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    accelerateUrl: process.env.DATABASE_URL,
+    accelerateUrl: process.env.DATABASE_URL || "prisma://placeholder-during-build",
     log: ["query"],
   });
 

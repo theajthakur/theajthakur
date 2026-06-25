@@ -10,36 +10,28 @@ export default function ProjectsGrid() {
 
   const projects = [
     {
-      name: "Market Gang",
-      link: "https://viraldon.vercel.app/",
+      name: "Oppskills",
+      link: "https://github.com/theajthakur",
       description:
-        "A modern marketing platform that helps brands analyse trends, reach target audiences, and optimise campaign performance through data-driven insights.",
-      thumbnail: ["marketgang.png"],
-      tags: ["Next.js", "Analytics", "Marketing", "SaaS"],
+        "A full-stack opportunity discovery platform built using Next.js, NestJS, PostgreSQL, and Redis, serving 10,000+ users. It features an analytics aggregation system, authentication systems, and streamlined user discovery for events and hackathons.",
+      thumbnail: ["oppskills.png"],
+      tags: ["Next.js", "NestJS", "PostgreSQL", "Redis", "TypeScript", "LLMs", "RAG"],
     },
     {
-      name: "SkillSwap",
-      link: "https://skillswapgcet.vercel.app/",
+      name: "Ponion",
+      link: "https://github.com/theajthakur",
       description:
-        "A peer-to-peer skill-exchange platform that matches users based on their profiles, skillsets, and requirements, enabling them to learn directly from each other.",
-      thumbnail: ["skillswap.png"],
-      tags: ["React", "Education", "Social Network", "P2P"],
+        "A multi-tenant food discovery and ordering platform inspired by modern restaurant marketplaces. It features a customer-facing app for menu browsing and order placement, a dedicated restaurant management portal, and a Super Admin dashboard for onboarding, verification, and platform-wide management.",
+      thumbnail: ["ponion.png"],
+      tags: ["Next.js", "Node.js", "MongoDB", "Tailwind CSS", "API Development"],
     },
     {
-      name: "Sewna",
-      link: "https://sewna-chi.vercel.app/",
+      name: "Rotaract Club Website",
+      link: "https://github.com/theajthakur",
       description:
-        "A collaborative hub connecting designers with clients, offering personalised design services, portfolio showcases, and seamless designer-client project interaction.",
-      thumbnail: ["sewna_main.png", "sewna_1.png", "sewna_2.png"],
-      tags: ["Design", "Marketplace", "Freelance", "Collaboration"],
-    },
-    {
-      name: "AgroVision",
-      link: "https://agrovision-psi.vercel.app/",
-      description:
-        "A smart agriculture solution designed for an SIH problem statement from the Odisha government, predicting crop yields and optimising production using environmental and historical data.",
-      thumbnail: ["agrovision.png"],
-      tags: ["AI/ML", "Agriculture", "GovTech", "Prediction"],
+        "Official website for the Rotaract Club of Galgotias Educational Institutions, supporting the organization's digital initiatives, registrations, and event promotions.",
+      thumbnail: ["rotaract.png"],
+      tags: ["Web Development", "React", "SEO", "Maintenance"],
     },
   ];
 

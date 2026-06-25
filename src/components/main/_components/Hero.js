@@ -8,6 +8,7 @@ import {
   Instagram,
   LaptopMinimalCheckIcon,
   Linkedin,
+  FileText,
 } from "lucide-react";
 import gsap from "gsap";
 import { Button } from "@/components/ui/button";
@@ -85,7 +86,7 @@ export default function Hero() {
             initial={{ x: 30, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="my-5"
+            className="my-5 flex gap-4 flex-wrap"
           >
             <Link href={"/p/hire"}>
               <Button className="cursor-pointer">
@@ -94,6 +95,17 @@ export default function Hero() {
                 </div>
               </Button>
             </Link>
+            <a
+              href={"/assets/VIJAY's Resume.pdf"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="cursor-pointer">
+                <div className="flex gap-2">
+                  <FileText className="w-5 h-5" /> <span>RESUME</span>
+                </div>
+              </Button>
+            </a>
           </motion.div>
         </div>
       </div>

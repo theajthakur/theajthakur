@@ -438,14 +438,24 @@ export default function Skills({ type = "long" }) {
   const onNodeMouseEnter = (event, node) => {
     if (!reactFlowWrapper.current) return;
     const rect = reactFlowWrapper.current.getBoundingClientRect();
+    const rawX = event.clientX - rect.left;
+    const rawY = event.clientY - rect.top;
+    const tooltipWidth = 224; // w-56
+    const tooltipHeight = 160; // Approx max tooltip height with padding
+
+    // Clamp X so the tooltip stays completely within the wrapper boundaries
+    const clampedX = Math.max(tooltipWidth / 2 + 12, Math.min(rect.width - (tooltipWidth / 2 + 12), rawX));
+    // Determine whether to display the tooltip below the node if it is too close to the top
+    const showBelow = rawY < tooltipHeight + 15;
 
     if (node.type === "skill") {
       setHoveredSkill({
         name: node.data.name,
         level: node.data.level,
         description: node.data.description,
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
+        x: clampedX,
+        y: rawY,
+        showBelow,
       });
       setHoveredSkillName(node.data.name);
     } else if (node.type === "category") {
@@ -462,8 +472,9 @@ export default function Skills({ type = "long" }) {
         name: node.data.label,
         level: null,
         description: categoryDescriptions[node.data.label] || "",
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
+        x: clampedX,
+        y: rawY,
+        showBelow,
       });
       setHoveredCategoryName(node.data.label);
     }
@@ -698,21 +709,26 @@ export default function Skills({ type = "long" }) {
             <AnimatePresence>
               {hoveredSkill && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                  initial={{ opacity: 0, scale: 0.9, y: hoveredSkill.showBelow ? -10 : 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                  exit={{ opacity: 0, scale: 0.9, y: hoveredSkill.showBelow ? -10 : 10 }}
                   transition={{ duration: 0.15 }}
                   style={{
                     position: "absolute",
                     left: hoveredSkill.x,
                     top: hoveredSkill.y,
-                    transform: "translate(-50%, -115%)",
+                    transform: hoveredSkill.showBelow ? "translate(-50%, 25px)" : "translate(-50%, -115%)",
                     pointerEvents: "none",
                     zIndex: 100,
                   }}
                   className="w-56 p-4 bg-card/95 border border-border backdrop-blur-md rounded-xl shadow-2xl text-center"
                 >
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2.5 h-2.5 bg-card border-r border-b border-border rotate-45" />
+                  {/* Arrow Indicator depending on position strategy */}
+                  {hoveredSkill.showBelow ? (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-1 w-2.5 h-2.5 bg-card border-t border-l border-border rotate-45" />
+                  ) : (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2.5 h-2.5 bg-card border-r border-b border-border rotate-45" />
+                  )}
                   <h4 className="font-heading font-semibold text-primary text-xs sm:text-sm mb-0.5">
                     {hoveredSkill.name}
                   </h4>

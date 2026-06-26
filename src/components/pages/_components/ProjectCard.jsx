@@ -1,7 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -11,79 +9,86 @@ export default function ProjectCard({ project, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
     >
-      <Card className="overflow-hidden border-border/50 bg-card/50 hover:bg-card/80 transition-all duration-300 group hover:shadow-lg hover:border-primary/50">
+      <div className="overflow-hidden border border-border/45 bg-card/15 backdrop-blur-md rounded-2xl hover:border-primary/55 hover:bg-card/25 transition-all duration-300 group hover:shadow-[0_8px_30px_rgba(0,139,155,0.06)] shadow-sm flex flex-col w-full">
         <div
           className={`flex flex-col ${
             isEven ? "md:flex-row" : "md:flex-row-reverse"
-          } h-full`}
+          } md:items-center w-full`}
         >
-          {/* Thumbnail Section */}
+          {/* Cinema-Resolution Image Container (Exact 1672:941 Native Aspect Ratio) */}
           <Link
             href={project.link}
             target="_blank"
-            className="w-full md:w-1/2 relative overflow-hidden h-64 md:h-auto min-h-[300px] cursor-pointer"
+            className="w-full md:w-[52%] aspect-[1672/941] relative overflow-hidden cursor-pointer shrink-0"
           >
-            <div className="absolute inset-0 bg-transparent group-hover:bg-black/0 transition-all duration-500 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-80 z-10 transition-opacity duration-300 group-hover:opacity-40" />
             {project.thumbnail && project.thumbnail[0] && (
               <Image
                 src={`/assets/projects/${project.thumbnail[0]}`}
                 alt={project.name}
                 fill
-                style={{ objectPosition: "left center" }}
-                className="object-cover transition-transform duration-700"
+                priority={index === 0}
+                sizes="(max-width: 768px) 100vw, 55vw"
+                className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.02]"
               />
             )}
           </Link>
 
-          {/* Content Section */}
-          <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-primary/60">
-                {project.name}
-              </h3>
-              <Button
-                variant="ghost"
-                size="icon"
-                asChild
-                className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
-              >
-                <Link href={project.link} target="_blank">
-                  <ExternalLink className="h-5 w-5" />
-                </Link>
-              </Button>
+          {/* Details Content Box */}
+          <div className="flex-grow p-6 sm:p-8 flex flex-col justify-center">
+            {/* Category Sub-Header & Index Tracker */}
+            <div className="flex items-center justify-between mb-2 select-none">
+              <span className="text-[10px] sm:text-xs tracking-[0.2em] font-heading text-primary font-bold uppercase">
+                {project.category || "Freelance Project"}
+              </span>
+              <span className="text-sm font-heading font-bold text-primary/40 group-hover:text-primary transition-colors duration-300">
+                {String(index + 1).padStart(2, "0")}
+              </span>
             </div>
 
-            <p className="text-muted-foreground mb-6 leading-relaxed text-sm md:text-base">
+            {/* Title */}
+            <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight mb-4">
+              {project.name}
+            </h3>
+
+            {/* Description */}
+            <p className="text-muted-foreground mb-6 leading-relaxed text-xs sm:text-sm">
               {project.description}
             </p>
 
-            <div className="flex flex-wrap gap-2 mb-8 mt-auto">
+            {/* Technologies Badges / Tags */}
+            <div className="flex flex-wrap gap-2 mb-6">
               {project.tags &&
                 project.tags.map((tag) => (
                   <Badge
                     key={tag}
                     variant="secondary"
-                    className="px-3 py-1 font-normal bg-secondary/50 hover:bg-secondary transition-colors"
+                    className="px-3 py-0.5 rounded-full font-heading font-medium tracking-wide text-[10px] bg-primary/5 text-primary border border-primary/10 transition-colors hover:bg-primary/15 hover:border-primary/20"
                   >
                     {tag}
                   </Badge>
                 ))}
             </div>
 
-            <Button className="w-full sm:w-auto self-start group/btn" asChild>
-              <Link href={project.link} target="_blank">
-                View Project
-                <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+            {/* Action Link */}
+            <div className="flex items-center gap-4 mt-auto">
+              <Link
+                href={project.link}
+                target="_blank"
+                className="inline-flex items-center gap-2 font-heading font-bold text-xs sm:text-sm text-primary hover:text-secondary transition-colors group/link"
+              >
+                <span>EXPLORE PROJECT</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1.5" />
               </Link>
-            </Button>
+            </div>
           </div>
         </div>
-      </Card>
+      </div>
     </motion.div>
   );
 }

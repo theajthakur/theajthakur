@@ -40,7 +40,7 @@ export default function Footer() {
               <div>
                 <MapPin />
               </div>
-              Alpha II, Greater Noida 201308, Gautam Budhha Nagar, Uttar
+              Greater Noida 201308, Gautam Budhha Nagar, Uttar
               Pradesh, India
             </div>
           </div>

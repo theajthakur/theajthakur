@@ -24,7 +24,7 @@ export default function ProjectCard({ project, index }) {
           <Link
             href={project.link}
             target="_blank"
-            className="w-full md:w-[52%] aspect-[1672/941] relative overflow-hidden cursor-pointer shrink-0"
+            className="w-full md:w-[42%] aspect-[1672/941] relative overflow-hidden cursor-pointer shrink-0"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-80 z-10 transition-opacity duration-300 group-hover:opacity-40" />
             {project.thumbnail && project.thumbnail[0] && (
@@ -40,9 +40,9 @@ export default function ProjectCard({ project, index }) {
           </Link>
 
           {/* Details Content Box */}
-          <div className="flex-grow p-6 sm:p-8 flex flex-col justify-center">
+          <div className="flex-grow p-5 sm:p-6 flex flex-col justify-center">
             {/* Category Sub-Header & Index Tracker */}
-            <div className="flex items-center justify-between mb-2 select-none">
+            <div className="flex items-center justify-between mb-1.5 select-none">
               <span className="text-[10px] sm:text-xs tracking-[0.2em] font-heading text-primary font-bold uppercase">
                 {project.category || "Freelance Project"}
               </span>
@@ -52,17 +52,17 @@ export default function ProjectCard({ project, index }) {
             </div>
 
             {/* Title */}
-            <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight mb-4">
+            <h3 className="text-xl sm:text-2xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight mb-3">
               {project.name}
             </h3>
 
             {/* Description */}
-            <p className="text-muted-foreground mb-6 leading-relaxed text-xs sm:text-sm">
+            <p className="text-muted-foreground mb-4 leading-relaxed text-xs sm:text-sm">
               {project.description}
             </p>
 
             {/* Technologies Badges / Tags */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {project.tags &&
                 project.tags.map((tag) => (
                   <Badge

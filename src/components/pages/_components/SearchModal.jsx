@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Search, X, ArrowRight, CornerDownLeft, Keyboard } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 const TRENDING_SEARCHES = [
   "Oppskills",
@@ -144,7 +145,7 @@ export default function SearchModal({
                     <button
                       key={term}
                       onClick={() => handleSelectQuery(term)}
-                      className="px-3.5 py-1.5 text-xs rounded-full border border-primary/10 bg-primary/5 hover:bg-primary/10 hover:border-primary/25 text-primary hover:text-secondary font-heading transition-all duration-300 cursor-pointer shadow-xs hover:scale-[1.01]"
+                      className="px-3.5 py-1.5 text-xs rounded-full border border-primary/10 bg-primary/5 hover:bg-primary/10 hover:border-primary/25 text-primary hover:text-dark font-heading transition-all duration-300 cursor-pointer shadow-xs hover:scale-[1.01]"
                     >
                       {term}
                     </button>
@@ -192,19 +193,32 @@ export default function SearchModal({
                           window.open(project.link, "_blank");
                           onClose();
                         }}
-                        className={`flex items-center justify-between p-3 rounded-xl border transition-all duration-200 cursor-pointer ${isSelected
+                        className={`flex items-center gap-3 p-2.5 rounded-xl border transition-all duration-200 cursor-pointer ${isSelected
                           ? "bg-primary/5 border-primary/45 shadow-sm translate-x-1"
                           : "bg-card/10 border-border/30 hover:border-border/60"
                           }`}
                       >
-                        <div className="space-y-1 pr-4">
+                        {/* Thumbnail */}
+                        {project.thumbnail && project.thumbnail[0] && (
+                          <div className="relative w-20 aspect-1672/941 rounded-sm overflow-hidden shrink-0 border border-border/40 bg-muted/20">
+                            <Image
+                              src={`/assets/projects/${project.thumbnail[0]}`}
+                              alt={project.name}
+                              fill
+                              sizes="64px"
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+
+                        <div className="flex flex-col space-y-0.5 min-w-0 pr-2">
                           <span className="text-[9px] tracking-wider text-primary font-bold font-heading uppercase">
                             {project.category}
                           </span>
-                          <h4 className="text-sm font-heading font-semibold text-foreground">
+                          <h4 className="text-sm font-heading font-semibold text-foreground truncate">
                             {project.name}
                           </h4>
-                          <p className="text-xs text-muted-foreground line-clamp-1 max-w-md">
+                          <p className="text-xs text-muted-foreground line-clamp-1">
                             {project.description}
                           </p>
                         </div>

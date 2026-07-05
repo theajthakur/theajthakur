@@ -1,12 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProjectCard from "./_components/ProjectCard";
 import ProjectSearch from "./_components/ProjectSearch";
+import SearchModal from "./_components/SearchModal";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProjectsGrid() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const isInput =
+        document.activeElement.tagName === "INPUT" ||
+        document.activeElement.tagName === "TEXTAREA" ||
+        document.activeElement.isContentEditable;
+
+      if (
+        (e.key === "k" && (e.metaKey || e.ctrlKey)) ||
+        (e.key === "/" && !isInput)
+      ) {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const projects = [
     {
@@ -84,7 +106,11 @@ export default function ProjectsGrid() {
 
   return (
     <div className="w-full">
-      <ProjectSearch value={searchQuery} onChange={setSearchQuery} />
+      <ProjectSearch
+        value={searchQuery}
+        onChange={setSearchQuery}
+        onOpenModal={() => setIsSearchOpen(true)}
+      />
 
       <div className="flex flex-col gap-6 md:gap-8">
         <AnimatePresence mode="wait">
@@ -107,6 +133,14 @@ export default function ProjectsGrid() {
           )}
         </AnimatePresence>
       </div>
+
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        projects={projects}
+      />
     </div>
   );
 }

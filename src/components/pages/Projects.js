@@ -43,7 +43,7 @@ export default function ProjectsGrid() {
     {
       name: "Snake & Ladder Multiplayer",
       category: "Real-Time Multiplayer Game",
-      link: "https://snake-ladder-rouge.vercel.app",
+      link: "https://www.snakeladder.me",
       description:
         "A modern web-based multiplayer implementation of the classic Snake & Ladder game featuring server-authoritative gameplay for complete fairness. Built with real-time API polling, backend-managed game instances, secure turn validation, lobby creation, room sharing, and synchronized gameplay. Designed with a scalable architecture that can seamlessly transition to WebSockets for lower latency and future features like in-game chat and voice communication.",
       thumbnail: ["snake-ladder.png"],
@@ -106,6 +106,15 @@ export default function ProjectsGrid() {
 
   return (
     <div className="w-full">
+      <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-4 tracking-tight">
+          Featured <span className="text-primary">Projects</span>
+        </h1>
+        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+          A premium showcase of full-stack web applications, real-time multiplayer games (including Snake & Ladder Multiplayer), multi-tenant SaaS platforms, and developer tooling crafted by Vijay Thakur.
+        </p>
+      </div>
+
       <ProjectSearch
         value={searchQuery}
         onChange={setSearchQuery}

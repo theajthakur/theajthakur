@@ -24,13 +24,15 @@ export default function ProjectCard({ project, index }) {
           <Link
             href={project.link}
             target="_blank"
+            rel="noopener noreferrer"
+            title={`Visit ${project.name} - ${project.category || 'Website'}`}
             className="w-full md:w-[42%] aspect-[1672/941] relative overflow-hidden cursor-pointer shrink-0"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-80 z-10 transition-opacity duration-300 group-hover:opacity-40" />
             {project.thumbnail && project.thumbnail[0] && (
               <Image
                 src={`/assets/projects/${project.thumbnail[0]}`}
-                alt={project.name}
+                alt={`${project.name} - ${project.category || 'Freelance Project'} - Full Stack Web Application by Vijay Thakur`}
                 fill
                 priority={index === 0}
                 sizes="(max-width: 768px) 100vw, 55vw"
@@ -80,6 +82,8 @@ export default function ProjectCard({ project, index }) {
               <Link
                 href={project.link}
                 target="_blank"
+                rel="noopener noreferrer"
+                title={`Explore ${project.name} project`}
                 className="inline-flex items-center gap-2 font-heading font-bold text-xs sm:text-sm text-primary hover:text-secondary transition-colors group/link"
               >
                 <span>EXPLORE PROJECT</span>

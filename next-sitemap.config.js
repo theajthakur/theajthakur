@@ -4,7 +4,7 @@ module.exports = {
   generateRobotsTxt: true,
   sitemapSize: 5000,
   additionalPaths: async (config) => {
-    const pages = ["/", "/p/about", "/p/contact", "/p/hire", "/p/skills"];
+    const pages = ["/", "/p/about", "/p/contact", "/p/hire", "/p/skills", "/p/projects"];
 
     return pages.map((page) => config.transform(config, page));
   },

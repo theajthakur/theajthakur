@@ -96,7 +96,7 @@ export default function Hero() {
               </Button>
             </Link>
             <a
-              href={"/assets/resume.pdf"}
+              href={"/resume"}
               target="_blank"
               rel="noopener noreferrer"
             >

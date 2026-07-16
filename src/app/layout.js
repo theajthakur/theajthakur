@@ -89,7 +89,7 @@ const jsonLd = {
         "https://github.com/theajthakur",
         "https://linkedin.com/in/theajthakur",
         "https://instagram.com/aj_thakur_rock",
-        "https://x.com/xvijaythkur"
+        "https://x.com/xvijaythakur"
       ],
       "jobTitle": "Full Stack Web Developer & AI Automation Engineer",
       "description": "Experienced software engineer specializing in full-stack web applications, AI integrations, n8n, and LangChain automation.",

@@ -45,7 +45,7 @@ export default function Navbar() {
     },
     {
       icon: <Twitter className="w-5 h-5" />,
-      link: "https://x.com/xvijaythkur",
+      link: "https://x.com/xvijaythakur",
     },
   ];
 

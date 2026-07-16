@@ -64,7 +64,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-secondary/30 mt-10 pt-4 text-center text-sm text-foreground/70">
-        © 2025 Vijay Singh. All rights reserved.
+        © {new Date().getFullYear()} Vijay Singh. All rights reserved.
       </div>
     </footer>
   );

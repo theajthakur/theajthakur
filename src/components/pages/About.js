@@ -44,7 +44,7 @@ export default function About() {
               Continuous Growth
             </h3>
             <p className="text-gray-600 text-sm">
-              I’m always learning — keeping up with new tools, frameworks, and
+              I’m always learning - keeping up with new tools, frameworks, and
               trends to improve my craft every day.
             </p>
           </div>

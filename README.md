@@ -64,4 +64,4 @@ Currently exploring:
 
 ---
 
-⭐ If you like clean architecture, scalable systems, and thoughtful code — you’ll feel at home here.
+⭐ If you like clean architecture, scalable systems, and thoughtful code - you’ll feel at home here.

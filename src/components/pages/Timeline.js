@@ -93,7 +93,7 @@ export function MyTimeLine() {
           </h3>
           <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">
             Learned <b>ReactJS</b> and created <b>TextUtils</b>. On{" "}
-            <b>4 October</b>, built <b>ResQ</b> — a Disaster Management App for
+            <b>4 October</b>, built <b>ResQ</b> - a Disaster Management App for
             a hackathon, became <b>Runner Up</b> 🥈.
           </p>
         </div>
@@ -197,7 +197,7 @@ export function MyTimeLine() {
           </h3>
           <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">
             Created <b>Notely</b>, a secure offline-first diary and to-do app
-            using <b>ReactJS</b> — no database or server, keeping user data
+            using <b>ReactJS</b> - no database or server, keeping user data
             private.
           </p>
         </div>

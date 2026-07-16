@@ -25,7 +25,7 @@ const aldrich = Aldrich({
 export const metadata = {
   title: "Best Freelance Web Developer & AI Automation Specialist | Vijay Thakur",
   description:
-    "Hire Vijay Thakur (Vijay Singh) — the best affordable freelance Full Stack Web Developer & AI automation specialist. Offering Next.js/React websites, n8n workflows, and FastAPI backends at best rates. Available in Delhi NCR, Greater Noida, and globally.",
+    "Hire Vijay Thakur (Vijay Singh) - the best affordable freelance Full Stack Web Developer & AI automation specialist. Offering Next.js/React websites, n8n workflows, and FastAPI backends at best rates. Available in Delhi NCR, Greater Noida, and globally.",
   keywords: [
     "best freelance web developer",
     "cheap freelance web developer",
@@ -49,7 +49,7 @@ export const metadata = {
     title:
       "Best Freelance Web Developer & AI Automation Specialist | Vijay Thakur",
     description:
-      "Hire Vijay Thakur (Vijay Singh) — high-performance Next.js/React apps, n8n workflow integrations, and secure database services at affordable freelancer rates.",
+      "Hire Vijay Thakur (Vijay Singh) - high-performance Next.js/React apps, n8n workflow integrations, and secure database services at affordable freelancer rates.",
     url: "https://dev.vijstack.com",
     siteName: "Vijay Thakur Portfolio",
     images: [

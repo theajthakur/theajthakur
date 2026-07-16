@@ -60,7 +60,7 @@ export default function Hero() {
           </div>
           <p className="text-foreground leading-relaxed text-sm md:text-base">
             Full Stack Web Developer & AI Automation Specialist. I build responsive,
-            high-performance web applications and intelligent AI solutions—from custom
+            high-performance web applications and intelligent AI solutions-from custom
             Next.js frontends to autonomous LLM agent pipelines, LangChain integrations, and n8n workflows.
           </p>
           <div className="flex flex-col items-end gap-0">

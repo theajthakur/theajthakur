@@ -50,7 +50,7 @@ Currently exploring:
 ---
 
 ### 🤖 AI & Automation
-![AI & Automation](public/ai_skill_banner.png)
+![AI & Automation](public/ai_skills_banner.png)
 
 * **Other AI & Automation Skills:** RAG, Vector Embeddings
 

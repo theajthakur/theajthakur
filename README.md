@@ -6,8 +6,6 @@
 
 ---
 
-## 🚀 About Me
-
 I’m a **Full-Stack Developer** who enjoys building scalable, secure, and high-performance web applications.  
 I work across the frontend (React, Next.js), backend (Node.js, Core PHP), and cloud, focusing on clean architecture and real-world usability.
 
@@ -22,34 +20,34 @@ Currently exploring:
 
 ## 🛠️ My Tech Stack
 
-### 🌐 Languages
+### Languages
 ![Languages](https://skillicons.dev/icons?i=js,ts,py,cpp)
 
 ---
 
-### 🎨 Frontend
+### Frontend
 ![Frontend](https://skillicons.dev/icons?i=nextjs,react,tailwind,redux,bootstrap,shadcn)  
 * **Other Frontend Skills:** SEO
 
 ---
 
-### 🧠 Backend
+### Backend
 ![Backend](https://skillicons.dev/icons?i=nodejs,nestjs,express,php,fastapi,django)
 
 ---
 
-### 💾 Databases
+### Databases
 ![Databases](https://skillicons.dev/icons?i=postgres,mongodb,redis,mysql)  
 * **Other Databases:** Vector Databases
 
 ---
 
-### ☁️ DevOps
+### DevOps
 ![DevOps](https://skillicons.dev/icons?i=docker,git,github,aws,gcp,linux,ubuntu,figma)
 
 ---
 
-### 🤖 AI & Automation
+### AI & Automation
 ![AI & Automation](public/ai_skills_banner.png)
 
 * **Other AI & Automation Skills:** RAG, Vector Embeddings

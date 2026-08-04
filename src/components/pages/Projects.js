@@ -58,6 +58,15 @@ export default function ProjectsGrid() {
       ],
     },
     {
+      name: "Leetalysis",
+      category: "LeetCode Analytics & Tracking Tool",
+      link: "https://leetalysis.vercel.app",
+      description:
+        "A LeetCode analytics tool for quickly exploring public user activity, including recent submissions, verdicts, and submitted solutions. Built with LeetCode's GraphQL API and supports bulk CSV-based student tracking for mentors and coding groups.",
+      thumbnail: ["leetalysis.png"],
+      tags: ["Next.js", "TypeScript", "GraphQL", "LeetCode API", "Tailwind CSS"],
+    },
+    {
       name: "URL Shortener",
       category: "URL Shortener & Windows XP Parody",
       link: "https://shortener-xp.vercel.app",

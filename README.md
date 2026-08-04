@@ -47,19 +47,16 @@ Currently exploring:
 ---
 
 ### Frontend
-### Frontend
 ![Frontend](https://skillicons.dev/icons?i=nextjs,react,tailwind,redux,bootstrap,shadcn)  
 * **Other Frontend Skills:** SEO
 
 ---
 
 ### Backend
-### Backend
 ![Backend](https://skillicons.dev/icons?i=nodejs,nestjs,express,php,fastapi,django)
 
 ---
 
-### Databases
 ### Databases
 ![Databases](https://skillicons.dev/icons?i=postgres,mongodb,redis,mysql)  
 * **Other Databases:** Vector Databases
@@ -67,12 +64,10 @@ Currently exploring:
 ---
 
 ### DevOps
-### DevOps
 ![DevOps](https://skillicons.dev/icons?i=docker,git,github,aws,gcp,linux,ubuntu,figma)
 
 ---
 
-### AI & Automation
 ### AI & Automation
 ![AI & Automation](public/ai_skills_banner.png)
 

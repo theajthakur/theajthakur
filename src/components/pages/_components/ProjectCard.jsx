@@ -1,98 +1,119 @@
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Github, FileText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function ProjectCard({ project, index }) {
-  const isEven = index % 2 === 0;
+  // Determine live link: explicit project.liveLink or fallback project.link (if not empty or '#')
+  const liveUrl = project.liveLink || (project.link && project.link !== "#" ? project.link : null);
+
+  // Render checks: missing or empty keys will not render corresponding buttons
+  const hasLiveDemo = Boolean(liveUrl && liveUrl.trim() !== "");
+  const hasGithub = Boolean(project.github && project.github.trim() !== "");
+  const hasReadMore = Boolean(project.slug && project.slug.trim() !== "");
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.05 }}
+      transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
+      className="h-full flex w-full"
     >
-      <div className="overflow-hidden border border-border/45 bg-card/15 backdrop-blur-md rounded-2xl hover:border-primary/55 hover:bg-card/25 transition-all duration-300 group hover:shadow-[0_8px_30px_rgba(0,139,155,0.06)] shadow-sm flex flex-col w-full">
-        <div
-          className={`flex flex-col ${
-            isEven ? "md:flex-row" : "md:flex-row-reverse"
-          } md:items-center w-full`}
-        >
-          {/* Cinema-Resolution Image Container (Exact 1672:941 Native Aspect Ratio) */}
-          <Link
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={`Visit ${project.name} - ${project.category || 'Website'}`}
-            className="w-full md:w-[42%] aspect-[1672/941] relative overflow-hidden cursor-pointer shrink-0"
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-80 z-10 transition-opacity duration-300 group-hover:opacity-40" />
-            {project.thumbnail && project.thumbnail[0] && (
+      <Card className="overflow-hidden rounded-2xl p-4 sm:p-5 gap-0">
+        <div>
+          {/* Top Banner Image Container */}
+          {project.thumbnail && project.thumbnail[0] && (
+            <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-4 bg-muted/30 border border-border/20">
               <Image
                 src={`/assets/projects/${project.thumbnail[0]}`}
-                alt={`${project.name} - ${project.category || 'Freelance Project'} - Full Stack Web Application by Vijay Thakur`}
+                alt={`${project.name} thumbnail`}
                 fill
-                priority={index === 0}
-                sizes="(max-width: 768px) 100vw, 55vw"
-                className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                priority={index < 2}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
               />
-            )}
-          </Link>
-
-          {/* Details Content Box */}
-          <div className="flex-grow p-5 sm:p-6 flex flex-col justify-center">
-            {/* Category Sub-Header & Index Tracker */}
-            <div className="flex items-center justify-between mb-1.5 select-none">
-              <span className="text-[10px] sm:text-xs tracking-[0.2em] font-heading text-primary font-bold uppercase">
-                {project.category || "Freelance Project"}
-              </span>
-              <span className="text-sm font-heading font-bold text-primary/40 group-hover:text-primary transition-colors duration-300">
-                {String(index + 1).padStart(2, "0")}
-              </span>
             </div>
+          )}
 
-            {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight mb-3">
+          {/* Title Header */}
+          <div className="mb-2">
+            <h3 className="text-xl sm:text-2xl font-heading font-bold text-card-foreground group-hover:text-primary transition-colors tracking-tight">
               {project.name}
             </h3>
-
-            {/* Description */}
-            <p className="text-muted-foreground mb-4 leading-relaxed text-xs sm:text-sm">
-              {project.description}
-            </p>
-
-            {/* Technologies Badges / Tags */}
-            <div className="flex flex-wrap gap-1.5 mb-4">
-              {project.tags &&
-                project.tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="px-3 py-0.5 rounded-full font-heading font-medium tracking-wide text-[10px] bg-primary/5 text-primary border border-primary/10 transition-colors hover:bg-primary/15 hover:border-primary/20"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-            </div>
-
-            {/* Action Link */}
-            <div className="flex items-center gap-4 mt-auto">
-              <Link
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`Explore ${project.name} project`}
-                className="inline-flex items-center gap-2 font-heading font-bold text-xs sm:text-sm text-primary hover:text-secondary transition-colors group/link"
-              >
-                <span>EXPLORE PROJECT</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1.5" />
-              </Link>
-            </div>
           </div>
+
+          {/* Description */}
+          <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-4 line-clamp-3">
+            {project.description}
+          </p>
+
+          {/* Tech Stack Badges */}
+          {project.tags && project.tags.length > 0 && (
+            <div className="flex flex-nowrap overflow-x-auto gap-1.5 sm:gap-2 mb-5 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              {project.tags.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className="shrink-0 whitespace-nowrap px-3 py-1 rounded-full text-[11px] font-medium bg-muted/70 hover:bg-muted text-foreground border-0 transition-colors"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+
+        {/* Action Buttons Row */}
+        {(hasLiveDemo || hasGithub || hasReadMore) && (
+          <div className="flex items-center gap-2 pt-3 border-t border-border/40 mt-auto w-full">
+            {hasReadMore && (
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="flex-1 rounded-xl border-border/80 hover:bg-accent text-xs font-semibold h-10 px-3 cursor-pointer"
+              >
+                <Link href={project.slug.startsWith("/") ? project.slug : `/p/${project.slug}`}>
+                  <FileText className="w-4 h-4 mr-1.5 shrink-0" />
+                  <span className="truncate">Read More</span>
+                </Link>
+              </Button>
+            )}
+
+            {hasGithub && (
+              <Button
+                variant="outline"
+                size="icon"
+                asChild
+                title="View Code on GitHub"
+                className="rounded-xl border-border/80 hover:bg-accent h-10 w-10 shrink-0 cursor-pointer"
+              >
+                <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">
+                  <Github className="w-4 h-4" />
+                </a>
+              </Button>
+            )}
+
+            {hasLiveDemo && (
+              <Button
+                size="icon"
+                asChild
+                title="Live Demo"
+                className="rounded-xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200 h-10 w-10 shrink-0 cursor-pointer shadow-xs"
+              >
+                <a href={liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Live Demo">
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </Button>
+            )}
+          </div>
+        )}
+      </Card>
     </motion.div>
   );
 }
+

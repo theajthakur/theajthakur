@@ -1,25 +1,17 @@
-import { Alata, Agdasima, Aldrich } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 import LayoutProvider from "@/components/providers/LayoutProvider";
 import { Analytics } from "@vercel/analytics/next";
 
-const alata = Alata({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-alata",
-  weight: "400",
+  variable: "--font-inter",
 });
 
-const agdasima = Agdasima({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-agdasima",
-  weight: "400",
-});
-
-const aldrich = Aldrich({
-  subsets: ["latin"],
-  variable: "--font-aldrich",
-  weight: "400",
+  variable: "--font-space-grotesk",
 });
 
 export const metadata = {
@@ -150,7 +142,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${alata.variable} ${agdasima.variable} ${aldrich.variable} antialiased font-primary`}
+        className={`${inter.variable} ${spaceGrotesk.variable} antialiased font-primary`}
       >
         <script
           type="application/ld+json"

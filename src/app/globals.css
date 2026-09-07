@@ -10,9 +10,9 @@
   --color-primary: #008b9b;
   --color-dark: #003a41;
   --color-secondary: #00e5ff;
-  --font-primary: var(--font-alata);
-  --font-secondary: var(--font-agdasima);
-  --font-heading: var(--font-aldrich);
+  --font-primary: var(--font-inter);
+  --font-secondary: var(--font-space-grotesk);
+  --font-heading: var(--font-space-grotesk);
   --color-light: #fff;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -83,11 +83,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-aldrich);
+  font-family: var(--font-space-grotesk);
 }
 
 p {
-  font-family: var(--foreground);
+  font-family: var(--font-inter);
 }
 
 :root {

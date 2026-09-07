@@ -11,66 +11,35 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const data = [
-  {
-    name: "Jan",
-    total: 12,
-  },
-  {
-    name: "Feb",
-    total: 24,
-  },
-  {
-    name: "Mar",
-    total: 18,
-  },
-  {
-    name: "Apr",
-    total: 35,
-  },
-  {
-    name: "May",
-    total: 28,
-  },
-  {
-    name: "Jun",
-    total: 45,
-  },
-  {
-    name: "Jul",
-    total: 32,
-  },
-  {
-    name: "Aug",
-    total: 40,
-  },
-  {
-    name: "Sep",
-    total: 38,
-  },
-  {
-    name: "Oct",
-    total: 55,
-  },
-  {
-    name: "Nov",
-    total: 48,
-  },
-  {
-    name: "Dec",
-    total: 60,
-  },
+const defaultData = [
+  { name: "Jan", total: 0 },
+  { name: "Feb", total: 0 },
+  { name: "Mar", total: 0 },
+  { name: "Apr", total: 0 },
+  { name: "May", total: 0 },
+  { name: "Jun", total: 0 },
+  { name: "Jul", total: 0 },
+  { name: "Aug", total: 0 },
+  { name: "Sep", total: 0 },
+  { name: "Oct", total: 0 },
+  { name: "Nov", total: 0 },
+  { name: "Dec", total: 0 },
 ];
 
-export default function OverviewChart() {
+interface ChartItem {
+  name: string;
+  total: number;
+}
+
+export default function OverviewChart({ data = [] }: { data?: ChartItem[] }) {
   return (
-    <Card className="col-span-4">
+    <Card className="lg:col-span-3 border-border/50 shadow-sm">
       <CardHeader>
-        <CardTitle>Overview</CardTitle>
+        <CardTitle className="font-heading text-xl">Activity Overview</CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={data}>
+        <ResponsiveContainer width="100%" height={320}>
+          <BarChart data={data.length > 0 ? data : defaultData}>
             <XAxis
               dataKey="name"
               stroke="#888888"

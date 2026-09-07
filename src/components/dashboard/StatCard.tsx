@@ -10,7 +10,7 @@ export default function StatCard({
 }) {
   return (
     <Card
-      className={`hover:border-primary transition-all border-2 relative gap-0 ${
+      className={`h-full flex flex-col justify-between hover:border-primary transition-all border-2 relative gap-0 ${
         active
           ? "bg-linear-to-br from-primary to-primary/70"
           : "hover:bg-linear-to-br from-primary/20 to-transparent"

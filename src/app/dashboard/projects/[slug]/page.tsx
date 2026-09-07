@@ -16,10 +16,12 @@ import {
   Globe,
   Github,
   Image as ImageIcon,
+  Trash2,
 } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
 import { BoneyardSkeleton, EditorPageSkeleton } from "@/components/common/Skeletons";
+import { CloudinaryFileUploader } from "@/components/common/ImageCropModal";
 
 export default function ProjectEditorPage() {
   const router = useRouter();
@@ -388,48 +390,72 @@ export default function ProjectEditorPage() {
                   </div>
                 </div>
 
-                {/* Thumbnail URLs */}
-                <div className="space-y-2 pt-4 border-t border-border/40">
-                  <Label htmlFor="thumbnail" className="text-base font-semibold flex items-center gap-2">
-                    <ImageIcon className="h-4 w-4 text-primary" /> Thumbnail Image URLs
-                  </Label>
-                  <Input
-                    type="text"
-                    id="thumbnail"
-                    placeholder="shopagent.png or /assets/projects/shopagent.png or https://..."
-                    value={thumbnail}
-                    onChange={(e) => setThumbnail(e.target.value)}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Comma-separated image URLs or filenames (e.g. <code className="font-mono text-foreground bg-muted px-1 rounded">shopagent.png</code> will resolve to <code className="font-mono text-foreground bg-muted px-1 rounded">/assets/projects/shopagent.png</code> on render).
-                  </p>
+                {/* Thumbnail Image Upload (Cloudinary + Crop) */}
+                <div className="space-y-3 pt-4 border-t border-border/40">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <Label className="text-base font-semibold flex items-center gap-2">
+                        <ImageIcon className="h-4 w-4 text-primary" /> Project Cover Image
+                      </Label>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Strictly file uploads only. Select a file from your device, crop it to fit, and upload to Cloudinary.
+                      </p>
+                    </div>
+                    <CloudinaryFileUploader
+                      folder="projects"
+                      label={thumbnail ? "Crop & Change Image" : "Upload & Crop Image"}
+                      onUploadSuccess={(url) => setThumbnail(url)}
+                    />
+                  </div>
 
-                  {/* Image Preview Box */}
+                  {/* Image Display & Controls Container */}
                   {(() => {
                     const firstThumb = thumbnail.split(",")[0]?.trim() || "";
                     const previewSrc = resolveThumbnailUrl(firstThumb);
 
                     return (
-                      <div className="mt-3 relative w-full h-48 rounded-xl overflow-hidden border border-border/50 bg-muted/40 flex items-center justify-center">
+                      <div className="mt-3 relative w-full h-56 rounded-xl overflow-hidden border border-border/50 bg-muted/40 flex items-center justify-center group">
                         {previewSrc && !imgError ? (
-                          <img
-                            key={previewSrc}
-                            src={previewSrc}
-                            alt="Thumbnail Preview"
-                            className="w-full h-full object-cover"
-                            onError={() => setImgError(true)}
-                          />
+                          <>
+                            <img
+                              key={previewSrc}
+                              src={previewSrc}
+                              alt="Thumbnail Preview"
+                              className="w-full h-full object-cover"
+                              onError={() => setImgError(true)}
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 p-4">
+                              <CloudinaryFileUploader
+                                folder="projects"
+                                label="Crop & Replace"
+                                onUploadSuccess={(url) => setThumbnail(url)}
+                              />
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => setThumbnail("")}
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" /> Remove
+                              </Button>
+                            </div>
+                          </>
                         ) : (
-                          <div className="flex flex-col items-center justify-center p-4 text-center space-y-2 text-muted-foreground">
-                            <ImageIcon className="h-8 w-8 text-muted-foreground/60" />
-                            <p className="text-xs font-mono bg-muted px-2.5 py-1 rounded-md max-w-sm truncate text-foreground border border-border/40">
-                              {previewSrc || "No thumbnail specified"}
+                          <div className="flex flex-col items-center justify-center p-6 text-center space-y-3 text-muted-foreground">
+                            <ImageIcon className="h-10 w-10 text-muted-foreground/60" />
+                            <p className="text-xs font-mono bg-muted px-3 py-1 rounded-md max-w-sm truncate text-foreground border border-border/40">
+                              {previewSrc || "No cover image uploaded yet"}
                             </p>
                             {imgError && previewSrc && (
                               <span className="text-[11px] text-amber-500 font-medium flex items-center gap-1">
                                 <AlertCircle className="h-3.5 w-3.5" /> Image not found at specified path
                               </span>
                             )}
+                            <CloudinaryFileUploader
+                              folder="projects"
+                              label="Select File to Crop & Upload"
+                              onUploadSuccess={(url) => setThumbnail(url)}
+                            />
                           </div>
                         )}
                       </div>

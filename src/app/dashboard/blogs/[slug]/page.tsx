@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Save, ArrowLeft, Loader2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Save, ArrowLeft, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
 
@@ -24,6 +25,11 @@ export default function BlogEditor() {
   const [isLoading, setIsLoading] = useState(!isNew);
   const [currentId, setCurrentId] = useState<number | null>(null);
 
+  // Slug check states
+  const [isCheckingSlug, setIsCheckingSlug] = useState(false);
+  const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "unique" | "taken">("idle");
+  const isManualSlugRef = useRef(false);
+
   useEffect(() => {
     const fetchBlog = async () => {
       if (!isNew && slugParam) {
@@ -38,6 +44,7 @@ export default function BlogEditor() {
             setContent(blog.content || "");
             setKeywords(blog.keywords || "");
             setCurrentId(blog.id);
+            isManualSlugRef.current = true;
           } else {
             toast.error("Blog post not found");
             router.push("/dashboard/blogs");
@@ -53,19 +60,99 @@ export default function BlogEditor() {
     fetchBlog();
   }, [isNew, slugParam, router]);
 
+  // Debounced auto-slug generation & uniqueness check on Title change
   useEffect(() => {
-    if (isNew && title && !slug) {
-      const generatedSlug = title
+    if (!isNew || isManualSlugRef.current || !title.trim()) return;
+
+    const timer = setTimeout(async () => {
+      const baseSlug = title
         .toLowerCase()
+        .trim()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)+/g, "");
-      setSlug(generatedSlug);
-    }
-  }, [title, isNew, slug]);
+
+      if (!baseSlug) {
+        setSlug("");
+        setSlugStatus("idle");
+        return;
+      }
+
+      setIsCheckingSlug(true);
+      setSlugStatus("checking");
+
+      try {
+        let candidateSlug = baseSlug;
+        let isUnique = false;
+        let attempts = 0;
+
+        while (!isUnique && attempts < 5) {
+          const checkRes = await fetch(
+            `/api/blogs/check-slug?slug=${encodeURIComponent(candidateSlug)}`
+          );
+          const checkData = await checkRes.json();
+
+          if (checkData.isUnique) {
+            isUnique = true;
+          } else {
+            attempts++;
+            const randomSuffix = Math.random().toString(36).substring(2, 6);
+            candidateSlug = `${baseSlug}-${randomSuffix}`;
+          }
+        }
+
+        setSlug(candidateSlug);
+        setSlugStatus(isUnique ? "unique" : "taken");
+      } catch (err) {
+        console.error("Error checking slug:", err);
+        setSlug(baseSlug);
+        setSlugStatus("idle");
+      } finally {
+        setIsCheckingSlug(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [title, isNew]);
+
+  // Debounced uniqueness check when user manually edits slug
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isManualSlugRef.current = true;
+    const rawVal = e.target.value;
+    const formatted = rawVal.toLowerCase().replace(/[^a-z0-9-]/g, "");
+    setSlug(formatted);
+  };
+
+  useEffect(() => {
+    if (!slug.trim() || !isManualSlugRef.current) return;
+
+    const timer = setTimeout(async () => {
+      setIsCheckingSlug(true);
+      setSlugStatus("checking");
+
+      try {
+        const checkRes = await fetch(
+          `/api/blogs/check-slug?slug=${encodeURIComponent(slug)}`
+        );
+        const checkData = await checkRes.json();
+        setSlugStatus(checkData.isUnique ? "unique" : "taken");
+      } catch {
+        setSlugStatus("idle");
+      } finally {
+        setIsCheckingSlug(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [slug]);
 
   const handleSave = async () => {
     if (!title.trim() || !slug.trim() || !description.trim() || !content.trim()) {
       toast.error("Please fill in all required fields: Title, Slug, Description, Content");
+      return;
+    }
+
+    if (slugStatus === "taken") {
+      toast.error("The slug is already taken. Please enter a unique slug.");
       return;
     }
 
@@ -75,7 +162,7 @@ export default function BlogEditor() {
         const checkRes = await fetch(`/api/blogs/check-slug?slug=${encodeURIComponent(slug)}`);
         const checkData = await checkRes.json();
         if (!checkData.isUnique) {
-          throw new Error("Slug already exists. Please enter a unique slug.");
+          throw new Error("Slug already exists. Please pick a unique slug.");
         }
       }
 
@@ -121,7 +208,7 @@ export default function BlogEditor() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center bg-background font-primary">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="h-6 w-6 animate-spin" />
           <span>Loading post...</span>
@@ -151,7 +238,7 @@ export default function BlogEditor() {
           <Button variant="outline" onClick={() => router.push("/dashboard/blogs")}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={isSubmitting}>
+          <Button onClick={handleSave} disabled={isSubmitting || isCheckingSlug}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -225,21 +312,41 @@ export default function BlogEditor() {
         <div className="space-y-6">
           <Card className="border-border/50 shadow-sm">
             <CardContent className="p-6 space-y-6">
-              {/* URL Slug */}
+              {/* URL Slug Input with Status */}
               <div className="space-y-2">
-                <Label htmlFor="slug" className="font-semibold">
-                  URL Slug <span className="text-destructive">*</span>
-                </Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="slug" className="font-semibold">
+                    URL Slug <span className="text-destructive">*</span>
+                  </Label>
+                  {isCheckingSlug && (
+                    <Badge variant="outline" className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Loader2 className="h-3 w-3 animate-spin" /> Checking...
+                    </Badge>
+                  )}
+                  {!isCheckingSlug && slugStatus === "unique" && slug && (
+                    <Badge variant="secondary" className="text-xs text-green-600 dark:text-green-400 bg-green-500/10 flex items-center gap-1">
+                      <CheckCircle2 className="h-3 w-3" /> Unique
+                    </Badge>
+                  )}
+                  {!isCheckingSlug && slugStatus === "taken" && slug && (
+                    <Badge variant="destructive" className="text-xs flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" /> Taken
+                    </Badge>
+                  )}
+                </div>
                 <Input
                   type="text"
                   id="slug"
                   placeholder="my-blog-post-slug"
                   value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
+                  onChange={handleSlugChange}
                   className="font-mono text-sm"
                 />
-                <p className="text-xs text-muted-foreground">
-                  Unique identifier used in URL path (`/blogs/${slug || "slug"}`)
+                <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                  <span>URL Path:</span>
+                  <code className="font-mono text-foreground bg-muted px-1.5 py-0.5 rounded text-[11px]">
+                    /blogs/{slug || "post-slug"}
+                  </code>
                 </p>
               </div>
 

@@ -128,90 +128,91 @@ export default function BlogsPage() {
         ) : (
           <div className="space-y-4">
             {filteredBlogs.length > 0 ? (
-              filteredBlogs.map((blog) => (
-                <div
-                  key={blog.id}
-                  className={cn(
-                    "group flex flex-col md:flex-row gap-6 p-5 rounded-xl border border-border/50 bg-card backdrop-blur-sm transition-all duration-200",
-                    "hover:bg-accent/40 hover:shadow-md hover:border-primary/30"
-                  )}
-                >
-                  <div className="flex-1 flex flex-col justify-between space-y-3">
-                    <div className="space-y-2">
-                      <h3
-                        className="text-xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors cursor-pointer"
-                        onClick={() => router.push(`/dashboard/blogs/${blog.slug}`)}
-                      >
-                        {blog.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {blog.description}
-                      </p>
-                    </div>
+              filteredBlogs.map((blog) => {
+                const tags = blog.keywords
+                  ? blog.keywords.split(",").map((kw) => kw.trim()).filter(Boolean)
+                  : [];
 
-                    <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground pt-2">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="h-3.5 w-3.5 text-primary" />
-                        <span>
-                          {new Date(blog.created_at).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </span>
+                return (
+                  <div
+                    key={blog.id}
+                    className={cn(
+                      "group flex flex-col md:flex-row gap-6 p-5 rounded-xl border border-border/50 bg-card backdrop-blur-sm transition-all duration-200",
+                      "hover:bg-accent/40 hover:shadow-md hover:border-primary/30"
+                    )}
+                  >
+                    <div className="flex-1 flex flex-col justify-between space-y-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Calendar className="h-3.5 w-3.5 text-primary" />
+                          <span>
+                            {new Date(blog.created_at).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+                          <span>•</span>
+                          <span className="font-mono text-muted-foreground/80">
+                            /blogs/{blog.slug}
+                          </span>
+                        </div>
+
+                        <h3
+                          className="text-xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors cursor-pointer"
+                          onClick={() => router.push(`/dashboard/blogs/${blog.slug}`)}
+                        >
+                          {blog.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {blog.description}
+                        </p>
                       </div>
 
-                      <div className="font-mono text-muted-foreground/80">
-                        /blogs/{blog.slug}
-                      </div>
-
-                      {blog.keywords && (
-                        <div className="flex flex-wrap gap-1.5">
-                          {blog.keywords
-                            .split(",")
-                            .map((kw) => kw.trim())
-                            .filter(Boolean)
-                            .map((keyword, i) => (
-                              <Badge key={i} variant="outline" className="text-[11px] py-0 px-2">
-                                #{keyword}
-                              </Badge>
-                            ))}
+                      {/* Keywords / Tech Stack positioned at bottom of card */}
+                      {tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border/40">
+                          {tags.map((keyword, i) => (
+                            <Badge key={i} variant="outline" className="text-[11px] py-0.5 px-2.5 rounded-full font-medium">
+                              #{keyword}
+                            </Badge>
+                          ))}
                         </div>
                       )}
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-end md:justify-center border-t md:border-t-0 md:border-l border-border/50 pt-3 md:pt-0 md:pl-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 hover:bg-muted"
-                        >
-                          <MoreVertical className="h-4 w-4" />
-                          <span className="sr-only">Actions</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          onClick={() => router.push(`/dashboard/blogs/${blog.slug}`)}
-                        >
-                          <FileText className="mr-2 h-4 w-4" />
-                          <span>Edit Post</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="text-destructive focus:text-destructive"
-                          onClick={() => handleDelete(blog.id)}
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          <span>Delete Post</span>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center justify-end md:justify-center border-t md:border-t-0 md:border-l border-border/50 pt-3 md:pt-0 md:pl-4">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 hover:bg-muted"
+                          >
+                            <MoreVertical className="h-4 w-4" />
+                            <span className="sr-only">Actions</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={() => router.push(`/dashboard/blogs/${blog.slug}`)}
+                          >
+                            <FileText className="mr-2 h-4 w-4" />
+                            <span>Edit Post</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-destructive focus:text-destructive"
+                            onClick={() => handleDelete(blog.id)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            <span>Delete Post</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 border rounded-xl border-dashed">
                 <div className="bg-muted/50 p-4 rounded-full">

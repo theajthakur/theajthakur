@@ -24,7 +24,7 @@ export const NavLinks = ({
         return (
           <Link href={e.link} key={i} onClick={onClick} className="relative group">
             <div
-              className={`relative cursor-pointer font-heading py-2 px-5 rounded-full transition-all duration-300 text-sm md:text-base z-10 ${
+              className={`relative cursor-pointer font-heading py-2 px-3 lg:px-5 rounded-full transition-all duration-300 text-xs sm:text-sm lg:text-base z-10 ${
                 active
                   ? "text-primary font-semibold"
                   : "text-muted-foreground hover:text-primary"

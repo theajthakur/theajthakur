@@ -25,6 +25,10 @@ export default function Navbar() {
       link: "/p/projects",
     },
     {
+      text: "Blogs",
+      link: "/blogs",
+    },
+    {
       text: "Contact",
       link: "/p/contact",
     },

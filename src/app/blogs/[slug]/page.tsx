@@ -6,12 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Tag } from "lucide-react";
 import { getBlogByIdOrSlug } from "@/lib/dashboard/blogs/BlogsController";
-import { blogsData } from "./data";
-
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const dbPost = await getBlogByIdOrSlug(slug);
-    const post = dbPost || blogsData.find((b) => b.slug === slug) || blogsData[0];
+    const post = await getBlogByIdOrSlug(slug);
     if (!post) return { title: "Blog Post | Vijay Thakur" };
 
     return {
@@ -43,21 +40,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     const { slug } = await params;
     const dbPost = await getBlogByIdOrSlug(slug);
 
-    const post = dbPost
-        ? {
-              title: dbPost.title,
-              description: dbPost.description,
-              content: dbPost.content,
-              createdAt: dbPost.created_at,
-              keywords: dbPost.keywords
-                  ? dbPost.keywords.split(",").map((k: string) => k.trim())
-                  : [],
-          }
-        : blogsData.find((b) => b.slug === slug) || blogsData[0];
-
-    if (!post) {
+    if (!dbPost) {
         notFound();
     }
+
+    const post = {
+        title: dbPost.title,
+        description: dbPost.description,
+        content: dbPost.content,
+        createdAt: dbPost.created_at,
+        keywords: dbPost.keywords
+            ? dbPost.keywords.split(",").map((k: string) => k.trim()).filter(Boolean)
+            : [],
+    };
 
     return (
         <article className="space-y-8">

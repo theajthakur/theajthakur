@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/pages/_components/ProjectCard";
-import { blogsData } from "./data";
+import { getAllBlogs } from "@/lib/dashboard/blogs/BlogsController";
 import { ArrowLeft, BookOpen, Sparkles, UserCheck } from "lucide-react";
 
 const featuredProject = {
@@ -19,9 +19,11 @@ const featuredProject = {
     tags: ["Next.js", "FastAPI", "Gemini AI", "Razorpay"],
 };
 
-export default function BlogLayout({ children }: { children: React.ReactNode }) {
+export default async function BlogLayout({ children }: { children: React.ReactNode }) {
+    const blogsData = await getAllBlogs();
+
     return (
-        <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6">
+        <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 font-primary">
             <div className="max-w-7xl mx-auto space-y-6">
                 {/* Navigation Breadcrumb / Back Link */}
                 <div className="flex items-center justify-between">
@@ -59,20 +61,26 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
                                 </Badge>
                             </CardHeader>
                             <CardContent className="p-0 space-y-3">
-                                {blogsData.map((b) => (
-                                    <Link
-                                        key={b.slug}
-                                        href={`/blogs/${b.slug}`}
-                                        className="block group p-2.5 rounded-xl hover:bg-accent/60 transition-colors"
-                                    >
-                                        <h4 className="text-xs font-semibold font-heading text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                                            {b.title}
-                                        </h4>
-                                        <p className="text-[11px] text-muted-foreground mt-1 line-clamp-1">
-                                            {b.description}
-                                        </p>
-                                    </Link>
-                                ))}
+                                {blogsData.length > 0 ? (
+                                    blogsData.map((b) => (
+                                        <Link
+                                            key={b.slug}
+                                            href={`/blogs/${b.slug}`}
+                                            className="block group p-2.5 rounded-xl hover:bg-accent/60 transition-colors"
+                                        >
+                                            <h4 className="text-xs font-semibold font-heading text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                                                {b.title}
+                                            </h4>
+                                            <p className="text-[11px] text-muted-foreground mt-1 line-clamp-1">
+                                                {b.description}
+                                            </p>
+                                        </Link>
+                                    ))
+                                ) : (
+                                    <p className="text-xs text-muted-foreground py-2 italic">
+                                        No other articles yet.
+                                    </p>
+                                )}
                             </CardContent>
                         </Card>
 
@@ -100,7 +108,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
                                 Building scalable web applications, real-time systems, and AI-driven automation workflows.
                             </p>
                             <Button asChild variant="outline" size="sm" className="w-full rounded-xl text-xs font-semibold">
-                                <Link href="/p/contact">
+                                <Link href="/contact">
                                     <UserCheck className="w-3.5 h-3.5 mr-1.5" />
                                     Get in Touch
                                 </Link>

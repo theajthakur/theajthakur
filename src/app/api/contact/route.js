@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { createAdminClient } from "@/lib/server";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -13,14 +13,20 @@ const contactSchema = z.object({
 export async function POST(req) {
   try {
     const body = await req.json();
-
     const parsedData = contactSchema.parse(body);
 
-    const user = await prisma.userQuery.create({
-      data: parsedData,
-    });
+    const supabase = createAdminClient();
+    const { data: userMessage, error } = await supabase
+      .from("messages")
+      .insert([parsedData])
+      .select()
+      .single();
 
-    return new Response(JSON.stringify(user), { status: 201 });
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return new Response(JSON.stringify(userMessage), { status: 201 });
   } catch (error) {
     if (error.name === "ZodError") {
       const fieldErrors = {};

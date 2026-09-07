@@ -133,14 +133,17 @@ export const getAllBlogs = async () => {
   }
 };
 
-export const checkSlugUnique = async (slug: string) => {
+export const checkSlugUnique = async (slug: string, excludeId?: string | number) => {
   try {
     const supabase = createAdminClient();
-    const { data, error } = await supabase
-      .from("posts")
-      .select("id")
-      .eq("slug", slug)
-      .maybeSingle();
+    let query = supabase.from("posts").select("id").eq("slug", slug);
+
+    if (excludeId !== undefined && excludeId !== null && excludeId !== "") {
+      const numericId = typeof excludeId === "string" && /^\d+$/.test(excludeId) ? parseInt(excludeId, 10) : excludeId;
+      query = query.neq("id", numericId);
+    }
+
+    const { data, error } = await query.maybeSingle();
 
     if (error) {
       console.error("Supabase error checking slug uniqueness:", error);

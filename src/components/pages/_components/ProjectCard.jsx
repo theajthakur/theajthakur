@@ -31,7 +31,11 @@ export default function ProjectCard({ project, index }) {
           {project.thumbnail && project.thumbnail[0] && (
             <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-4 bg-muted/30 border border-border/20">
               <Image
-                src={`/assets/projects/${project.thumbnail[0]}`}
+                src={
+                  project.thumbnail[0].startsWith("http") || project.thumbnail[0].startsWith("/")
+                    ? project.thumbnail[0]
+                    : `/assets/projects/${project.thumbnail[0]}`
+                }
                 alt={`${project.name} thumbnail`}
                 fill
                 priority={index < 2}

@@ -131,8 +131,9 @@ export default function BlogEditor() {
       setSlugStatus("checking");
 
       try {
+        const excludeParam = currentId ? `&excludeId=${currentId}` : "";
         const checkRes = await fetch(
-          `/api/blogs/check-slug?slug=${encodeURIComponent(slug)}`
+          `/api/blogs/check-slug?slug=${encodeURIComponent(slug)}${excludeParam}`
         );
         const checkData = await checkRes.json();
         setSlugStatus(checkData.isUnique ? "unique" : "taken");
@@ -144,7 +145,7 @@ export default function BlogEditor() {
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [slug]);
+  }, [slug, currentId]);
 
   const handleSave = async () => {
     if (!title.trim() || !slug.trim() || !description.trim() || !content.trim()) {

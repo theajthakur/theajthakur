@@ -8,6 +8,7 @@ import {
   FileText,
   Clock,
   LayoutDashboard,
+  FolderKanban,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,11 @@ const sidebarItems = [
     title: "Blogs",
     href: "/dashboard/blogs",
     icon: FileText,
+  },
+  {
+    title: "Projects",
+    href: "/dashboard/projects",
+    icon: FolderKanban,
   },
   {
     title: "Timelines",

@@ -203,12 +203,16 @@ export default function SearchModal({
                         {project.thumbnail && project.thumbnail[0] && (
                           <div className="relative w-20 aspect-1672/941 rounded-sm overflow-hidden shrink-0 border border-border/40 bg-muted/20">
                             <Image
-                              src={`/assets/projects/${project.thumbnail[0]}`}
-                              alt={project.name}
-                              fill
-                              sizes="64px"
-                              className="object-cover"
-                            />
+                               src={
+                                 project.thumbnail[0].startsWith("http") || project.thumbnail[0].startsWith("/")
+                                   ? project.thumbnail[0]
+                                   : `/assets/projects/${project.thumbnail[0]}`
+                               }
+                               alt={project.name}
+                               fill
+                               sizes="64px"
+                               className="object-contain"
+                             />
                           </div>
                         )}
 

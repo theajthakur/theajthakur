@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 const TRENDING_SEARCHES = [
+  "ShopAgent",
   "Oppskills",
   "Multiplayer",
   "URL Shortener",

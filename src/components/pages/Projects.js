@@ -32,6 +32,26 @@ export default function ProjectsGrid() {
 
   const projects = [
     {
+      name: "ShopAgent",
+      category: "AI Growth & Agentic Commerce",
+      link: "#",
+      description:
+        "An AI-native commerce layer that makes existing merchant APIs transactable by AI buyers. It enables product discovery, cart management, address handling, order placement, and Razorpay payments through a natural-language conversation, without requiring merchants to rebuild their existing commerce stack.",
+      thumbnail: ["shopagent.png"],
+      tags: [
+        "Next.js",
+        "FastAPI",
+        "Python",
+        "Google Gemini",
+        "Razorpay",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "Clerk",
+        "Docker",
+        "GCP VPS"
+      ],
+    },
+    {
       name: "Oppskills",
       category: "Full-Stack Discovery Platform",
       link: "https://oppskills.com",

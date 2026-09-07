@@ -22,17 +22,22 @@ Currently exploring:
 
 ## Featured Projects
 
-### 1. [Oppskills](https://oppskills.com)
+### 1. ShopAgent - AI Growth & Agentic Commerce
+* **Category:** AI Growth & Agentic Commerce
+* **Description:** An AI-native commerce layer that makes existing merchant APIs transactable by AI buyers. Enables product discovery, cart management, address handling, order placement, and Razorpay payments through natural-language conversation without requiring merchants to rebuild their existing commerce stack.
+* **Tech Stack:** `Next.js` `FastAPI` `Python` `SQLAlchemy` `PostgreSQL` `Google Gemini` `Razorpay` `Clerk` `Docker` `GitHub Actions` `GCP VPS`
+
+### 2. [Oppskills](https://oppskills.com)
 * **Category:** Full-Stack Discovery Platform
 * **Description:** A full-stack opportunity discovery platform built using Next.js, NestJS, PostgreSQL, and Redis, serving 10,000+ users. Features analytics aggregation, custom authentication, and streamlined discovery for events and hackathons.
 * **Tech Stack:** `Next.js` `NestJS` `PostgreSQL` `Redis` `TypeScript` `LLMs` `RAG`
 
-### 2. [Snake & Ladder Multiplayer](https://www.snakeladder.me)
+### 3. [Snake & Ladder Multiplayer](https://www.snakeladder.me)
 * **Category:** Real-Time Multiplayer Game
 * **Description:** A modern web-based multiplayer implementation of Snake & Ladder featuring server-authoritative gameplay, real-time API polling, secure turn validation, lobby creation, and synchronized gameplay.
 * **Tech Stack:** `Next.js` `FastAPI` `Python` `Tailwind CSS` `REST API`
 
-### 3. [Leetalysis](https://leetalysis.vercel.app)
+### 4. [Leetalysis](https://leetalysis.vercel.app)
 * **Category:** LeetCode Analytics & Tracking Tool
 * **Description:** A LeetCode analytics tool for exploring public user activity, recent submissions, verdicts, and solutions. Supports bulk CSV-based student tracking for mentors and coding groups.
 * **Tech Stack:** `Next.js` `TypeScript` `GraphQL` `LeetCode API` `Tailwind CSS`

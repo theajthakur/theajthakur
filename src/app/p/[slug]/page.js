@@ -12,8 +12,10 @@ export async function generateMetadata({ params }) {
   const seoData = {
     projects: {
       title: "Projects & Portfolio | Vijay Thakur | Best Freelance Web Developer",
-      description: "Explore the portfolio of Vijay Thakur, a top freelance developer. Featuring Snake & Ladder multiplayer game, Oppskills Discovery Platform, Ponion Food SaaS, and XP URL Shortener.",
+      description: "Explore the portfolio of Vijay Thakur, a top freelance developer. Featuring ShopAgent AI Commerce, Snake & Ladder multiplayer game, Oppskills Discovery Platform, Ponion Food SaaS, and XP URL Shortener.",
       keywords: [
+        "ShopAgent AI Commerce",
+        "Agentic Commerce Layer",
         "Snake and Ladder multiplayer game",
         "Oppskills discovery platform",
         "Ponion food SaaS",
@@ -108,6 +110,18 @@ export default async function Page({ params }) {
           "position": 1,
           "item": {
             "@type": "SoftwareApplication",
+            "name": "ShopAgent",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "All",
+            "url": "https://dev.vijstack.com/p/projects",
+            "description": "An AI-native commerce layer that makes existing merchant APIs transactable by AI buyers. It enables product discovery, cart management, address handling, order placement, and Razorpay payments through natural-language conversation."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "SoftwareApplication",
             "name": "Oppskills",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "All",
@@ -117,7 +131,7 @@ export default async function Page({ params }) {
         },
         {
           "@type": "ListItem",
-          "position": 2,
+          "position": 3,
           "item": {
             "@type": "SoftwareApplication",
             "name": "Snake & Ladder Multiplayer",
@@ -129,7 +143,7 @@ export default async function Page({ params }) {
         },
         {
           "@type": "ListItem",
-          "position": 3,
+          "position": 4,
           "item": {
             "@type": "SoftwareApplication",
             "name": "URL Shortener",
@@ -141,7 +155,7 @@ export default async function Page({ params }) {
         },
         {
           "@type": "ListItem",
-          "position": 4,
+          "position": 5,
           "item": {
             "@type": "SoftwareApplication",
             "name": "Ponion",
@@ -153,7 +167,7 @@ export default async function Page({ params }) {
         },
         {
           "@type": "ListItem",
-          "position": 5,
+          "position": 6,
           "item": {
             "@type": "SoftwareApplication",
             "name": "Rotaract Club Website",

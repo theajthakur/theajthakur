@@ -11,9 +11,36 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const post = await getBlogByIdOrSlug(slug);
     if (!post) return { title: "Blog Post | Vijay Thakur" };
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://theajthakur.com";
+    const postUrl = `${baseUrl}/blogs/${post.slug}`;
+    const keywordsList = post.keywords
+        ? post.keywords.split(",").map((k: string) => k.trim()).filter(Boolean)
+        : [];
+
     return {
         title: `${post.title} | Vijay Thakur`,
         description: post.description,
+        keywords: keywordsList,
+        authors: [{ name: "Vijay Thakur" }],
+        alternates: {
+            canonical: postUrl,
+        },
+        openGraph: {
+            title: post.title,
+            description: post.description,
+            url: postUrl,
+            siteName: "Vijay Thakur",
+            type: "article",
+            publishedTime: post.created_at,
+            authors: ["Vijay Thakur"],
+            tags: keywordsList,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.description,
+            creator: "@xvijaythakur",
+        },
     };
 }
 
@@ -54,8 +81,36 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             : [],
     };
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://theajthakur.com";
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.description,
+        "author": {
+            "@type": "Person",
+            "name": "Vijay Thakur",
+            "url": baseUrl,
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Vijay Thakur",
+        },
+        "datePublished": post.createdAt,
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `${baseUrl}/blogs/${slug}`,
+        },
+        "keywords": post.keywords.join(", "),
+    };
+
     return (
-        <article className="space-y-8">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <article className="space-y-8">
             {/* Blog Article Header */}
             <Card className="rounded-2xl p-6 sm:p-8 space-y-4">
                 <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
@@ -242,5 +297,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
             </Card>
         </article>
+      </>
     );
 }

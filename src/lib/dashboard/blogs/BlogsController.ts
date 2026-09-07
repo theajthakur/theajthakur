@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/server";
+import { createClient, createAdminClient } from "@/lib/server";
 import slugify from "slugify";
 
 export interface PostData {
@@ -88,44 +88,54 @@ export const deleteBlog = async (id: string | number) => {
 };
 
 export const getBlogByIdOrSlug = async (idOrSlug: string) => {
-  const supabase = await createClient();
-  const isNumeric = /^\d+$/.test(idOrSlug);
+  try {
+    const supabase = createAdminClient();
+    const isNumeric = /^\d+$/.test(idOrSlug);
 
-  const query = supabase.from("posts").select("*");
-  if (isNumeric) {
-    query.eq("id", parseInt(idOrSlug, 10));
-  } else {
-    query.eq("slug", idOrSlug);
-  }
+    const query = supabase.from("posts").select("*");
+    if (isNumeric) {
+      query.eq("id", parseInt(idOrSlug, 10));
+    } else {
+      query.eq("slug", idOrSlug);
+    }
 
-  const { data, error } = await query.maybeSingle();
+    const { data, error } = await query.maybeSingle();
 
-  if (error) {
-    console.error("Error fetching post:", error);
+    if (error) {
+      console.error("Error fetching post:", error);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Exception fetching post:", err);
     return null;
   }
-
-  return data;
 };
 
 export const getAllBlogs = async () => {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("posts")
-    .select("*")
-    .order("created_at", { ascending: false });
+  try {
+    const supabase = createAdminClient();
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("Error fetching posts:", error);
+    if (error) {
+      console.error("Error fetching posts:", error);
+      return [];
+    }
+
+    return data || [];
+  } catch (err) {
+    console.error("Exception fetching posts:", err);
     return [];
   }
-
-  return data || [];
 };
 
 export const checkSlugUnique = async (slug: string) => {
   try {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
     const { data, error } = await supabase
       .from("posts")
       .select("id")

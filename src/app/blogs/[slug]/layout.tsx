@@ -4,23 +4,24 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/pages/_components/ProjectCard";
 import { getAllBlogs } from "@/lib/dashboard/blogs/BlogsController";
+import { getAllProjects } from "@/lib/dashboard/projects/ProjectsController";
 import { ArrowLeft, BookOpen, Sparkles, UserCheck } from "lucide-react";
-
-const featuredProject = {
-    name: "ShopAgent",
-    category: "AI Commerce",
-    slug: "shopagent",
-    liveLink: "https://shopagent.vercel.app",
-    github: "https://github.com/theajthakur/shopagent",
-    link: "https://shopagent.vercel.app",
-    description:
-        "An AI-native commerce layer that enables product discovery, cart management, and Razorpay payments through natural conversation.",
-    thumbnail: ["shopagent.png"],
-    tags: ["Next.js", "FastAPI", "Gemini AI", "Razorpay"],
-};
 
 export default async function BlogLayout({ children }: { children: React.ReactNode }) {
     const blogsData = await getAllBlogs();
+    const projectsData = await getAllProjects();
+
+    const featuredRaw = projectsData.find((p) => p.featured) || projectsData[0];
+    const featuredProject = featuredRaw
+        ? {
+              ...featuredRaw,
+              liveLink: featuredRaw.live_link || featuredRaw.link,
+              github: featuredRaw.github,
+              link: featuredRaw.link || featuredRaw.live_link,
+              thumbnail: Array.isArray(featuredRaw.thumbnail) ? featuredRaw.thumbnail : [featuredRaw.thumbnail].filter(Boolean),
+              tags: Array.isArray(featuredRaw.tags) ? featuredRaw.tags : [],
+          }
+        : null;
 
     return (
         <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 font-primary">
@@ -85,13 +86,15 @@ export default async function BlogLayout({ children }: { children: React.ReactNo
                         </Card>
 
                         {/* Sidebar Widget 2: Featured Project Showcase */}
-                        <div className="space-y-2">
-                            <div className="flex items-center gap-2 px-1 text-xs font-bold font-heading uppercase text-primary tracking-wider">
-                                <Sparkles className="w-3.5 h-3.5" />
-                                <span>Featured Showcase</span>
+                        {featuredProject && (
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-2 px-1 text-xs font-bold font-heading uppercase text-primary tracking-wider">
+                                    <Sparkles className="w-3.5 h-3.5" />
+                                    <span>Featured Showcase</span>
+                                </div>
+                                <ProjectCard project={featuredProject} index={0} />
                             </div>
-                            <ProjectCard project={featuredProject} index={0} />
-                        </div>
+                        )}
 
                         {/* Sidebar Widget 3: Author Profile */}
                         <Card className="rounded-2xl p-4 sm:p-5">

@@ -5,10 +5,39 @@ import ProjectCard from "./_components/ProjectCard";
 import ProjectSearch from "./_components/ProjectSearch";
 import SearchModal from "./_components/SearchModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { BoneyardSkeleton, ProjectsGridSkeleton } from "@/components/common/Skeletons";
 
 export default function ProjectsGrid() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("/api/projects");
+        if (res.ok) {
+          const data = await res.json();
+          const normalized = data.map((p) => ({
+            ...p,
+            liveLink: p.live_link || p.liveLink,
+            github: p.github,
+            link: p.link || p.live_link,
+            thumbnail: Array.isArray(p.thumbnail) ? p.thumbnail : [p.thumbnail].filter(Boolean),
+            tags: Array.isArray(p.tags) ? p.tags : [],
+          }));
+          setProjects(normalized);
+        }
+      } catch (err) {
+        console.error("Error loading projects from Supabase:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -30,116 +59,15 @@ export default function ProjectsGrid() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const projects = [
-    {
-      name: "ShopAgent",
-      category: "AI Growth & Agentic Commerce",
-      slug: "shopagent",
-      liveLink: "https://shopagent.vercel.app",
-      github: "https://github.com/theajthakur/shopagent",
-      link: "https://shopagent.vercel.app",
-      description:
-        "An AI-native commerce layer that makes existing merchant APIs transactable by AI buyers. It enables product discovery, cart management, address handling, order placement, and Razorpay payments through a natural-language conversation, without requiring merchants to rebuild their existing commerce stack.",
-      thumbnail: ["shopagent.png"],
-      tags: [
-        "Next.js",
-        "FastAPI",
-        "Python",
-        "Google Gemini",
-        "Razorpay",
-        "SQLAlchemy",
-        "PostgreSQL",
-        "Clerk",
-        "Docker",
-        "GCP VPS"
-      ],
-    },
-    {
-      name: "Oppskills",
-      category: "Full-Stack Discovery Platform",
-      slug: "oppskills",
-      liveLink: "https://oppskills.com",
-      github: "https://github.com/theajthakur/oppskills",
-      link: "https://oppskills.com",
-      description:
-        "A full-stack opportunity discovery platform built using Next.js, NestJS, PostgreSQL, and Redis, serving 10,000+ users. It features an analytics aggregation system, authentication systems, and streamlined user discovery for events and hackathons.",
-      thumbnail: ["oppskills.png"],
-      tags: ["Next.js", "NestJS", "PostgreSQL", "Redis", "TypeScript", "LLMs", "RAG"],
-    },
-    {
-      name: "Snake & Ladder Multiplayer",
-      category: "Real-Time Multiplayer Game",
-      slug: "snake-ladder-multiplayer",
-      liveLink: "https://www.snakeladder.me",
-      github: "https://github.com/theajthakur/snakeladder",
-      link: "https://www.snakeladder.me",
-      description:
-        "A modern web-based multiplayer implementation of the classic Snake & Ladder game featuring server-authoritative gameplay for complete fairness. Built with real-time API polling, backend-managed game instances, secure turn validation, lobby creation, room sharing, and synchronized gameplay. Designed with a scalable architecture that can seamlessly transition to WebSockets for lower latency and future features like in-game chat and voice communication.",
-      thumbnail: ["snake-ladder.png"],
-      tags: [
-        "Next.js",
-        "FastAPI",
-        "Python",
-        "Tailwind CSS",
-        "REST API",
-        "Real-Time Multiplayer",
-        "Game Logic"
-      ],
-    },
-    {
-      name: "Leetalysis",
-      category: "LeetCode Analytics & Tracking Tool",
-      slug: "leetalysis",
-      liveLink: "https://leetalysis.vercel.app",
-      github: "https://github.com/theajthakur/leetalysis",
-      link: "https://leetalysis.vercel.app",
-      description:
-        "A LeetCode analytics tool for quickly exploring public user activity, including recent submissions, verdicts, and submitted solutions. Built with LeetCode's GraphQL API and supports bulk CSV-based student tracking for mentors and coding groups.",
-      thumbnail: ["leetalysis.png"],
-      tags: ["Next.js", "TypeScript", "GraphQL", "LeetCode API", "Tailwind CSS"],
-    },
-    {
-      name: "URL Shortener",
-      category: "URL Shortener & Windows XP Parody",
-      slug: "url-shortener",
-      liveLink: "https://shortener-xp.vercel.app",
-      github: "https://github.com/theajthakur/url-shortener",
-      link: "https://shortener-xp.vercel.app",
-      description:
-        "A nostalgic Windows XP-inspired web experience featuring a humorous GTA-themed parody interface with an integrated high-performance URL shortener. The backend is built independently using FastAPI with PostgreSQL and Redis for efficient URL resolution, caching, analytics, and scalable request handling. Deployed on Google Cloud App Engine with a production-ready architecture separating frontend and backend services.",
-      thumbnail: ["url-shortener.png"],
-      tags: [
-        "Next.js",
-        "FastAPI",
-        "Python",
-        "PostgreSQL",
-        "Redis",
-        "Google Cloud",
-        "App Engine",
-        "Tailwind CSS"
-      ],
-    },
-    {
-      name: "Ponion",
-      category: "Multi-Tenant Food SaaS",
-      slug: "ponion",
-      liveLink: "https://ponion.vercel.app",
-      github: "https://github.com/theajthakur/ponion",
-      link: "https://ponion.vercel.app",
-      description:
-        "A multi-tenant food discovery and ordering platform inspired by modern restaurant marketplaces. It features a customer-facing app for menu browsing and order placement, a dedicated restaurant management portal, and a Super Admin dashboard for onboarding, verification, and platform-wide management.",
-      thumbnail: ["ponion.png"],
-      tags: ["Next.js", "Node.js", "MongoDB", "Tailwind CSS", "API Development"],
-    }
-  ];
-
   const filteredProjects = projects.filter(
     (project) =>
       project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      (project.description &&
+        project.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (project.tags &&
+        project.tags.some((tag) =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
+        ))
   );
 
   return (
@@ -149,7 +77,7 @@ export default function ProjectsGrid() {
           Featured <span className="text-primary">Projects</span>
         </h1>
         <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-          A premium showcase of full-stack web applications, real-time multiplayer games (including Snake & Ladder Multiplayer), multi-tenant SaaS platforms, and developer tooling crafted by Vijay Thakur.
+          A premium showcase of full-stack web applications, real-time multiplayer games, multi-tenant SaaS platforms, and developer tooling crafted by Vijay Thakur.
         </p>
       </div>
 
@@ -159,27 +87,33 @@ export default function ProjectsGrid() {
         onOpenModal={() => setIsSearchOpen(true)}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-        <AnimatePresence mode="wait">
-          {filteredProjects.length > 0 ? (
-            filteredProjects.map((e, index) => (
-              <ProjectCard key={e.name} project={e} index={index} />
-            ))
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-center py-20 text-muted-foreground col-span-full"
-            >
-              <p className="text-lg">
-                No projects found matching "{searchQuery}"
-              </p>
-              <p className="text-sm">Try adjusting your search terms</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      <BoneyardSkeleton
+        loading={isLoading}
+        name="projects-grid"
+        fallback={<ProjectsGridSkeleton count={6} />}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+          <AnimatePresence mode="wait">
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((e, index) => (
+                <ProjectCard key={e.slug || e.name} project={e} index={index} />
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-center py-20 text-muted-foreground col-span-full"
+              >
+                <p className="text-lg">
+                  No projects found matching "{searchQuery}"
+                </p>
+                <p className="text-sm">Try adjusting your search terms</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </BoneyardSkeleton>
 
       <SearchModal
         isOpen={isSearchOpen}

@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Save, ArrowLeft, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
+import { BoneyardSkeleton, EditorPageSkeleton } from "@/components/common/Skeletons";
 
 export default function BlogEditor() {
   const router = useRouter();
@@ -206,19 +207,13 @@ export default function BlogEditor() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background font-primary">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <Loader2 className="h-6 w-6 animate-spin" />
-          <span>Loading post...</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-background p-4 md:p-8 space-y-8 max-w-7xl mx-auto font-primary">
+    <BoneyardSkeleton
+      loading={isLoading}
+      name="blog-editor-page"
+      fallback={<EditorPageSkeleton />}
+    >
+      <div className="min-h-screen bg-background p-4 md:p-8 space-y-8 max-w-7xl mx-auto font-primary">
       {/* Header Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
@@ -372,5 +367,6 @@ export default function BlogEditor() {
         </div>
       </div>
     </div>
+  </BoneyardSkeleton>
   );
 }

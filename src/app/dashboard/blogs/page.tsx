@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BoneyardSkeleton, DashboardBlogsSkeleton } from "@/components/common/Skeletons";
 
 interface Post {
   id: number;
@@ -121,11 +122,11 @@ export default function BlogsPage() {
         </div>
 
         {/* Blog Post List */}
-        {isLoading ? (
-          <div className="flex justify-center py-20 text-muted-foreground">
-            Loading posts from Supabase...
-          </div>
-        ) : (
+        <BoneyardSkeleton
+          loading={isLoading}
+          name="dashboard-blogs"
+          fallback={<DashboardBlogsSkeleton count={5} />}
+        >
           <div className="space-y-4">
             {filteredBlogs.length > 0 ? (
               filteredBlogs.map((blog) => {
@@ -238,7 +239,7 @@ export default function BlogsPage() {
               </div>
             )}
           </div>
-        )}
+        </BoneyardSkeleton>
       </div>
     </div>
   );

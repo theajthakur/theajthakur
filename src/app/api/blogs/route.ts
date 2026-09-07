@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllBlogs, createBlog } from "@/lib/dashboard/blogs/BlogsController";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const full = searchParams.get("full");
     const blogs = await getAllBlogs();
+
+    if (full === "true") {
+      return NextResponse.json(blogs);
+    }
+
     return NextResponse.json(
       blogs.map((b) => ({
         ...b,
-        content: b.content.substring(0, 100),
+        content: b.content ? b.content.substring(0, 200) : "",
       }))
     );
   } catch (error: any) {
@@ -18,10 +23,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+
 
   try {
     const data = await request.json();

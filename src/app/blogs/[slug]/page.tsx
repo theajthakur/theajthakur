@@ -5,11 +5,13 @@ import rehypeRaw from "rehype-raw";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Tag } from "lucide-react";
+import { getBlogByIdOrSlug } from "@/lib/dashboard/blogs/BlogsController";
 import { blogsData } from "./data";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post = blogsData.find((b) => b.slug === slug) || blogsData[0];
+    const dbPost = await getBlogByIdOrSlug(slug);
+    const post = dbPost || blogsData.find((b) => b.slug === slug) || blogsData[0];
     if (!post) return { title: "Blog Post | Vijay Thakur" };
 
     return {
@@ -39,7 +41,19 @@ function getYouTubeEmbedUrl(url: string) {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post = blogsData.find((b) => b.slug === slug) || blogsData[0];
+    const dbPost = await getBlogByIdOrSlug(slug);
+
+    const post = dbPost
+        ? {
+              title: dbPost.title,
+              description: dbPost.description,
+              content: dbPost.content,
+              createdAt: dbPost.created_at,
+              keywords: dbPost.keywords
+                  ? dbPost.keywords.split(",").map((k: string) => k.trim())
+                  : [],
+          }
+        : blogsData.find((b) => b.slug === slug) || blogsData[0];
 
     if (!post) {
         notFound();
@@ -71,7 +85,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 pt-2 border-t border-border/40">
                     <Tag className="w-3.5 h-3.5 text-muted-foreground self-center mr-1" />
-                    {["AI", "Next.js", "Engineering", "WebDev"].map((tag) => (
+                    {(post.keywords && post.keywords.length > 0
+                        ? post.keywords
+                        : ["AI", "Next.js", "Engineering", "WebDev"]
+                    ).map((tag: string) => (
                         <Badge key={tag} variant="outline" className="rounded-full px-3 py-0.5 text-xs font-medium">
                             {tag}
                         </Badge>

@@ -1,84 +1,145 @@
-import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/server";
 import slugify from "slugify";
 
-export interface CreateBlogData {
+export interface PostData {
   title: string;
-  content: string;
-  tags?: string[];
-  thumbnail?: string;
   slug?: string;
+  description: string;
+  content: string;
+  keywords?: string;
 }
 
-export const createBlog = async (data: CreateBlogData) => {
-  const { title, content, tags, thumbnail, slug } = data;
+export const createBlog = async (data: PostData) => {
+  const supabase = await createClient();
+  const { title, content, description, keywords, slug } = data;
 
-  // Use provided slug or generate from title
   let finalSlug = slug;
   if (!finalSlug) {
     finalSlug = slugify(title, { lower: true, strict: true });
   }
 
-  // Ensure slug is unique
-  const existing = await prisma.post.findUnique({ where: { slug: finalSlug } });
+  // Check slug uniqueness
+  const { data: existing } = await supabase
+    .from("posts")
+    .select("id")
+    .eq("slug", finalSlug)
+    .maybeSingle();
+
   if (existing) {
     throw new Error("Slug already exists");
   }
 
-  return await prisma.post.create({
-    data: {
-      title,
-      content,
-      slug: finalSlug!,
-      tags: tags || [],
-      thumbnail,
-      published: false, // Default to draft
-    },
-  });
+  const { data: newPost, error } = await supabase
+    .from("posts")
+    .insert([
+      {
+        title,
+        slug: finalSlug,
+        description: description || title,
+        content,
+        keywords: keywords || null,
+      },
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return newPost;
 };
 
-export const updateBlog = async (id: string | number, data: any) => {
-  return await prisma.post.update({
-    where: { id: typeof id === "string" ? parseInt(id) : id },
-    data,
-  });
+export const updateBlog = async (id: string | number, data: Partial<PostData>) => {
+  const supabase = await createClient();
+  const numericId = typeof id === "string" ? parseInt(id, 10) : id;
+
+  const { data: updatedPost, error } = await supabase
+    .from("posts")
+    .update({
+      title: data.title,
+      slug: data.slug,
+      description: data.description,
+      content: data.content,
+      keywords: data.keywords || null,
+    })
+    .eq("id", numericId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return updatedPost;
 };
 
 export const deleteBlog = async (id: string | number) => {
-  return await prisma.post.delete({
-    where: { id: typeof id === "string" ? parseInt(id) : id },
-  });
+  const supabase = await createClient();
+  const numericId = typeof id === "string" ? parseInt(id, 10) : id;
+
+  const { error } = await supabase.from("posts").delete().eq("id", numericId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return true;
 };
 
-export const getBlogBySlug = async (slug: string) => {
-  return await prisma.post.findUnique({
-    where: { slug },
-  });
-};
-export const getBlogById = async (id: string | number) => {
-  return await prisma.post.findUnique({
-    where: { id: typeof id === "string" ? parseInt(id) : id },
-  });
+export const getBlogByIdOrSlug = async (idOrSlug: string) => {
+  const supabase = await createClient();
+  const isNumeric = /^\d+$/.test(idOrSlug);
+
+  const query = supabase.from("posts").select("*");
+  if (isNumeric) {
+    query.eq("id", parseInt(idOrSlug, 10));
+  } else {
+    query.eq("slug", idOrSlug);
+  }
+
+  const { data, error } = await query.maybeSingle();
+
+  if (error) {
+    console.error("Error fetching post:", error);
+    return null;
+  }
+
+  return data;
 };
 
 export const getAllBlogs = async () => {
-  return await prisma.post.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-};
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("posts")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-export const togglePublishStatus = async (id: string | number) => {
-  const blog = await prisma.post.findUnique({
-    where: { id: typeof id === "string" ? parseInt(id) : id },
-  });
-  if (!blog) throw new Error("Blog not found");
+  if (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 
-  return await prisma.post.update({
-    where: { id: typeof id === "string" ? parseInt(id) : id },
-    data: { published: !blog.published },
-  });
+  return data || [];
 };
 
 export const checkSlugUnique = async (slug: string) => {
-  const existing = await prisma.post.findUnique({ where: { slug } });
-  return !existing;
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("posts")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Supabase error checking slug uniqueness:", error);
+      return true;
+    }
+
+    return !data;
+  } catch (err) {
+    console.error("Exception checking slug uniqueness:", err);
+    return true;
+  }
 };

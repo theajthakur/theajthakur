@@ -27,8 +27,4 @@ model UserQuery {
   message   String
   createdAt DateTime @default(now())
 }
-
-enum Role {
-  USER
-  ADMIN
 }

@@ -19,14 +19,18 @@ export default function ProjectsGrid() {
         const res = await fetch("/api/projects");
         if (res.ok) {
           const data = await res.json();
-          const normalized = data.map((p) => ({
-            ...p,
-            liveLink: p.live_link || p.liveLink,
-            github: p.github,
-            link: p.link || p.live_link,
-            thumbnail: Array.isArray(p.thumbnail) ? p.thumbnail : [p.thumbnail].filter(Boolean),
-            tags: Array.isArray(p.tags) ? p.tags : [],
-          }));
+          const normalized = data
+            .map((p) => ({
+              ...p,
+              thumbnail: Array.isArray(p.thumbnail) ? p.thumbnail : [p.thumbnail].filter(Boolean),
+              tags: Array.isArray(p.tags) ? p.tags : [],
+            }))
+            .sort((a, b) => {
+              const pa = a.priority ?? -Infinity;
+              const pb = b.priority ?? -Infinity;
+              if (pb !== pa) return pb - pa;
+              return new Date(b.created_at) - new Date(a.created_at);
+            });
           setProjects(normalized);
         }
       } catch (err) {

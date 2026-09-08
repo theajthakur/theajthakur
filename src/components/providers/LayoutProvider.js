@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 
 export default function LayoutProvider({ children }) {
   const pathname = usePathname();
-  if (pathname.startsWith("/dashboard")) {
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/login")) {
     return (
       <>
         <div>{children}</div>

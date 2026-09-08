@@ -1,17 +1,14 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import {
   Save,
   ArrowLeft,
   Loader2,
-  CheckCircle2,
   AlertCircle,
-  FolderKanban,
   Star,
   Globe,
   Github,
@@ -31,7 +28,6 @@ export default function ProjectEditorPage() {
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [liveLink, setLiveLink] = useState("");
   const [github, setGithub] = useState("");
@@ -44,11 +40,14 @@ export default function ProjectEditorPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [currentId, setCurrentId] = useState<string | null>(null);
+  const [projectSlug, setProjectSlug] = useState(""); // stored slug from DB (for existing projects)
 
-  // Slug check states
-  const [isCheckingSlug, setIsCheckingSlug] = useState(false);
-  const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "unique" | "taken">("idle");
-  const isManualSlugRef = useRef(false);
+  // Computed slug from name (always auto-derived)
+  const computedSlug = name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
 
   useEffect(() => {
     setImgError(false);
@@ -64,7 +63,7 @@ export default function ProjectEditorPage() {
             const project = await res.json();
             setName(project.name || "");
             setCategory(project.category || "");
-            setSlug(project.slug || "");
+            setProjectSlug(project.slug || "");
             setDescription(project.description || "");
             setLiveLink(project.live_link || "");
             setGithub(project.github || "");
@@ -77,7 +76,6 @@ export default function ProjectEditorPage() {
             );
             setFeatured(!!project.featured);
             setCurrentId(project.id);
-            isManualSlugRef.current = true;
           } else {
             toast.error("Project not found");
             router.push("/dashboard/projects");
@@ -93,90 +91,6 @@ export default function ProjectEditorPage() {
     fetchProject();
   }, [isNew, slugParam, router]);
 
-  // Debounced auto-slug generation on Name change for new projects
-  useEffect(() => {
-    if (!isNew || isManualSlugRef.current || !name.trim()) return;
-
-    const timer = setTimeout(async () => {
-      const baseSlug = name
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)+/g, "");
-
-      if (!baseSlug) {
-        setSlug("");
-        setSlugStatus("idle");
-        return;
-      }
-
-      setIsCheckingSlug(true);
-      setSlugStatus("checking");
-
-      try {
-        let candidateSlug = baseSlug;
-        let isUnique = false;
-        let attempts = 0;
-
-        while (!isUnique && attempts < 5) {
-          const checkRes = await fetch(
-            `/api/projects/check-slug?slug=${encodeURIComponent(candidateSlug)}`
-          );
-          const checkData = await checkRes.json();
-
-          if (checkData.isUnique) {
-            isUnique = true;
-          } else {
-            attempts++;
-            const randomSuffix = Math.random().toString(36).substring(2, 6);
-            candidateSlug = `${baseSlug}-${randomSuffix}`;
-          }
-        }
-
-        setSlug(candidateSlug);
-        setSlugStatus(isUnique ? "unique" : "taken");
-      } catch (err) {
-        console.error("Error checking project slug:", err);
-        setSlug(baseSlug);
-        setSlugStatus("idle");
-      } finally {
-        setIsCheckingSlug(false);
-      }
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [name, isNew]);
-
-  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    isManualSlugRef.current = true;
-    const rawVal = e.target.value;
-    const formatted = rawVal.toLowerCase().replace(/[^a-z0-9-]/g, "");
-    setSlug(formatted);
-  };
-
-  useEffect(() => {
-    if (!slug.trim() || !isManualSlugRef.current) return;
-
-    const timer = setTimeout(async () => {
-      setIsCheckingSlug(true);
-      setSlugStatus("checking");
-
-      try {
-        const excludeParam = currentId ? `&excludeId=${currentId}` : "";
-        const checkRes = await fetch(
-          `/api/projects/check-slug?slug=${encodeURIComponent(slug)}${excludeParam}`
-        );
-        const checkData = await checkRes.json();
-        setSlugStatus(checkData.isUnique ? "unique" : "taken");
-      } catch {
-        setSlugStatus("idle");
-      } finally {
-        setIsCheckingSlug(false);
-      }
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [slug, currentId]);
 
   const resolveThumbnailUrl = (url: string) => {
     const trimmed = url.trim();
@@ -192,13 +106,8 @@ export default function ProjectEditorPage() {
   };
 
   const handleSave = async () => {
-    if (!name.trim() || !slug.trim()) {
-      toast.error("Please fill in required fields: Name and Slug");
-      return;
-    }
-
-    if (slugStatus === "taken" && isNew) {
-      toast.error("The slug is already taken. Please enter a unique slug.");
+    if (!name.trim()) {
+      toast.error("Please fill in the Project Name");
       return;
     }
 
@@ -216,7 +125,7 @@ export default function ProjectEditorPage() {
 
       const payload = {
         name: name.trim(),
-        slug: slug.trim(),
+        // slug is always auto-derived from name on the server side; no need to send it
         category: category.trim() || null,
         description: description.trim() || null,
         live_link: liveLink.trim() || null,
@@ -268,32 +177,36 @@ export default function ProjectEditorPage() {
     >
       <div className="min-h-screen bg-background p-4 md:p-8 space-y-8 max-w-7xl mx-auto font-primary">
         {/* Header Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-3">
+          {/* Top row: back button + title */}
+          <div className="flex items-start gap-3">
             <Button
               variant="ghost"
               size="icon"
+              className="shrink-0 mt-0.5"
               onClick={() => router.push("/dashboard/projects")}
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div>
-              <h1 className="text-3xl font-bold font-heading">
+            <div className="min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold font-heading leading-tight truncate">
                 {isNew ? "Create New Project" : "Edit Project"}
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm mt-0.5 truncate">
                 {isNew ? "Add a new showcase project to your portfolio." : `Editing: ${name}`}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          {/* Action buttons — full width on mobile, auto on md+ */}
+          <div className="flex items-center gap-2 sm:gap-3 sm:self-end">
             <Button
               variant="outline"
+              className="flex-1 sm:flex-none"
               onClick={() => router.push("/dashboard/projects")}
             >
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={isSubmitting || isCheckingSlug}>
+            <Button onClick={handleSave} disabled={isSubmitting} className="flex-1 sm:flex-none">
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -350,10 +263,10 @@ export default function ProjectEditorPage() {
                   <h3 className="text-base font-semibold font-heading flex items-center gap-2">
                     <Globe className="h-4 w-4 text-primary" /> Links & URLs
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2 min-w-0">
                       <Label htmlFor="liveLink" className="text-sm font-medium flex items-center gap-1.5">
-                        <Globe className="h-3.5 w-3.5 text-muted-foreground" /> Live Link
+                        <Globe className="h-3.5 w-3.5 text-muted-foreground shrink-0" /> Live Link
                       </Label>
                       <Input
                         type="url"
@@ -361,11 +274,12 @@ export default function ProjectEditorPage() {
                         placeholder="https://shopagent.vercel.app"
                         value={liveLink}
                         onChange={(e) => setLiveLink(e.target.value)}
+                        className="min-w-0"
                       />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 min-w-0">
                       <Label htmlFor="github" className="text-sm font-medium flex items-center gap-1.5">
-                        <Github className="h-3.5 w-3.5 text-muted-foreground" /> GitHub Repository
+                        <Github className="h-3.5 w-3.5 text-muted-foreground shrink-0" /> GitHub Repository
                       </Label>
                       <Input
                         type="url"
@@ -373,6 +287,7 @@ export default function ProjectEditorPage() {
                         placeholder="https://github.com/username/repo"
                         value={github}
                         onChange={(e) => setGithub(e.target.value)}
+                        className="min-w-0"
                       />
                     </div>
                   </div>
@@ -392,72 +307,81 @@ export default function ProjectEditorPage() {
 
                 {/* Thumbnail Image Upload (Cloudinary + Crop) */}
                 <div className="space-y-3 pt-4 border-t border-border/40">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <Label className="text-base font-semibold flex items-center gap-2">
-                        <ImageIcon className="h-4 w-4 text-primary" /> Project Cover Image
-                      </Label>
-                      <p className="text-xs text-muted-foreground mt-0.5">
-                        Strictly file uploads only. Select a file from your device, crop it to fit, and upload to Cloudinary.
-                      </p>
-                    </div>
-                    <CloudinaryFileUploader
-                      folder="projects"
-                      label={thumbnail ? "Crop & Change Image" : "Upload & Crop Image"}
-                      onUploadSuccess={(url) => setThumbnail(url)}
-                    />
+                  {/* Label row — always stacked, button never fights for space */}
+                  <div className="flex items-center gap-2">
+                    <ImageIcon className="h-4 w-4 text-primary shrink-0" />
+                    <Label className="text-base font-semibold">Project Cover Image</Label>
                   </div>
+                  <p className="text-xs text-muted-foreground">
+                    File uploads only. Select a file, crop it, and upload to Cloudinary.
+                  </p>
 
-                  {/* Image Display & Controls Container */}
+                  {/* Image preview + upload controls */}
                   {(() => {
                     const firstThumb = thumbnail.split(",")[0]?.trim() || "";
                     const previewSrc = resolveThumbnailUrl(firstThumb);
 
-                    return (
-                      <div className="mt-3 relative w-full h-56 rounded-xl overflow-hidden border border-border/50 bg-muted/40 flex items-center justify-center group">
-                        {previewSrc && !imgError ? (
-                          <>
-                            <img
-                              key={previewSrc}
-                              src={previewSrc}
-                              alt="Thumbnail Preview"
-                              className="w-full h-full object-cover"
-                              onError={() => setImgError(true)}
-                            />
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 p-4">
-                              <CloudinaryFileUploader
-                                folder="projects"
-                                label="Crop & Replace"
-                                onUploadSuccess={(url) => setThumbnail(url)}
-                              />
-                              <Button
-                                type="button"
-                                variant="destructive"
-                                size="sm"
-                                onClick={() => setThumbnail("")}
-                              >
-                                <Trash2 className="h-4 w-4 mr-1" /> Remove
-                              </Button>
-                            </div>
-                          </>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center p-6 text-center space-y-3 text-muted-foreground">
-                            <ImageIcon className="h-10 w-10 text-muted-foreground/60" />
-                            <p className="text-xs font-mono bg-muted px-3 py-1 rounded-md max-w-sm truncate text-foreground border border-border/40">
-                              {previewSrc || "No cover image uploaded yet"}
-                            </p>
-                            {imgError && previewSrc && (
-                              <span className="text-[11px] text-amber-500 font-medium flex items-center gap-1">
-                                <AlertCircle className="h-3.5 w-3.5" /> Image not found at specified path
-                              </span>
-                            )}
+                    return previewSrc && !imgError ? (
+                      /* — has image — */
+                      <div className="space-y-2">
+                        <div className="relative w-full rounded-xl overflow-hidden border border-border/50 bg-muted/40 group">
+                          <img
+                            key={previewSrc}
+                            src={previewSrc}
+                            alt="Thumbnail Preview"
+                            className="w-full h-56 object-cover"
+                            onError={() => setImgError(true)}
+                          />
+                          {/* hover overlay */}
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 p-4">
                             <CloudinaryFileUploader
                               folder="projects"
-                              label="Select File to Crop & Upload"
+                              label="Crop & Replace"
                               onUploadSuccess={(url) => setThumbnail(url)}
                             />
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => setThumbnail("")}
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" /> Remove
+                            </Button>
                           </div>
+                        </div>
+                        {/* Button always visible below image on mobile (no hover needed) */}
+                        <div className="flex flex-wrap gap-2 sm:hidden">
+                          <CloudinaryFileUploader
+                            folder="projects"
+                            label="Crop & Change Image"
+                            onUploadSuccess={(url) => setThumbnail(url)}
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setThumbnail("")}
+                            className="text-destructive border-destructive/40 hover:bg-destructive/10"
+                          >
+                            <Trash2 className="h-4 w-4 mr-1" /> Remove
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* — no image / error — */
+                      <div className="w-full rounded-xl border border-dashed border-border/60 bg-muted/30 flex flex-col items-center justify-center gap-3 p-8 text-center">
+                        <ImageIcon className="h-10 w-10 text-muted-foreground/50" />
+                        {imgError && previewSrc && (
+                          <span className="text-[11px] text-amber-500 font-medium flex items-center gap-1">
+                            <AlertCircle className="h-3.5 w-3.5" /> Image not found at specified path
+                          </span>
                         )}
+                        <p className="text-xs text-muted-foreground">No cover image uploaded yet</p>
+                        <CloudinaryFileUploader
+                          folder="projects"
+                          label="Select File to Crop & Upload"
+                          onUploadSuccess={(url) => setThumbnail(url)}
+                        />
                       </div>
                     );
                   })()}
@@ -471,13 +395,13 @@ export default function ProjectEditorPage() {
             <Card className="border-border/50 shadow-sm">
               <CardContent className="p-6 space-y-6">
                 {/* Featured Checkbox */}
-                <div className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-muted/20">
-                  <div className="space-y-0.5">
+                <div className="flex items-start justify-between gap-3 p-3 rounded-lg border border-border/50 bg-muted/20">
+                  <div className="space-y-0.5 min-w-0">
                     <Label htmlFor="featured" className="font-semibold cursor-pointer flex items-center gap-1.5">
-                      <Star className="h-4 w-4 text-amber-500 fill-amber-500" /> Featured Project
+                      <Star className="h-4 w-4 text-amber-500 fill-amber-500 shrink-0" /> Featured Project
                     </Label>
                     <p className="text-xs text-muted-foreground">
-                      Highlight this project on home & portfolio pages.
+                      Highlight this project on home &amp; portfolio pages.
                     </p>
                   </div>
                   <input
@@ -485,47 +409,11 @@ export default function ProjectEditorPage() {
                     id="featured"
                     checked={featured}
                     onChange={(e) => setFeatured(e.target.checked)}
-                    className="h-5 w-5 rounded border-border accent-primary cursor-pointer"
+                    className="h-5 w-5 shrink-0 mt-0.5 rounded border-border accent-primary cursor-pointer"
                   />
                 </div>
 
-                {/* URL Slug Input */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="slug" className="font-semibold">
-                      URL Slug <span className="text-destructive">*</span>
-                    </Label>
-                    {isCheckingSlug && (
-                      <Badge variant="outline" className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Loader2 className="h-3 w-3 animate-spin" /> Checking...
-                      </Badge>
-                    )}
-                    {!isCheckingSlug && slugStatus === "unique" && slug && (
-                      <Badge variant="secondary" className="text-xs text-green-600 dark:text-green-400 bg-green-500/10 flex items-center gap-1">
-                        <CheckCircle2 className="h-3 w-3" /> Unique
-                      </Badge>
-                    )}
-                    {!isCheckingSlug && slugStatus === "taken" && slug && (
-                      <Badge variant="destructive" className="text-xs flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" /> Taken
-                      </Badge>
-                    )}
-                  </div>
-                  <Input
-                    type="text"
-                    id="slug"
-                    placeholder="my-project-slug"
-                    value={slug}
-                    onChange={handleSlugChange}
-                    className="font-mono text-sm"
-                  />
-                  <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                    <span>Path:</span>
-                    <code className="font-mono text-foreground bg-muted px-1.5 py-0.5 rounded text-[11px]">
-                      /p/{slug || "project-slug"}
-                    </code>
-                  </p>
-                </div>
+
 
                 {/* Category */}
                 <div className="space-y-2">

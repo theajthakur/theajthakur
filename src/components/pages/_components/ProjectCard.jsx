@@ -9,13 +9,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function ProjectCard({ project, index }) {
-  // Determine live link: explicit project.liveLink or fallback project.link (if not empty or '#')
-  const liveUrl = project.liveLink || (project.link && project.link !== "#" ? project.link : null);
-
-  // Render checks: missing or empty keys will not render corresponding buttons
-  const hasLiveDemo = Boolean(liveUrl && liveUrl.trim() !== "");
+  // DB fields: live_link → Live Demo, github → GitHub, link → Read More
+  const hasLiveDemo = Boolean(project.live_link && project.live_link.trim() !== "");
   const hasGithub = Boolean(project.github && project.github.trim() !== "");
-  const hasReadMore = Boolean(project.slug && project.slug.trim() !== "");
+  const hasReadMore = Boolean(project.link && project.link.trim() !== "" && project.link !== "#");
+  const readMoreIsExternal = hasReadMore && (project.link.startsWith("http://") || project.link.startsWith("https://"));
 
   return (
     <motion.div
@@ -83,10 +81,17 @@ export default function ProjectCard({ project, index }) {
                 asChild
                 className="flex-1 rounded-xl border-border/80 hover:bg-accent text-xs font-semibold h-10 px-3 cursor-pointer"
               >
-                <Link href={project.slug.startsWith("/") ? project.slug : `/p/${project.slug}`}>
-                  <FileText className="w-4 h-4 mr-1.5 shrink-0" />
-                  <span className="truncate">Read More</span>
-                </Link>
+                {readMoreIsExternal ? (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    <FileText className="w-4 h-4 mr-1.5 shrink-0" />
+                    <span className="truncate">Read More</span>
+                  </a>
+                ) : (
+                  <Link href={project.link}>
+                    <FileText className="w-4 h-4 mr-1.5 shrink-0" />
+                    <span className="truncate">Read More</span>
+                  </Link>
+                )}
               </Button>
             )}
 
@@ -111,7 +116,7 @@ export default function ProjectCard({ project, index }) {
                 title="Live Demo"
                 className="rounded-xl bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200 h-10 w-10 shrink-0 cursor-pointer shadow-xs"
               >
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer" aria-label="Live Demo">
+                <a href={project.live_link} target="_blank" rel="noopener noreferrer" aria-label="Live Demo">
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </Button>

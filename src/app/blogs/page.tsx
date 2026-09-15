@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Calendar, ArrowRight, BookOpen } from "lucide-react";
 import { getAllBlogs } from "@/lib/dashboard/blogs/BlogsController";
 
+// Always fetch fresh from Supabase — never serve a stale static build cache
+export const dynamic = "force-dynamic";
+
 export const metadata = {
     title: "Blog & Articles | Vijay Thakur",
     description: "Articles on web development, AI automation, full-stack architecture, and software design by Vijay Thakur.",

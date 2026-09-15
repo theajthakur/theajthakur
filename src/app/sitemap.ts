@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://theajthakur.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dev.vijstack.com";
 
   // Static core routes
   const staticRoutes: MetadataRoute.Sitemap = [

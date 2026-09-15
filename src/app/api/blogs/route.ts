@@ -29,8 +29,9 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
     const newBlog = await createBlog(data);
-    // Bust the /blogs page cache so the new post appears immediately
+    // Bust the /blogs page cache and sitemap so new post appears immediately
     revalidatePath("/blogs");
+    revalidatePath("/sitemap.xml");
     return NextResponse.json(newBlog, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

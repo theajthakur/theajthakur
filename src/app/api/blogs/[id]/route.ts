@@ -26,9 +26,10 @@ export async function PUT(
   try {
     const data = await request.json();
     const updatedBlog = await updateBlog(id, data);
-    // Bust listing + individual post cache
+    // Bust listing + individual post cache + sitemap
     revalidatePath("/blogs");
     if (updatedBlog?.slug) revalidatePath(`/blogs/${updatedBlog.slug}`);
+    revalidatePath("/sitemap.xml");
     return NextResponse.json(updatedBlog);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -42,8 +43,9 @@ export async function DELETE(
   const { id } = await params;
   try {
     await deleteBlog(id);
-    // Bust listing cache after deletion
+    // Bust listing cache + sitemap after deletion
     revalidatePath("/blogs");
+    revalidatePath("/sitemap.xml");
     return NextResponse.json({ message: "Blog deleted successfully" });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

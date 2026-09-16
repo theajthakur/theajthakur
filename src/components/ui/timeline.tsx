@@ -8,11 +8,27 @@ export const Timeline = ({ data }) => {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setHeight(rect.height);
-    }
-  }, [ref]);
+    if (!ref.current) return;
+
+    const measure = () => {
+      if (ref.current) {
+        setHeight(ref.current.scrollHeight);
+      }
+    };
+
+    // RAF ensures the browser has painted before we measure
+    const raf = requestAnimationFrame(measure);
+
+    // Also re-measure if content resizes (lazy images, etc.)
+    const ro = new ResizeObserver(measure);
+    ro.observe(ref.current);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.length]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

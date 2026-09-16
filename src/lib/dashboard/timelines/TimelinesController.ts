@@ -1,31 +1,7 @@
 import { createAdminClient } from "@/lib/server";
-
-export type TimelineIcon =
-  | "Globe"
-  | "Github"
-  | "Rocket"
-  | "Award"
-  | "MapPin"
-  | "Calendar"
-  | "ShoppingCart"
-  | "Server"
-  | "Cpu"
-  | "Star";
-
-export const TIMELINE_ICONS: TimelineIcon[] = [
-  "Globe",
-  "Github",
-  "Rocket",
-  "Award",
-  "MapPin",
-  "Calendar",
-  "ShoppingCart",
-  "Server",
-  "Cpu",
-  "Star",
-];
-
-export const DEFAULT_ICON: TimelineIcon = "Globe";
+import type { TimelineIcon } from "./timelines-config";
+export type { TimelineIcon } from "./timelines-config";
+export { TIMELINE_ICONS, DEFAULT_ICON } from "./timelines-config";
 
 export interface TimelineData {
   id?: string;

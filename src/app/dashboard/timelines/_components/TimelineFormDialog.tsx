@@ -31,8 +31,9 @@ import {
   Star,
 } from "lucide-react";
 import { toast } from "sonner";
-import { TIMELINE_ICONS, DEFAULT_ICON } from "@/lib/dashboard/timelines/TimelinesController";
-import type { TimelineIcon, TimelineData } from "@/lib/dashboard/timelines/TimelinesController";
+import { TIMELINE_ICONS, DEFAULT_ICON } from "@/lib/dashboard/timelines/timelines-config";
+import type { TimelineIcon } from "@/lib/dashboard/timelines/timelines-config";
+import type { TimelineData } from "@/lib/dashboard/timelines/TimelinesController";
 
 const ICON_MAP: Record<TimelineIcon, React.ReactNode> = {
   Globe: <Globe className="h-4 w-4" />,

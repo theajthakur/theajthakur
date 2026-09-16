@@ -14,7 +14,8 @@ import {
   Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { TimelineIcon, TimelineData } from "@/lib/dashboard/timelines/TimelinesController";
+import type { TimelineIcon } from "@/lib/dashboard/timelines/timelines-config";
+import type { TimelineData } from "@/lib/dashboard/timelines/TimelinesController";
 
 const ICON_MAP: Record<TimelineIcon, React.ReactNode> = {
   Globe: <Globe className="h-4 w-4" />,

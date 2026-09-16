@@ -57,9 +57,5 @@ export function MyTimeLine({ timelines = [] }) {
     };
   });
 
-  return (
-    <div className="relative w-full overflow-clip">
-      <Timeline data={data} />
-    </div>
-  );
+  return <Timeline data={data} />;
 }

@@ -171,7 +171,7 @@ export const Timeline = ({ data }: TimelineProps) => {
   if (!data || data.length === 0) return null;
 
   return (
-    <section className="w-full overflow-x-hidden">
+    <section className="w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
 
         {/* ── Desktop: two-column grid ── */}

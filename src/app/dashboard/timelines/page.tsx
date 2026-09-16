@@ -52,7 +52,6 @@ export default function DashboardTimelinesPage() {
       const updated = exists
         ? prev.map((t) => (t.id === saved.id ? saved : t))
         : [saved, ...prev];
-      // Re-sort by sort_date descending
       return [...updated].sort(
         (a, b) => new Date(b.sort_date).getTime() - new Date(a.sort_date).getTime()
       );

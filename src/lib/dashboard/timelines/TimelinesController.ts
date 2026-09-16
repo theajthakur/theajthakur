@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/server";
+import { DEFAULT_ICON } from "./timelines-config";
 import type { TimelineIcon } from "./timelines-config";
 export type { TimelineIcon } from "./timelines-config";
 export { TIMELINE_ICONS, DEFAULT_ICON } from "./timelines-config";

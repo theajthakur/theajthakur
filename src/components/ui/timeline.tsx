@@ -6,20 +6,25 @@ export const Timeline = ({ data }) => {
   const ref = useRef(null);
   const containerRef = useRef(null);
   const [height, setHeight] = useState(0);
+  const [topOffset, setTopOffset] = useState(0);
 
   useEffect(() => {
     if (!ref.current) return;
 
     const measure = () => {
-      if (ref.current) {
-        setHeight(ref.current.scrollHeight);
+      if (!ref.current) return;
+      setHeight(ref.current.scrollHeight);
+
+      // Find the vertical center of the first bullet dot:
+      // = first item's paddingTop + half of the bullet element height (h-10 = 40px → 20px)
+      const firstItem = ref.current.firstElementChild as HTMLElement | null;
+      if (firstItem) {
+        const pt = parseFloat(window.getComputedStyle(firstItem).paddingTop) || 0;
+        setTopOffset(pt + 20);
       }
     };
 
-    // RAF ensures the browser has painted before we measure
     const raf = requestAnimationFrame(measure);
-
-    // Also re-measure if content resizes (lazy images, etc.)
     const ro = new ResizeObserver(measure);
     ro.observe(ref.current);
 
@@ -29,6 +34,7 @@ export const Timeline = ({ data }) => {
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data.length]);
+
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -87,9 +93,10 @@ export const Timeline = ({ data }) => {
         ))}
         <div
           style={{
-            height: height + "px",
+            top: topOffset + "px",
+            height: Math.max(0, height - topOffset) + "px",
           }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-border/50 dark:via-border/20 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+          className="absolute md:left-8 left-8 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-border/50 dark:via-border/20 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{

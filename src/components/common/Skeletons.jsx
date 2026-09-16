@@ -134,6 +134,37 @@ export function EditorPageSkeleton() {
   );
 }
 
+export function DashboardTimelineItemSkeleton() {
+  return (
+    <div className="rounded-xl border border-border/50 bg-card p-5 flex items-start gap-4 animate-pulse">
+      <div className="h-9 w-9 rounded-lg bg-muted/70 shrink-0 mt-0.5" />
+      <div className="flex-1 space-y-2.5">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-20 bg-muted/80 rounded-full" />
+          <div className="h-4 w-28 bg-muted/60 rounded" />
+        </div>
+        <div className="h-5 w-2/5 bg-muted/70 rounded-md" />
+        <div className="h-4 w-full bg-muted/60 rounded" />
+        <div className="h-4 w-4/5 bg-muted/60 rounded" />
+      </div>
+      <div className="flex gap-1 shrink-0">
+        <div className="h-7 w-14 bg-muted/60 rounded-md" />
+        <div className="h-7 w-7 bg-muted/60 rounded-md" />
+      </div>
+    </div>
+  );
+}
+
+export function DashboardTimelinesSkeleton({ count = 5 }) {
+  return (
+    <div className="space-y-3">
+      {Array.from({ length: count }).map((_, i) => (
+        <DashboardTimelineItemSkeleton key={i} />
+      ))}
+    </div>
+  );
+}
+
 export function BoneyardSkeleton({ loading, children, fallback, name, className }) {
   return (
     <Skeleton loading={loading} name={name} fallback={fallback} className={className}>

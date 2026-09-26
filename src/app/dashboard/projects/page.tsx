@@ -35,7 +35,11 @@ export default function DashboardProjectsPage() {
     try {
       const res = await fetch("/api/projects");
       if (res.ok) {
-        setProjects(await res.json());
+        const data = await res.json();
+        const sorted = Array.isArray(data)
+          ? [...data].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime())
+          : [];
+        setProjects(sorted);
       } else {
         toast.error("Failed to load projects");
       }

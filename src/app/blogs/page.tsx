@@ -26,7 +26,10 @@ function formatDate(dateStr: string) {
 }
 
 export default async function BlogsPage() {
-    const posts = await getAllBlogs();
+    const rawPosts = await getAllBlogs();
+    const posts = [...rawPosts].sort(
+        (a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
+    );
 
     return (
         <div className="min-h-screen py-12 sm:py-16 px-4 sm:px-6 font-primary">

@@ -53,7 +53,10 @@ export default function MessagesPage() {
       const res = await fetch("/api/messages");
       if (res.ok) {
         const data = await res.json();
-        setMessages(data);
+        const sorted = Array.isArray(data)
+          ? [...data].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime())
+          : [];
+        setMessages(sorted);
       } else {
         toast.error("Failed to load messages");
       }

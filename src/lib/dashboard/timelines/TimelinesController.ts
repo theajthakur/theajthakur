@@ -23,7 +23,8 @@ export const getAllTimelines = async (): Promise<TimelineData[]> => {
     const { data, error } = await supabase
       .from("timelines")
       .select("*")
-      .order("sort_date", { ascending: false });
+      .order("sort_date", { ascending: false })
+      .order("created_at", { ascending: false });
 
     if (error) {
       console.error("Error fetching timelines from Supabase:", error);

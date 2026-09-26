@@ -23,8 +23,8 @@ export const getAllProjects = async (): Promise<ProjectData[]> => {
     const { data, error } = await supabase
       .from("projects")
       .select("*")
-      .order("priority", { ascending: false, nullsFirst: false })
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .order("priority", { ascending: false, nullsFirst: false });
 
     if (error) {
       console.error("Error fetching projects from Supabase:", error);

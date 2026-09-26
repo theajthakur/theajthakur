@@ -44,7 +44,10 @@ export default function BlogsPage() {
       const res = await fetch("/api/blogs");
       if (res.ok) {
         const data = await res.json();
-        setBlogs(data);
+        const sorted = Array.isArray(data)
+          ? [...data].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime())
+          : [];
+        setBlogs(sorted);
       } else {
         toast.error("Failed to load blog posts");
       }

@@ -19,7 +19,15 @@ export default function DashboardTimelinesPage() {
     try {
       const res = await fetch("/api/timelines");
       if (res.ok) {
-        setTimelines(await res.json());
+        const data = await res.json();
+        const sorted = Array.isArray(data)
+          ? [...data].sort(
+              (a, b) =>
+                new Date(b.sort_date || b.created_at || 0).getTime() -
+                new Date(a.sort_date || a.created_at || 0).getTime()
+            )
+          : [];
+        setTimelines(sorted);
       } else {
         toast.error("Failed to load timelines");
       }

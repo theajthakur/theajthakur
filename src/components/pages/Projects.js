@@ -26,10 +26,12 @@ export default function ProjectsGrid() {
               tags: Array.isArray(p.tags) ? p.tags : [],
             }))
             .sort((a, b) => {
-              const pa = a.priority ?? -Infinity;
-              const pb = b.priority ?? -Infinity;
-              if (pb !== pa) return pb - pa;
-              return new Date(b.created_at) - new Date(a.created_at);
+              const timeA = new Date(a.created_at || 0).getTime();
+              const timeB = new Date(b.created_at || 0).getTime();
+              if (timeB !== timeA) return timeB - timeA;
+              const pa = a.priority ?? 0;
+              const pb = b.priority ?? 0;
+              return pb - pa;
             });
           setProjects(normalized);
         }
